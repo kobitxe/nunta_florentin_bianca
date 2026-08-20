@@ -10,7 +10,7 @@
   --linea: rgba(117, 133, 95, 0.32);
 
   --serif: 'Marcellus', 'Georgia', serif;
-  --script: 'Great Vibes', 'Segoe Script', cursive;
+  --script: 'Parisienne', 'Segoe Script', cursive;
   --sans: Arial, Helvetica, sans-serif;
 
   --ancho: 68rem;
@@ -32,7 +32,7 @@ html {
 body {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.65;
   color: var(--tinta);
   background-color: var(--papel);
@@ -110,9 +110,9 @@ button {
 
 .eyebrow {
   font-family: var(--sans);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.3em;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--salvia);
   margin-bottom: 0.9rem;
@@ -162,8 +162,9 @@ button {
 }
 
 .navbar__logo {
-  font-family: var(--script);
-  font-size: 1.5rem;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
   text-decoration: none;
   color: var(--tinta);
 }
@@ -179,9 +180,9 @@ button {
 }
 
 .navbar__links a {
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--tinta);
@@ -292,15 +293,15 @@ button {
 
 .sobre__papel-nombres {
   font-family: var(--script);
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: var(--tinta);
 }
 
 .sobre__papel-fecha {
   font-family: var(--sans);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--salvia);
 }
@@ -381,9 +382,9 @@ button {
 }
 
 .carta__hint {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.3em;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--salvia-clara);
   animation: hint-pulso 2.4s ease-in-out infinite;
@@ -465,9 +466,9 @@ button {
 }
 
 .hero__anuncio {
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.34em;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--taupe);
   margin-bottom: 1.6rem;
@@ -509,9 +510,9 @@ button {
   align-items: center;
   gap: 1.1rem;
   margin-top: 1.2rem;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.3em;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--taupe);
 }
@@ -529,8 +530,9 @@ button {
 
 .hero__ciudades {
   margin-top: 0.7rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.26em;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--salvia);
 }
@@ -575,8 +577,9 @@ button {
 }
 
 .countdown__label {
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--taupe);
 }
@@ -628,9 +631,9 @@ button {
   right: 1.5rem;
   bottom: 4.4rem;
   text-align: center;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.28em;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #f2eee3;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
@@ -656,9 +659,9 @@ button {
 }
 
 .dia__etiqueta {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.24em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--salvia);
 }
@@ -672,8 +675,8 @@ button {
 }
 
 .dia__anio {
-  font-size: 0.85rem;
-  letter-spacing: 0.3em;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
   color: var(--taupe);
   margin-bottom: 1.1rem;
 }
@@ -687,7 +690,7 @@ button {
 
 .dia__dato {
   color: var(--taupe);
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .dia__nota {
@@ -700,9 +703,9 @@ button {
 .dia__enlace {
   display: inline-block;
   margin-top: 1rem;
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
@@ -906,9 +909,9 @@ button {
 
 .campo label {
   display: block;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--tinta);
   margin-bottom: 0.4rem;
@@ -969,9 +972,9 @@ button {
   border-radius: 999px;
   background: var(--salvia);
   color: var(--marfil);
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   transition: background 0.2s ease, opacity 0.2s ease;
 }
@@ -1036,9 +1039,9 @@ button {
 
 .stats__label {
   margin-top: 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--taupe);
 }
@@ -1341,8 +1344,8 @@ button {
 }
 
 .footer__firma {
-  font-size: 0.78rem;
-  letter-spacing: 0.24em;
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--salvia-clara);
 }
