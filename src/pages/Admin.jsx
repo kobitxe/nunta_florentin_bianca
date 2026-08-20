@@ -73,7 +73,7 @@ function estadoDe(inv) {
   return r.asiste ? 'si' : 'no'
 }
 
-function Panel() {
+function Panel({ email }) {
   const [lista, setLista] = useState([])
   const [error, setError] = useState(null)
   const [tipo, setTipo] = useState('individual')
@@ -141,9 +141,12 @@ function Panel() {
     <div className="admin__inner">
       <div className="admin__head">
         <h1>Panel de la boda</h1>
-        <button className="btn-mini" type="button" onClick={() => supabase.auth.signOut()}>
-          Cerrar sesión
-        </button>
+        <div className="admin__sesion">
+          <span className="tabla__detalle">{email}</span>
+          <button className="btn-mini" type="button" onClick={() => supabase.auth.signOut()}>
+            Cerrar sesión
+          </button>
+        </div>
       </div>
 
       <div className="stats stats--admin">
@@ -280,5 +283,5 @@ export default function Admin() {
     )
   }
 
-  return <div className="admin">{!listo ? null : sesion ? <Panel /> : <Login />}</div>
+  return <div className="admin">{!listo ? null : sesion ? <Panel email={sesion.user?.email} /> : <Login />}</div>
 }

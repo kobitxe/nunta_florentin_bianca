@@ -880,6 +880,12 @@ button {
   margin-bottom: 2rem;
 }
 
+.admin__sesion {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
 .admin__subtitulo {
   margin: 2.5rem 0 1rem;
 }
