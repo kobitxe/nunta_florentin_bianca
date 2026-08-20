@@ -217,13 +217,18 @@ button {
   box-shadow: 0 1.2rem 2.5rem rgba(0, 0, 0, 0.35);
 }
 
-/* Destinatario escrito en el frontal del sobre */
+/* Destinatario escrito en el frontal del sobre, centrado en la zona
+   libre bajo el sello */
 .sobre__destinatario {
   position: absolute;
-  top: 66%;
+  top: 62%;
+  bottom: 0;
   left: 8%;
   right: 8%;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--serif);
   font-style: italic;
   font-size: clamp(1.05rem, 4.5vw, 1.3rem);
