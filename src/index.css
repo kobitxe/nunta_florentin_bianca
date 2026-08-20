@@ -937,37 +937,55 @@ button {
   }
 }
 
-.tabla-wrap {
-  overflow-x: auto;
+/* Lista de invitaciones en tarjetas: pensada para móvil, sin scroll lateral */
+.lista-inv {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.inv-card {
+  background: #fffdf8;
   border: 1px solid var(--linea);
   border-radius: var(--radio);
-  background: #fffdf8;
+  padding: 1rem 1.1rem;
 }
 
-.tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
+.inv-card__top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.4rem;
 }
 
-.tabla th {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--marron);
+.inv-card__nombre {
+  font-size: 1.05rem;
+  margin-right: auto;
+  overflow-wrap: anywhere;
 }
 
-.tabla th,
-.tabla td {
-  text-align: left;
-  vertical-align: top;
-  padding: 0.7rem 0.8rem;
-  border-bottom: 1px solid var(--linea);
+.inv-card .acciones {
+  margin-top: 0.8rem;
 }
 
-.tabla tr:last-child td {
-  border-bottom: none;
+.inv-card .acciones .btn-mini {
+  flex: 1 1 auto;
+  text-align: center;
+  padding: 0.5rem 0.7rem;
+}
+
+@media (min-width: 48rem) {
+  .lista-inv {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .inv-card .acciones .btn-mini {
+    flex: 0 0 auto;
+    padding: 0.28rem 0.65rem;
+  }
 }
 
 .tabla__detalle {
