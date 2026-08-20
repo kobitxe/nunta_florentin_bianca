@@ -217,6 +217,19 @@ button {
   box-shadow: 0 1.2rem 2.5rem rgba(0, 0, 0, 0.35);
 }
 
+/* Destinatario escrito en el frontal del sobre */
+.sobre__destinatario {
+  position: absolute;
+  top: 68%;
+  left: 8%;
+  right: 8%;
+  z-index: 2;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.05rem, 4.5vw, 1.3rem);
+  color: var(--tinta);
+}
+
 .sobre__nombres {
   position: absolute;
   bottom: 9%;
@@ -273,18 +286,6 @@ button {
 .carta--abierta .sobre__sello {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.7);
-}
-
-.carta__para {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--beige);
-  margin: -1rem 0 -1.4rem;
-}
-
-.carta--abierta .carta__para {
-  visibility: hidden;
 }
 
 .carta__hint {

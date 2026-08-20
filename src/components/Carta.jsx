@@ -55,15 +55,15 @@ export default function Carta({ invitado }) {
           <span className="sobre__papel-fecha">{t('hero.datele')}</span>
         </span>
         <span className="sobre__pocket" />
+        {invitado && (
+          <span className="sobre__destinatario">
+            {t('carta.para')} {nombresDe(invitado)}
+          </span>
+        )}
         <span className="sobre__nombres">Flo &amp; Bianca</span>
         <span className="sobre__solapa" />
         <span className="sobre__sello">F&amp;B</span>
       </button>
-      {invitado && (
-        <p className="carta__para">
-          {t('carta.para')} {nombresDe(invitado)}
-        </p>
-      )}
       <p className="carta__hint">{t('carta.abrir')}</p>
     </div>
   )
