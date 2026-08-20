@@ -30,7 +30,7 @@ export default function Detalles() {
 
   return (
     <section className="seccion seccion--marfil" id="detalii">
-      <Rasgado className="seccion__corte seccion__corte--papel" />
+      <Rasgado className="seccion__corte seccion__corte--blanco" />
       <div className="seccion__inner">
         <Reveal>
           <p className="eyebrow">{t('detalii.eyebrow')}</p>

@@ -104,6 +104,10 @@ button {
   color: var(--marfil);
 }
 
+.seccion__corte--blanco {
+  color: #fff;
+}
+
 .eyebrow {
   font-family: var(--sans);
   font-size: 0.72rem;
@@ -376,15 +380,6 @@ button {
   transform: translate(-50%, -50%) scale(0.7);
 }
 
-.carta__rosas {
-  position: absolute;
-  left: -1.5rem;
-  bottom: -1.5rem;
-  width: clamp(9rem, 30vw, 14rem);
-  pointer-events: none;
-  opacity: 0.9;
-}
-
 .carta__hint {
   font-size: 0.72rem;
   font-weight: 500;
@@ -430,8 +425,15 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 6.5rem 1.5rem 4rem;
+  /* en móvil, aire extra arriba y abajo para las esquinas de rosas */
+  padding: 8.5rem 1.5rem 9rem;
   overflow: hidden;
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    padding: 6.5rem 1.5rem 5rem;
+  }
 }
 
 /* rosas.png está orientada a la esquina inferior izquierda; se voltea
@@ -529,24 +531,34 @@ button {
   color: var(--salvia);
 }
 
-/* Cuenta atrás en contenedor propio bajo el hero */
+/* Cuenta atrás: franja horizontal blanca dedicada, bajo el hero */
 .contador-seccion {
-  padding: 0.5rem 1.5rem 4.5rem;
+  background: #fff;
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+  padding: 1.7rem 1.5rem;
 }
 
 .contador {
-  max-width: 34rem;
+  max-width: var(--ancho);
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
   text-align: center;
-  background: var(--marfil);
-  border: 1px solid var(--linea);
-  border-radius: var(--radio);
-  padding: 2.2rem 1.5rem;
-  box-shadow: 0 0.8rem 2rem rgba(51, 48, 42, 0.07);
 }
 
 .contador .eyebrow {
-  margin-bottom: 1.2rem;
+  margin-bottom: 0;
+}
+
+@media (min-width: 48rem) {
+  .contador {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
 }
 
 .countdown__cifras {
