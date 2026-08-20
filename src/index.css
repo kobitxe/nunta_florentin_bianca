@@ -230,19 +230,6 @@ button {
   color: var(--tinta);
 }
 
-.sobre__nombres {
-  position: absolute;
-  bottom: 4%;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  font-family: var(--serif);
-  font-size: 0.85rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--marron);
-}
-
 /* Solapa: se abre girando hacia arriba */
 .sobre__solapa {
   position: absolute;

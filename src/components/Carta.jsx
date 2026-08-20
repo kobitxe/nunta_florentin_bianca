@@ -60,7 +60,6 @@ export default function Carta({ invitado }) {
             {t('carta.para')} {nombresDe(invitado)}
           </span>
         )}
-        <span className="sobre__nombres">Flo &amp; Bianca</span>
         <span className="sobre__solapa" />
         <span className="sobre__sello">F&amp;B</span>
       </button>
