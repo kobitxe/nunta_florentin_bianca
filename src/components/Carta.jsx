@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
 import { nombresDe } from '../lib/nombres.js'
+import { Rosas } from './Decor.jsx'
 
 const DURACION_APERTURA = 1800
 
@@ -49,6 +50,7 @@ export default function Carta({ invitado }) {
 
   return (
     <div className={`carta${fase === 'abriendo' ? ' carta--abierta' : ''}`}>
+      <Rosas className="carta__rosas" />
       <button type="button" className="sobre" onClick={abrir} aria-label={t('carta.abrir')}>
         <span className="sobre__papel">
           <span className="sobre__papel-nombres">Flo &amp; Bianca</span>
