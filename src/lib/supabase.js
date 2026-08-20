@@ -82,6 +82,29 @@ export async function listarInvitaciones() {
   return data
 }
 
+// Corrección manual desde el panel: 'si' | 'no' | 'pendiente'.
+// 'pendiente' borra la respuesta; sí/no la crea o actualiza sin tocar
+// restricciones ni mensaje ya guardados.
+export async function fijarAsistencia(inv, estado) {
+  if (!supabase) throw new Error('supabase-not-configured')
+  if (estado === 'pendiente') {
+    const { error } = await supabase.from('rsvps').delete().eq('invitado_id', inv.id)
+    if (error) throw error
+    return
+  }
+  const asiste = estado === 'si'
+  const { error } = await supabase.from('rsvps').upsert(
+    {
+      invitado_id: inv.id,
+      asiste,
+      num_acompanantes: asiste && inv.tipo === 'pareja' ? 1 : 0,
+      fecha_respuesta: new Date().toISOString(),
+    },
+    { onConflict: 'invitado_id' },
+  )
+  if (error) throw error
+}
+
 export async function borrarInvitacion(id) {
   if (!supabase) throw new Error('supabase-not-configured')
   const { error } = await supabase.from('invitados').delete().eq('id', id)

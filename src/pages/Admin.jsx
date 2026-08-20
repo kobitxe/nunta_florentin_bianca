@@ -4,6 +4,7 @@ import {
   crearInvitacion,
   listarInvitaciones,
   borrarInvitacion,
+  fijarAsistencia,
   suscribirRsvps,
 } from '../lib/supabase.js'
 
@@ -123,6 +124,15 @@ function Panel({ email }) {
     }
   }
 
+  const onEstado = async (inv, estado) => {
+    try {
+      await fijarAsistencia(inv, estado)
+      refrescar()
+    } catch {
+      setError('No se pudo cambiar el estado.')
+    }
+  }
+
   // Copiar y WhatsApp preguntan primero el idioma; el enlace lleva ?lang=
   // para que la invitación se abra directamente en ese idioma.
   const elegirIdioma = async (lang) => {
@@ -232,6 +242,14 @@ function Panel({ email }) {
                   <button className="btn-mini" type="button" onClick={() => setDialogo({ inv, accion: 'copiar' })}>
                     {copiado === inv.id ? '✓ Copiado' : '🔗 Copiar enlace'}
                   </button>
+                  <label className="estado-editar">
+                    Estado:
+                    <select value={estado} onChange={(e) => onEstado(inv, e.target.value)}>
+                      <option value="si">Sí</option>
+                      <option value="no">No</option>
+                      <option value="pendiente">Pendiente</option>
+                    </select>
+                  </label>
                   <button className="btn-mini btn-mini--borrar" type="button" onClick={() => onBorrar(inv)}>
                     Borrar
                   </button>
