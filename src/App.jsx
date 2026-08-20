@@ -1,4 +1,5 @@
 import { I18nProvider } from './i18n/index.jsx'
+import Carta from './components/Carta.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import Detalles from './components/Detalles.jsx'
@@ -11,6 +12,7 @@ import Footer from './components/Footer.jsx'
 export default function App() {
   return (
     <I18nProvider>
+      <Carta />
       <Navbar />
       <main>
         <Hero />

@@ -5,6 +5,9 @@ export default {
     galerie: 'Galerie',
     rsvp: 'Confirmă',
   },
+  carta: {
+    abrir: 'Deschide invitația',
+  },
   hero: {
     anunt: 'Ne căsătorim',
     si: '&',

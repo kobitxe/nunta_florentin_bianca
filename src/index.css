@@ -124,6 +124,193 @@ button {
   }
 }
 
+/* ── Carta de entrada ───────────────────────────────────── */
+.carta {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 30%, rgba(201, 171, 110, 0.14), transparent),
+    var(--tinta);
+  transition: opacity 0.7s ease 1s, visibility 0s linear 1.8s;
+}
+
+.carta--abierta {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.sobre {
+  position: relative;
+  width: min(20rem, 82vw);
+  aspect-ratio: 8 / 5;
+  border: none;
+  background: none;
+  padding: 0;
+  perspective: 60rem;
+  animation: sobre-flotar 3.5s ease-in-out infinite;
+}
+
+.carta--abierta .sobre {
+  animation: none;
+}
+
+@keyframes sobre-flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.4rem);
+  }
+}
+
+/* Carta interior: asoma al abrirse */
+.sobre__papel {
+  position: absolute;
+  inset: 7% 6%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 1.1rem;
+  gap: 0.2rem;
+  background: #fffdf8;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  transform: translateY(6%);
+  transition: transform 0.65s cubic-bezier(0.22, 0.9, 0.3, 1) 0.45s;
+}
+
+.carta--abierta .sobre__papel {
+  transform: translateY(-58%);
+}
+
+.sobre__papel-nombres {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--tinta);
+}
+
+.sobre__papel-fecha {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--dorado);
+}
+
+/* Bolsillo frontal del sobre: todo menos el hueco superior */
+.sobre__pocket {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(170deg, var(--crema), var(--beige));
+  clip-path: polygon(0 0, 50% 48%, 100% 0, 100% 100%, 0 100%);
+  border-radius: var(--radio);
+  box-shadow: 0 1.2rem 2.5rem rgba(0, 0, 0, 0.35);
+}
+
+.sobre__nombres {
+  position: absolute;
+  bottom: 9%;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  font-family: var(--serif);
+  font-size: 1rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--marron);
+}
+
+/* Solapa: se abre girando hacia arriba */
+.sobre__solapa {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 52%;
+  z-index: 3;
+  background: linear-gradient(190deg, var(--beige), var(--dorado-claro));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-radius: var(--radio) var(--radio) 0 0;
+  transform-origin: top center;
+  backface-visibility: hidden;
+  transition: transform 0.55s ease-in;
+}
+
+.carta--abierta .sobre__solapa {
+  transform: rotateX(180deg);
+}
+
+/* Sello de lacre */
+.sobre__sello {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  width: 3.4rem;
+  height: 3.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--dorado-claro), var(--dorado) 65%);
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.3);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--crema);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.carta--abierta .sobre__sello {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+}
+
+.carta__hint {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--dorado-claro);
+  animation: hint-pulso 2.4s ease-in-out infinite;
+}
+
+.carta--abierta .carta__hint {
+  visibility: hidden;
+}
+
+@keyframes hint-pulso {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sobre,
+  .carta__hint {
+    animation: none;
+  }
+  .carta,
+  .sobre__papel,
+  .sobre__solapa,
+  .sobre__sello {
+    transition: none;
+  }
+}
+
 /* ── Navbar ─────────────────────────────────────────────── */
 .navbar {
   position: fixed;
