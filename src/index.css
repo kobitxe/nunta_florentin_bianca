@@ -529,39 +529,24 @@ button {
   color: var(--salvia);
 }
 
-.hero__cta {
-  display: inline-block;
-  margin-top: 2.2rem;
-  padding: 0.85rem 2.4rem;
-  border: 1px solid var(--salvia);
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--salvia);
-  background: transparent;
-  transition: background 0.3s ease, color 0.3s ease;
+/* Cuenta atrás en contenedor propio bajo el hero */
+.contador-seccion {
+  padding: 0.5rem 1.5rem 4.5rem;
 }
 
-.hero__cta:hover {
-  background: var(--salvia);
-  color: var(--marfil);
+.contador {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--marfil);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 2.2rem 1.5rem;
+  box-shadow: 0 0.8rem 2rem rgba(51, 48, 42, 0.07);
 }
 
-/* Cuenta atrás */
-.countdown {
-  margin-top: 2.4rem;
-}
-
-.countdown__titulo {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--taupe);
-  margin-bottom: 0.9rem;
+.contador .eyebrow {
+  margin-bottom: 1.2rem;
 }
 
 .countdown__cifras {

@@ -4,6 +4,7 @@ import { buscarInvitadoPorToken } from './lib/supabase.js'
 import Carta from './components/Carta.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
+import Contador from './components/Contador.jsx'
 import Detalles from './components/Detalles.jsx'
 import FotoBanda from './components/FotoBanda.jsx'
 import Timeline from './components/Timeline.jsx'
@@ -36,6 +37,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero invitado={invitado} />
+        <Contador />
         <Detalles />
         <FotoBanda />
         <Timeline />
