@@ -8,6 +8,9 @@ const STORAGE_KEY = 'boda-idioma'
 
 export function I18nProvider({ children }) {
   const [idioma, setIdioma] = useState(() => {
+    // ?lang=ro|es en el enlace manda sobre la preferencia guardada.
+    const param = new URLSearchParams(window.location.search).get('lang')
+    if (param in diccionarios) return param
     const guardado = localStorage.getItem(STORAGE_KEY)
     return guardado in diccionarios ? guardado : 'ro'
   })

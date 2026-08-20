@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
+import { nombresDe } from '../lib/nombres.js'
 
 const DURACION_APERTURA = 1800
 
 // Sobre de entrada: cubre la pantalla hasta que el invitado lo abre
 // con un click o con el primer intento de scroll.
-export default function Carta() {
+export default function Carta({ invitado }) {
   const { t } = useI18n()
   const [fase, setFase] = useState('cerrada') // cerrada | abriendo | oculta
 
@@ -58,6 +59,11 @@ export default function Carta() {
         <span className="sobre__solapa" />
         <span className="sobre__sello">F&amp;B</span>
       </button>
+      {invitado && (
+        <p className="carta__para">
+          {t('carta.para')} {nombresDe(invitado)}
+        </p>
+      )}
       <p className="carta__hint">{t('carta.abrir')}</p>
     </div>
   )

@@ -7,8 +7,10 @@ export default {
   },
   carta: {
     abrir: 'Abre la invitación',
+    para: 'Para',
   },
   hero: {
+    holaPre: '¡Hola, ',
     anunt: 'Nos casamos',
     si: '&',
     datele: '5 y 8 de agosto de 2027',

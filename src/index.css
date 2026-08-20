@@ -275,6 +275,18 @@ button {
   transform: translate(-50%, -50%) scale(0.7);
 }
 
+.carta__para {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--beige);
+  margin: -1rem 0 -1.4rem;
+}
+
+.carta--abierta .carta__para {
+  visibility: hidden;
+}
+
 .carta__hint {
   font-size: 0.72rem;
   font-weight: 600;
@@ -398,6 +410,14 @@ button {
   background:
     radial-gradient(ellipse 70% 45% at 50% 0%, rgba(201, 171, 110, 0.18), transparent),
     var(--crema);
+}
+
+.hero__saludo {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  color: var(--dorado);
+  margin-bottom: 1.2rem;
 }
 
 .hero__anuncio {
@@ -1026,6 +1046,68 @@ button {
 .btn-mini--borrar:hover {
   border-color: #a04a3a;
   color: #a04a3a;
+}
+
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: none;
+  border-radius: var(--radio);
+  background: #25d366;
+  padding: 0.32rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.btn-wa:hover {
+  background: #1ebe5b;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(61, 47, 36, 0.45);
+}
+
+.modal__card {
+  width: 100%;
+  max-width: 22rem;
+  background: #fffdf8;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 1.8rem;
+  text-align: center;
+}
+
+.modal__card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal__card p {
+  font-size: 0.9rem;
+  color: var(--marron);
+  margin-bottom: 1.2rem;
+}
+
+.modal__opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.modal__opciones .rsvp__enviar {
+  margin-top: 0;
+  padding: 0.8rem;
 }
 
 /* ── Footer ─────────────────────────────────────────────── */

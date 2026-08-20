@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
 import { CEREMONIA } from '../config/wedding.js'
+import { nombresDe } from '../lib/nombres.js'
 
 function restante() {
   const diff = new Date(CEREMONIA.fechaISO) - Date.now()
@@ -13,7 +14,7 @@ function restante() {
   }
 }
 
-export default function Hero() {
+export default function Hero({ invitado }) {
   const { t } = useI18n()
   const [tiempo, setTiempo] = useState(restante)
 
@@ -24,6 +25,12 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top">
+      {invitado && (
+        <p className="hero__saludo">
+          {t('hero.holaPre')}
+          {nombresDe(invitado)}!
+        </p>
+      )}
       <p className="hero__anuncio">{t('hero.anunt')}</p>
       <h1 className="hero__nombres">
         Flo

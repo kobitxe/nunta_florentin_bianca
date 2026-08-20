@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
-import { supabase, buscarInvitadoPorToken, obtenerRsvp, guardarRsvp } from '../lib/supabase.js'
+import { supabase, obtenerRsvp, guardarRsvp } from '../lib/supabase.js'
+import { nombresDe } from '../lib/nombres.js'
 import Reveal from './Reveal.jsx'
 
 // La invitación es personal: el invitado llega con /i/{token} y su nombre
 // viene de la URL, así que el formulario no pide datos personales.
-export default function Rsvp({ token }) {
+export default function Rsvp({ token, invitado, cargando }) {
   const { t } = useI18n()
-  const [invitado, setInvitado] = useState(null)
-  const [cargando, setCargando] = useState(Boolean(token && supabase))
   const [yaRespondio, setYaRespondio] = useState(false)
   const [asiste, setAsiste] = useState(null)
   const [restricciones, setRestricciones] = useState('')
@@ -16,34 +15,24 @@ export default function Rsvp({ token }) {
   const [estado, setEstado] = useState('idle') // idle | enviando | ok | error
 
   useEffect(() => {
-    if (!token || !supabase) return
+    if (!invitado) return
     let activo = true
-    ;(async () => {
-      try {
-        const inv = await buscarInvitadoPorToken(token)
-        if (!activo) return
-        setInvitado(inv)
-        if (inv) {
-          const previo = await obtenerRsvp(inv.id)
-          if (!activo) return
-          if (previo) {
-            setYaRespondio(true)
-            setAsiste(previo.asiste)
-            setRestricciones(previo.restricciones || '')
-            setMensaje(previo.mensaje || '')
-          }
-        }
-      } finally {
-        if (activo) setCargando(false)
-      }
-    })()
+    obtenerRsvp(invitado.id)
+      .then((previo) => {
+        if (!activo || !previo) return
+        setYaRespondio(true)
+        setAsiste(previo.asiste)
+        setRestricciones(previo.restricciones || '')
+        setMensaje(previo.mensaje || '')
+      })
+      .catch(() => {})
     return () => {
       activo = false
     }
-  }, [token])
+  }, [invitado])
 
   const esPareja = invitado?.tipo === 'pareja'
-  const nombres = esPareja ? `${invitado.nombre} & ${invitado.nombre_pareja}` : invitado?.nombre
+  const nombres = invitado ? nombresDe(invitado) : ''
 
   const onSubmit = async (e) => {
     e.preventDefault()
