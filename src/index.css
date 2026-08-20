@@ -220,7 +220,7 @@ button {
 /* Destinatario escrito en el frontal del sobre */
 .sobre__destinatario {
   position: absolute;
-  top: 68%;
+  top: 66%;
   left: 8%;
   right: 8%;
   z-index: 2;
@@ -232,12 +232,12 @@ button {
 
 .sobre__nombres {
   position: absolute;
-  bottom: 9%;
+  bottom: 4%;
   left: 0;
   right: 0;
   z-index: 2;
   font-family: var(--serif);
-  font-size: 1rem;
+  font-size: 0.85rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--marron);
