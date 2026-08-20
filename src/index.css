@@ -1,18 +1,20 @@
 /* ── Tokens ─────────────────────────────────────────────── */
 :root {
-  --crema: #faf7f0;
-  --beige: #eee5d6;
-  --tinta: #3d2f24;
-  --marron: #8b7460;
-  --dorado: #a8843c;
-  --dorado-claro: #c9ab6e;
-  --linea: rgba(168, 132, 60, 0.35);
+  --papel: #f2eee3;
+  --marfil: #fbf9f2;
+  --tinta: #33302a;
+  --taupe: #8d8574;
+  --salvia: #75855f;
+  --salvia-oscura: #59684a;
+  --salvia-clara: #aab792;
+  --linea: rgba(117, 133, 95, 0.32);
 
-  --serif: 'Cormorant Garamond', 'Georgia', serif;
-  --sans: 'Karla', 'Segoe UI', sans-serif;
+  --serif: 'Fraunces', 'Georgia', serif;
+  --script: 'Great Vibes', 'Segoe Script', cursive;
+  --sans: 'Outfit', 'Segoe UI', sans-serif;
 
   --ancho: 68rem;
-  --radio: 2px;
+  --radio: 3px;
 }
 
 /* ── Base ───────────────────────────────────────────────── */
@@ -33,7 +35,9 @@ body {
   font-size: 1rem;
   line-height: 1.65;
   color: var(--tinta);
-  background: var(--crema);
+  background-color: var(--papel);
+  /* textura de papel sutil */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23p)' opacity='0.05'/%3E%3C/svg%3E");
   -webkit-font-smoothing: antialiased;
 }
 
@@ -51,7 +55,7 @@ h3 {
 }
 
 a {
-  color: var(--dorado);
+  color: var(--salvia);
 }
 
 button {
@@ -60,17 +64,18 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--dorado);
+  outline: 2px solid var(--salvia);
   outline-offset: 3px;
 }
 
-/* ── Utilidades de sección ──────────────────────────────── */
+/* ── Secciones y cortes de papel ────────────────────────── */
 .seccion {
-  padding: 5rem 1.5rem;
+  position: relative;
+  padding: 6rem 1.5rem 5rem;
 }
 
-.seccion--beige {
-  background: var(--beige);
+.seccion--marfil {
+  background: var(--marfil);
 }
 
 .seccion__inner {
@@ -78,27 +83,41 @@ button {
   margin: 0 auto;
 }
 
+.rasgado {
+  display: block;
+  width: 100%;
+  height: 2.6rem;
+}
+
+.seccion__corte {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+}
+
+.seccion__corte--papel {
+  color: var(--papel);
+}
+
+.seccion__corte--marfil {
+  color: var(--marfil);
+}
+
 .eyebrow {
   font-family: var(--sans);
   font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.28em;
+  font-weight: 500;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--dorado);
+  color: var(--salvia);
   margin-bottom: 0.9rem;
 }
 
 .titulo {
-  font-size: clamp(2rem, 5vw, 2.9rem);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 500;
   margin-bottom: 2.5rem;
-}
-
-/* Hilo dorado: firma visual que une las secciones */
-.hilo {
-  width: 1px;
-  height: 4rem;
-  margin: 0 auto;
-  background: linear-gradient(var(--linea), var(--dorado));
 }
 
 /* Aparición al hacer scroll */
@@ -124,6 +143,80 @@ button {
   }
 }
 
+/* ── Navbar ─────────────────────────────────────────────── */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.5rem;
+  background: color-mix(in srgb, var(--papel) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linea);
+}
+
+.navbar__logo {
+  font-family: var(--script);
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--tinta);
+}
+
+.navbar__logo em {
+  color: var(--salvia);
+  font-style: normal;
+}
+
+.navbar__links {
+  display: none;
+  gap: 1.8rem;
+}
+
+.navbar__links a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--tinta);
+}
+
+.navbar__links a:hover {
+  color: var(--salvia);
+}
+
+.idiomas {
+  display: flex;
+  gap: 0.25rem;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  padding: 0.2rem;
+}
+
+.idiomas__btn {
+  border: none;
+  background: none;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--taupe);
+}
+
+.idiomas__btn.activo {
+  background: var(--salvia);
+  color: var(--marfil);
+}
+
+@media (min-width: 48rem) {
+  .navbar__links {
+    display: flex;
+  }
+}
+
 /* ── Carta de entrada ───────────────────────────────────── */
 .carta {
   position: fixed;
@@ -135,7 +228,7 @@ button {
   justify-content: center;
   gap: 2.4rem;
   background:
-    radial-gradient(ellipse 75% 55% at 50% 30%, rgba(201, 171, 110, 0.14), transparent),
+    radial-gradient(ellipse 75% 55% at 50% 30%, rgba(170, 183, 146, 0.16), transparent),
     var(--tinta);
   transition: opacity 0.7s ease 1s, visibility 0s linear 1.8s;
 }
@@ -180,9 +273,9 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 1.1rem;
-  gap: 0.2rem;
-  background: #fffdf8;
+  padding-top: 0.9rem;
+  gap: 0.1rem;
+  background: var(--marfil);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   transform: translateY(6%);
@@ -194,16 +287,18 @@ button {
 }
 
 .sobre__papel-nombres {
-  font-family: var(--serif);
-  font-size: 1.2rem;
+  font-family: var(--script);
+  font-size: 1.5rem;
   color: var(--tinta);
 }
 
 .sobre__papel-fecha {
-  font-family: var(--serif);
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  color: var(--dorado);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--salvia);
 }
 
 /* Bolsillo frontal del sobre: todo menos el hueco superior */
@@ -211,7 +306,7 @@ button {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(170deg, var(--crema), var(--beige));
+  background: linear-gradient(170deg, var(--marfil), var(--papel));
   clip-path: polygon(0 0, 50% 48%, 100% 0, 100% 100%, 0 100%);
   border-radius: var(--radio);
   box-shadow: 0 1.2rem 2.5rem rgba(0, 0, 0, 0.35);
@@ -229,9 +324,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.05rem, 4.5vw, 1.3rem);
+  font-family: var(--script);
+  font-size: clamp(1.35rem, 6vw, 1.7rem);
   color: var(--tinta);
 }
 
@@ -241,7 +335,7 @@ button {
   inset: 0 0 auto 0;
   height: 52%;
   z-index: 3;
-  background: linear-gradient(190deg, var(--beige), var(--dorado-claro));
+  background: linear-gradient(190deg, var(--papel), var(--salvia-clara));
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   border-radius: var(--radio) var(--radio) 0 0;
   transform-origin: top center;
@@ -266,12 +360,12 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--dorado-claro), var(--dorado) 65%);
+  background: radial-gradient(circle at 35% 30%, var(--salvia-clara), var(--salvia) 65%);
   box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.3);
   font-family: var(--serif);
   font-style: italic;
   font-size: 1.05rem;
-  color: var(--crema);
+  color: var(--marfil);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -282,10 +376,10 @@ button {
 
 .carta__hint {
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--dorado-claro);
+  color: var(--salvia-clara);
   animation: hint-pulso 2.4s ease-in-out infinite;
 }
 
@@ -316,175 +410,144 @@ button {
   }
 }
 
-/* ── Navbar ─────────────────────────────────────────────── */
-.navbar {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 1.5rem;
-  background: color-mix(in srgb, var(--crema) 88%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--linea);
-}
-
-.navbar__logo {
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  color: var(--tinta);
-}
-
-.navbar__logo em {
-  color: var(--dorado);
-  font-style: italic;
-}
-
-.navbar__links {
-  display: none;
-  gap: 1.8rem;
-}
-
-.navbar__links a {
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--tinta);
-}
-
-.navbar__links a:hover {
-  color: var(--dorado);
-}
-
-.idiomas {
-  display: flex;
-  gap: 0.25rem;
-  border: 1px solid var(--linea);
-  border-radius: 999px;
-  padding: 0.2rem;
-}
-
-.idiomas__btn {
-  border: none;
-  background: none;
-  border-radius: 999px;
-  padding: 0.25rem 0.7rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--marron);
-}
-
-.idiomas__btn.activo {
-  background: var(--dorado);
-  color: var(--crema);
-}
-
-@media (min-width: 48rem) {
-  .navbar__links {
-    display: flex;
-  }
-}
-
 /* ── Hero ───────────────────────────────────────────────── */
 .hero {
+  position: relative;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 7rem 1.5rem 4rem;
-  background:
-    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(201, 171, 110, 0.18), transparent),
-    var(--crema);
+  padding: 6.5rem 1.5rem 4rem;
+  overflow: hidden;
+}
+
+.hero__rosas {
+  position: absolute;
+  width: clamp(9rem, 26vw, 14rem);
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.hero__rosas--tl {
+  top: 3.6rem;
+  left: -1.4rem;
+}
+
+.hero__rosas--br {
+  bottom: 1.6rem;
+  right: -1.4rem;
+  transform: scale(-1, -1);
 }
 
 .hero__saludo {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.2rem, 4vw, 1.6rem);
-  color: var(--dorado);
-  margin-bottom: 1.2rem;
+  font-family: var(--script);
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  color: var(--salvia);
+  margin-bottom: 0.8rem;
 }
 
 .hero__anuncio {
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: var(--dorado);
+  color: var(--taupe);
   margin-bottom: 1.6rem;
 }
 
+/* Foto en arco, como una invitación impresa */
+.hero__arco {
+  width: min(17rem, 68vw);
+  aspect-ratio: 3 / 4;
+  padding: 0.55rem;
+  border: 1px solid var(--linea);
+  border-radius: 50% 50% var(--radio) var(--radio) / 34% 34% var(--radio) var(--radio);
+  background: var(--marfil);
+  box-shadow: 0 1rem 2.4rem rgba(51, 48, 42, 0.12);
+}
+
+.hero__arco img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  border-radius: 50% 50% var(--radio) var(--radio) / 34% 34% var(--radio) var(--radio);
+}
+
 .hero__nombres {
-  font-size: clamp(3rem, 12vw, 6.5rem);
-  font-weight: 300;
-  letter-spacing: 0.02em;
-}
-
-.hero__amp {
-  display: block;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.55em;
-  color: var(--dorado);
-  line-height: 1;
-  margin: 0.1em 0;
-}
-
-.hero__fechas {
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(3rem, 11vw, 5rem);
+  line-height: 1.1;
   margin-top: 1.6rem;
+}
+
+.hero__fechabar {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.2rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--taupe);
+}
+
+.hero__fechabar-dias {
   font-family: var(--serif);
-  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
-  letter-spacing: 0.12em;
+  font-size: 1.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--tinta);
+  padding: 0 1.1rem;
+  border-left: 1px solid var(--linea);
+  border-right: 1px solid var(--linea);
 }
 
 .hero__ciudades {
-  margin-top: 0.4rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.24em;
+  margin-top: 0.7rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--marron);
+  color: var(--salvia);
 }
 
 .hero__cta {
   display: inline-block;
-  margin-top: 2.6rem;
+  margin-top: 2.2rem;
   padding: 0.85rem 2.4rem;
-  border: 1px solid var(--dorado);
+  border: 1px solid var(--salvia);
   border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--dorado);
+  color: var(--salvia);
+  background: transparent;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
 .hero__cta:hover {
-  background: var(--dorado);
-  color: var(--crema);
+  background: var(--salvia);
+  color: var(--marfil);
 }
 
 /* Cuenta atrás */
 .countdown {
-  margin-top: 3rem;
+  margin-top: 2.4rem;
 }
 
 .countdown__titulo {
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--marron);
-  margin-bottom: 1rem;
+  color: var(--taupe);
+  margin-bottom: 0.9rem;
 }
 
 .countdown__cifras {
@@ -499,16 +562,72 @@ button {
 
 .countdown__num {
   font-family: var(--serif);
-  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-size: clamp(1.7rem, 6vw, 2.4rem);
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--tinta);
 }
 
 .countdown__label {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--marron);
+  color: var(--taupe);
+}
+
+/* ── Banda de foto con papel rasgado ────────────────────── */
+.banda {
+  position: relative;
+  min-height: 26rem;
+  height: 68vh;
+  overflow: hidden;
+}
+
+.banda__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.banda__velo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(30, 28, 24, 0.05), rgba(30, 28, 24, 0.35));
+}
+
+.banda__rasgado {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+}
+
+.banda__rasgado--top {
+  top: -1px;
+  color: var(--marfil);
+}
+
+.banda__rasgado--bottom {
+  bottom: -1px;
+  color: var(--papel);
+  transform: scaleY(-1);
+}
+
+.banda__texto {
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 4.4rem;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #f2eee3;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 /* ── Detalles: díptico 05 / 08 ──────────────────────────── */
@@ -518,7 +637,7 @@ button {
 }
 
 .tarjeta {
-  background: var(--crema);
+  background: var(--marfil);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   padding: 2.2rem 1.8rem;
@@ -526,36 +645,37 @@ button {
 
 .tarjeta__dia {
   font-family: var(--serif);
-  font-size: 3.4rem;
+  font-size: 3.2rem;
   font-weight: 300;
   line-height: 1;
-  color: var(--dorado-claro);
+  color: var(--salvia-clara);
 }
 
 .tarjeta__etiqueta {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--dorado);
+  color: var(--salvia);
   margin: 0.8rem 0 0.5rem;
 }
 
 .tarjeta__lugar {
   font-family: var(--serif);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 500;
   margin-bottom: 0.3rem;
 }
 
 .tarjeta__dato {
-  color: var(--marron);
+  color: var(--taupe);
   font-size: 0.95rem;
 }
 
 .tarjeta__nota {
   font-size: 0.8rem;
   font-style: italic;
-  color: var(--marron);
+  color: var(--taupe);
   margin-top: 0.4rem;
 }
 
@@ -577,7 +697,7 @@ button {
   display: inline-block;
   margin-top: 1rem;
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -595,7 +715,8 @@ button {
 }
 
 .timeline__dia h3 {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
+  font-weight: 500;
   margin-bottom: 1.4rem;
   color: var(--tinta);
 }
@@ -603,7 +724,7 @@ button {
 .timeline__lista {
   list-style: none;
   padding: 0;
-  border-left: 1px solid var(--dorado);
+  border-left: 1px solid var(--salvia);
 }
 
 .timeline__item {
@@ -623,14 +744,15 @@ button {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: var(--crema);
-  border: 1px solid var(--dorado);
+  background: var(--papel);
+  border: 1px solid var(--salvia);
 }
 
 .timeline__hora {
   font-family: var(--serif);
-  font-size: 1.15rem;
-  color: var(--dorado);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--salvia);
   font-variant-numeric: tabular-nums;
 }
 
@@ -657,12 +779,15 @@ button {
   border-radius: var(--radio);
   overflow: hidden;
   border: 1px solid var(--linea);
+  background: var(--marfil);
+  padding: 0.4rem;
 }
 
 .galeria__item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: var(--radio);
   transition: transform 0.5s ease;
 }
 
@@ -676,17 +801,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, var(--beige), var(--crema));
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 2rem;
-  color: var(--dorado-claro);
+  background: linear-gradient(160deg, var(--papel), var(--marfil));
+  font-family: var(--script);
+  font-size: 2.2rem;
+  color: var(--salvia-clara);
 }
 
 .galeria__nota {
   margin-top: 1.4rem;
   font-style: italic;
-  color: var(--marron);
+  color: var(--taupe);
   text-align: center;
 }
 
@@ -704,7 +828,20 @@ button {
 
 .rsvp__intro {
   margin-bottom: 2rem;
-  color: var(--marron);
+  color: var(--taupe);
+}
+
+.rsvp__saludo {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 1.6rem;
+}
+
+.rsvp__nombres {
+  font-family: var(--script);
+  font-size: 1.9rem;
+  font-weight: 400;
+  color: var(--salvia);
 }
 
 .campo {
@@ -713,8 +850,8 @@ button {
 
 .campo label {
   display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--tinta);
@@ -727,7 +864,7 @@ button {
   width: 100%;
   font: inherit;
   color: var(--tinta);
-  background: var(--crema);
+  background: var(--marfil);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   padding: 0.7rem 0.9rem;
@@ -741,9 +878,9 @@ button {
 .campo input:focus,
 .campo select:focus,
 .campo textarea:focus {
-  outline: 2px solid var(--dorado);
+  outline: 2px solid var(--salvia);
   outline-offset: 0;
-  border-color: var(--dorado);
+  border-color: var(--salvia);
 }
 
 .asiste {
@@ -755,17 +892,17 @@ button {
 .asiste__opcion {
   border: 1px solid var(--linea);
   border-radius: var(--radio);
-  background: var(--crema);
+  background: var(--marfil);
   padding: 0.8rem;
-  font-weight: 500;
-  color: var(--marron);
+  font-weight: 400;
+  color: var(--taupe);
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .asiste__opcion.activo {
-  border-color: var(--dorado);
-  color: var(--dorado);
-  background: color-mix(in srgb, var(--dorado) 8%, var(--crema));
+  border-color: var(--salvia);
+  color: var(--salvia-oscura);
+  background: color-mix(in srgb, var(--salvia) 10%, var(--marfil));
 }
 
 .rsvp__enviar {
@@ -774,17 +911,17 @@ button {
   padding: 0.95rem;
   border: none;
   border-radius: 999px;
-  background: var(--dorado);
-  color: var(--crema);
+  background: var(--salvia);
+  color: var(--marfil);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  transition: opacity 0.2s ease;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .rsvp__enviar:hover {
-  opacity: 0.9;
+  background: var(--salvia-oscura);
 }
 
 .rsvp__enviar:disabled {
@@ -800,33 +937,24 @@ button {
 }
 
 .aviso--ok {
-  background: color-mix(in srgb, #5c7a4e 12%, var(--crema));
+  background: color-mix(in srgb, #5c7a4e 12%, var(--marfil));
   border: 1px solid #5c7a4e;
   color: #3d5233;
 }
 
 .aviso--error {
-  background: color-mix(in srgb, #a04a3a 10%, var(--crema));
+  background: color-mix(in srgb, #a04a3a 10%, var(--marfil));
   border: 1px solid #a04a3a;
   color: #7c392d;
 }
 
 .aviso--info {
-  background: var(--beige);
+  background: var(--papel);
   border: 1px solid var(--linea);
-  color: var(--marron);
+  color: var(--taupe);
 }
 
-.rsvp__saludo {
-  font-size: 1.45rem;
-  margin-bottom: 1.6rem;
-}
-
-.rsvp__nombres {
-  color: var(--dorado);
-}
-
-/* ── Stats ──────────────────────────────────────────────── */
+/* ── Stats (panel) ──────────────────────────────────────── */
 .stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -838,25 +966,25 @@ button {
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   padding: 1.6rem 1rem;
-  background: var(--crema);
+  background: var(--marfil);
 }
 
 .stats__num {
   font-family: var(--serif);
-  font-size: 2.6rem;
-  font-weight: 300;
+  font-size: 2.4rem;
+  font-weight: 400;
   line-height: 1;
-  color: var(--dorado);
+  color: var(--salvia);
   font-variant-numeric: tabular-nums;
 }
 
 .stats__label {
   margin-top: 0.5rem;
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--marron);
+  color: var(--taupe);
 }
 
 @media (min-width: 48rem) {
@@ -868,7 +996,6 @@ button {
 /* ── Panel de administración ────────────────────────────── */
 .admin {
   min-height: 100svh;
-  background: var(--crema);
   padding: 2.5rem 1.5rem 4rem;
 }
 
@@ -879,10 +1006,12 @@ button {
 
 .admin h1 {
   font-size: 1.9rem;
+  font-weight: 500;
 }
 
 .admin h2 {
   font-size: 1.35rem;
+  font-weight: 500;
 }
 
 .admin__head {
@@ -920,7 +1049,7 @@ button {
 .crear {
   margin: 2rem 0 0;
   padding: 1.6rem;
-  background: #fffdf8;
+  background: var(--marfil);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
 }
@@ -952,7 +1081,7 @@ button {
 }
 
 .inv-card {
-  background: #fffdf8;
+  background: var(--marfil);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   padding: 1rem 1.1rem;
@@ -995,7 +1124,7 @@ button {
 
 .tabla__detalle {
   font-size: 0.78rem;
-  color: var(--marron);
+  color: var(--taupe);
   overflow-wrap: anywhere;
 }
 
@@ -1011,7 +1140,7 @@ button {
 }
 
 .chip--si {
-  background: #e3ecdd;
+  background: #e0e8d6;
   color: #3d5233;
 }
 
@@ -1021,13 +1150,13 @@ button {
 }
 
 .chip--pend {
-  background: var(--beige);
-  color: var(--marron);
+  background: var(--papel);
+  color: var(--taupe);
 }
 
 .chip--tipo {
   border: 1px solid var(--linea);
-  color: var(--marron);
+  color: var(--taupe);
 }
 
 .acciones {
@@ -1040,41 +1169,23 @@ button {
   display: inline-block;
   border: 1px solid var(--linea);
   border-radius: var(--radio);
-  background: #fffdf8;
+  background: var(--marfil);
   padding: 0.28rem 0.65rem;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--tinta);
   text-decoration: none;
   white-space: nowrap;
 }
 
 .btn-mini:hover {
-  border-color: var(--dorado);
-  color: var(--dorado);
+  border-color: var(--salvia);
+  color: var(--salvia-oscura);
 }
 
 .btn-mini--borrar:hover {
   border-color: #a04a3a;
   color: #a04a3a;
-}
-
-.btn-wa {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border: none;
-  border-radius: var(--radio);
-  background: #25d366;
-  padding: 0.32rem 0.7rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
-  white-space: nowrap;
-}
-
-.btn-wa:hover {
-  background: #1ebe5b;
 }
 
 .modal {
@@ -1085,13 +1196,13 @@ button {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: rgba(61, 47, 36, 0.45);
+  background: rgba(51, 48, 42, 0.45);
 }
 
 .modal__card {
   width: 100%;
   max-width: 22rem;
-  background: #fffdf8;
+  background: var(--marfil);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   padding: 1.8rem;
@@ -1100,12 +1211,13 @@ button {
 
 .modal__card h3 {
   font-size: 1.3rem;
+  font-weight: 500;
   margin-bottom: 0.5rem;
 }
 
 .modal__card p {
   font-size: 0.9rem;
-  color: var(--marron);
+  color: var(--taupe);
   margin-bottom: 1.2rem;
 }
 
@@ -1123,16 +1235,20 @@ button {
 
 /* ── Footer ─────────────────────────────────────────────── */
 .footer {
+  position: relative;
   text-align: center;
-  padding: 4rem 1.5rem 3rem;
+  padding: 6rem 1.5rem 3rem;
   background: var(--tinta);
-  color: var(--beige);
+  color: var(--papel);
+}
+
+.footer .seccion__corte {
+  top: -1px;
 }
 
 .footer__frase {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.25rem;
+  font-family: var(--script);
+  font-size: 1.7rem;
   margin-bottom: 0.8rem;
 }
 
@@ -1140,5 +1256,5 @@ button {
   font-size: 0.78rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--dorado-claro);
+  color: var(--salvia-clara);
 }

@@ -9,8 +9,12 @@ export default {
     abrir: 'Abre la invitación',
     para: 'Para',
   },
+  banda: {
+    texto: 'Ceremonia religiosa · 5 de agosto de 2027 · Brăila',
+  },
   hero: {
     holaPre: '¡Hola, ',
+    luna: 'agosto',
     anunt: 'Nos casamos',
     si: '&',
     datele: '5 y 8 de agosto de 2027',
@@ -43,8 +47,8 @@ export default {
   program: {
     eyebrow: 'Programa de los días',
     titlu: 'Así lo celebraremos',
-    zi1: '5 de agosto — Brăila',
-    zi2: '8 de agosto — Mamaia',
+    zi1: '5 de agosto   Brăila',
+    zi2: '8 de agosto   Mamaia',
     evenimente1: [
       { ora: '10:30', text: 'Llegada de los invitados a la iglesia' },
       { ora: '11:00', text: 'Ceremonia religiosa' },
@@ -87,7 +91,7 @@ export default {
     cargando: 'Cargando la invitación…',
     sinToken: 'La invitación es personal. Si no has recibido tu enlace, pídeselo a los novios.',
     noEncontrado: 'No hemos encontrado esta invitación. Revisa el enlace recibido.',
-    yaRespondido: 'Ya habéis respondido — podéis cambiar la respuesta cuando queráis.',
+    yaRespondido: 'Ya habéis respondido   podéis cambiar la respuesta cuando queráis.',
     sinConfig: 'El formulario estará activo muy pronto.',
   },
   footer: {

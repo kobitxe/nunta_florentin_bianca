@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
 import { CEREMONIA } from '../config/wedding.js'
 import { nombresDe } from '../lib/nombres.js'
+import { Rosas } from './Decor.jsx'
 
 function restante() {
   const diff = new Date(CEREMONIA.fechaISO) - Date.now()
@@ -25,6 +26,9 @@ export default function Hero({ invitado }) {
 
   return (
     <section className="hero" id="top">
+      <Rosas className="hero__rosas hero__rosas--tl" />
+      <Rosas className="hero__rosas hero__rosas--br" />
+
       {invitado && (
         <p className="hero__saludo">
           {t('hero.holaPre')}
@@ -32,12 +36,18 @@ export default function Hero({ invitado }) {
         </p>
       )}
       <p className="hero__anuncio">{t('hero.anunt')}</p>
-      <h1 className="hero__nombres">
-        Flo
-        <span className="hero__amp">{t('hero.si')}</span>
-        Bianca
-      </h1>
-      <p className="hero__fechas">{t('hero.datele')}</p>
+
+      <div className="hero__arco">
+        <img src="/novios.jpeg" alt="Flo & Bianca" />
+      </div>
+
+      <h1 className="hero__nombres">Flo &amp; Bianca</h1>
+
+      <div className="hero__fechabar">
+        <span>{t('hero.luna')}</span>
+        <span className="hero__fechabar-dias">5 &amp; 8</span>
+        <span>2027</span>
+      </div>
       <p className="hero__ciudades">{t('hero.orase')}</p>
 
       {tiempo && (

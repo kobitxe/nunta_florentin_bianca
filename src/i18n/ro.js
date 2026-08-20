@@ -9,8 +9,12 @@ export default {
     abrir: 'Deschide invitația',
     para: 'Pentru',
   },
+  banda: {
+    texto: 'Cununia religioasă · 5 august 2027 · Brăila',
+  },
   hero: {
     holaPre: 'Bună, ',
+    luna: 'august',
     anunt: 'Ne căsătorim',
     si: '&',
     datele: '5 & 8 august 2027',
@@ -43,8 +47,8 @@ export default {
   program: {
     eyebrow: 'Programul zilelor',
     titlu: 'Cum vom sărbători',
-    zi1: '5 august — Brăila',
-    zi2: '8 august — Mamaia',
+    zi1: '5 august   Brăila',
+    zi2: '8 august   Mamaia',
     evenimente1: [
       { ora: '10:30', text: 'Sosirea invitaților la biserică' },
       { ora: '11:00', text: 'Cununia religioasă' },
@@ -87,7 +91,7 @@ export default {
     cargando: 'Se încarcă invitația…',
     sinToken: 'Invitația este personală. Dacă nu ai primit linkul tău, cere-l mirilor.',
     noEncontrado: 'Nu am găsit această invitație. Verifică linkul primit.',
-    yaRespondido: 'Ați răspuns deja — puteți modifica răspunsul oricând.',
+    yaRespondido: 'Ați răspuns deja   puteți modifica răspunsul oricând.',
     sinConfig: 'Formularul va fi activ în curând.',
   },
   footer: {

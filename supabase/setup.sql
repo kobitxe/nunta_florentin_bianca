@@ -1,4 +1,4 @@
--- Invitación de boda Flo & Bianca — configuración de base de datos.
+-- Invitación de boda Flo & Bianca   configuración de base de datos.
 -- Ejecutar UNA VEZ en Supabase: Dashboard → SQL Editor → New query → pegar y Run.
 
 -- ── Tablas ──────────────────────────────────────────────────────────────

@@ -1,4 +1,4 @@
-# Flo & Bianca — Invitación de boda
+# Flo & Bianca Invitación de boda
 
 Invitación web bilingüe (rumano/castellano) para la boda de Flo & Bianca.
 

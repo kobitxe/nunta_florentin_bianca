@@ -1,4 +1,4 @@
-# Invitación de boda Flo & Bianca — React + Supabase (sin backend)
+# Invitación de boda Flo & Bianca   React + Supabase (sin backend)
 
 Fecha: 2026-08-20 · Estado: aprobado por el usuario (spec entregada cerrada)
 
@@ -12,8 +12,8 @@ Fecha: 2026-08-20 · Estado: aprobado por el usuario (spec entregada cerrada)
 ## Datos reales
 
 - Novios: **Flo & Bianca**.
-- Ceremonia (cununia religioasă): **5 agosto 2027, ~11:00** (hora por confirmar) — Biserica Ortodoxă de Rit Vechi „Vovidenia", Strada Reșița 76, Brăila.
-- Recepción: **8 agosto 2027, 17:00** — Restaurant Terasa Tic Tac Mamaia, Bulevardul Mamaia, Constanța.
+- Ceremonia (cununia religioasă): **5 agosto 2027, ~11:00** (hora por confirmar)   Biserica Ortodoxă de Rit Vechi „Vovidenia", Strada Reșița 76, Brăila.
+- Recepción: **8 agosto 2027, 17:00**   Restaurant Terasa Tic Tac Mamaia, Bulevardul Mamaia, Constanța.
 - Mapas embebidos con `https://www.google.com/maps?q=<lugar>&output=embed` (sin API key) + enlace al link corto original.
 
 ## i18n
@@ -32,7 +32,7 @@ rsvps:     id uuid PK, invitado_id uuid FK→invitados.id, asiste boolean NOT NU
 
 - RLS activado en ambas tablas. Políticas: `anon` puede INSERT en ambas y SELECT en ambas (necesario para estadísticas públicas).
 - Realtime habilitado en `rsvps` para estadísticas en vivo.
-- Script completo en `supabase/setup.sql` — se ejecuta una vez en el SQL Editor de Supabase.
+- Script completo en `supabase/setup.sql`   se ejecuta una vez en el SQL Editor de Supabase.
 
 ## Flujo RSVP
 

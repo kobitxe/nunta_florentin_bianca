@@ -5,6 +5,7 @@ import Carta from './components/Carta.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import Detalles from './components/Detalles.jsx'
+import FotoBanda from './components/FotoBanda.jsx'
 import Timeline from './components/Timeline.jsx'
 import Galeria from './components/Galeria.jsx'
 import Rsvp from './components/Rsvp.jsx'
@@ -36,6 +37,7 @@ export default function App() {
       <main>
         <Hero invitado={invitado} />
         <Detalles />
+        <FotoBanda />
         <Timeline />
         <Galeria />
         <Rsvp token={token} invitado={invitado} cargando={cargandoInvitado} />

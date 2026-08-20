@@ -1,6 +1,7 @@
 import { useI18n } from '../i18n/context.js'
 import { GALERIA_FOTOS } from '../config/wedding.js'
 import Reveal from './Reveal.jsx'
+import { Rasgado } from './Decor.jsx'
 
 const PLACEHOLDERS = 4
 
@@ -9,7 +10,8 @@ export default function Galeria() {
   const hayFotos = GALERIA_FOTOS.length > 0
 
   return (
-    <section className="seccion seccion--beige" id="galerie">
+    <section className="seccion seccion--marfil" id="galerie">
+      <Rasgado className="seccion__corte seccion__corte--papel" />
       <div className="seccion__inner">
         <Reveal>
           <p className="eyebrow">{t('galerie.eyebrow')}</p>

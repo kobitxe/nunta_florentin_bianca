@@ -1,6 +1,7 @@
 import { useI18n } from '../i18n/context.js'
 import { CEREMONIA, RECEPCION } from '../config/wedding.js'
 import Reveal from './Reveal.jsx'
+import { Rasgado } from './Decor.jsx'
 
 function Tarjeta({ dia, etiqueta, lugar, direccion, fecha, hora, nota, mapsEmbed, mapsLink }) {
   const { t } = useI18n()
@@ -28,7 +29,8 @@ export default function Detalles() {
   const { t } = useI18n()
 
   return (
-    <section className="seccion seccion--beige" id="detalii">
+    <section className="seccion seccion--marfil" id="detalii">
+      <Rasgado className="seccion__corte seccion__corte--papel" />
       <div className="seccion__inner">
         <Reveal>
           <p className="eyebrow">{t('detalii.eyebrow')}</p>
