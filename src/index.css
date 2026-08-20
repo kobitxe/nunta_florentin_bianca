@@ -10,7 +10,7 @@
   --linea: rgba(117, 133, 95, 0.32);
 
   --serif: 'Marcellus', 'Georgia', serif;
-  --script: 'Parisienne', 'Segoe Script', cursive;
+  --script: 'Dancing Script', 'Segoe Script', cursive;
   --sans: Arial, Helvetica, sans-serif;
 
   --ancho: 68rem;
@@ -162,9 +162,9 @@ button {
 }
 
 .navbar__logo {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  letter-spacing: 0.05em;
+  font-family: var(--script);
+  font-size: 1.5rem;
+  font-weight: 600;
   text-decoration: none;
   color: var(--tinta);
 }
@@ -495,8 +495,8 @@ button {
 
 .hero__nombres {
   font-family: var(--script);
-  font-weight: 400;
-  font-size: clamp(3rem, 11vw, 5rem);
+  font-weight: 500;
+  font-size: clamp(2.3rem, 9vw, 4.4rem);
   line-height: 1.1;
   margin-top: 1.6rem;
 }

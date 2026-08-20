@@ -23,7 +23,7 @@ export default function Hero({ invitado }) {
       </div>
 
       <h1 className="hero__nombres">
-        Flo <span className="hero__amp">&amp;</span> Bianca
+        Florentin <span className="hero__amp">&amp;</span> Bianca
       </h1>
 
       <div className="hero__fechabar">

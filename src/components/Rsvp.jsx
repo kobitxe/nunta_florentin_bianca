@@ -74,6 +74,7 @@ export default function Rsvp({ token, invitado, cargando }) {
 
         <form onSubmit={onSubmit}>
           <div className="campo">
+            <br></br>
             <label>{esPareja ? t('rsvp.preguntaPareja') : t('rsvp.preguntaIndividual')}</label>
             <div className="asiste" role="group">
               <button
