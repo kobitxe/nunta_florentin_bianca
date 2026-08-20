@@ -11,7 +11,7 @@
 
   --serif: 'Marcellus', 'Georgia', serif;
   --script: 'Great Vibes', 'Segoe Script', cursive;
-  --sans: 'Jost', 'Segoe UI', sans-serif;
+  --sans: 'Inter', 'Arial', 'Helvetica Neue', sans-serif;
 
   --ancho: 68rem;
   --radio: 3px;
@@ -31,7 +31,7 @@ html {
 
 body {
   font-family: var(--sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1rem;
   line-height: 1.65;
   color: var(--tinta);
@@ -446,8 +446,8 @@ button {
 }
 
 .hero__rosas--tl {
-  top: 3.4rem;
-  left: -1.2rem;
+  top: 4rem;
+  left: 0;
   transform: scaleY(-1);
 }
 
@@ -498,6 +498,10 @@ button {
   font-size: clamp(3rem, 11vw, 5rem);
   line-height: 1.1;
   margin-top: 1.6rem;
+}
+
+.hero__amp {
+  color: var(--salvia);
 }
 
 .hero__fechabar {

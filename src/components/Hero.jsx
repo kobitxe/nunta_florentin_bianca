@@ -22,7 +22,9 @@ export default function Hero({ invitado }) {
         <img src="/novios.jpeg" alt="Flo & Bianca" />
       </div>
 
-      <h1 className="hero__nombres">Flo &amp; Bianca</h1>
+      <h1 className="hero__nombres">
+        Flo <span className="hero__amp">&amp;</span> Bianca
+      </h1>
 
       <div className="hero__fechabar">
         <span>{t('hero.luna')}</span>
