@@ -1,22 +1,48 @@
-<<<<<<< HEAD
-# nunta_florentin_bianca
-=======
-# React + Vite
+# Flo & Bianca — Invitación de boda
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Invitación web bilingüe (rumano/castellano) para la boda de Flo & Bianca.
 
-Currently, two official plugins are available:
+- **Ceremonia:** 5 agosto 2027 · Biserica „Vovidenia", Brăila
+- **Recepción:** 8 agosto 2027, 17:00 · Restaurant Terasa Tic Tac, Mamaia
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Arquitectura
 
-## React Compiler
+React (Vite) → Vercel · Datos en Supabase (sin backend propio).
+El frontend habla directamente con Supabase vía `@supabase/supabase-js` usando la anon key pública; RLS limita a `anon` a insertar y leer RSVPs (nada de updates/deletes).
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Desarrollo local
 
-Note: This will impact Vite dev & build performances.
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Sin configurar Supabase la web funciona igualmente: el formulario RSVP y las estadísticas muestran un estado "activo en breve".
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
->>>>>>> 7d86783 (Inicio)
+## Configurar Supabase (una vez)
+
+1. Crea un proyecto gratuito en [supabase.com](https://supabase.com) (región `eu-central` recomendada).
+2. **SQL Editor → New query**: pega el contenido de [`supabase/setup.sql`](supabase/setup.sql) y ejecuta. Crea las tablas `invitados` y `rsvps`, las políticas RLS y habilita Realtime.
+3. **Project Settings → API**: copia la *Project URL* y la *anon public key*.
+4. Pégalas en `.env.local`:
+   ```
+   VITE_SUPABASE_URL=https://xxxx.supabase.co
+   VITE_SUPABASE_ANON_KEY=eyJ...
+   ```
+5. Reinicia `npm run dev` y prueba el formulario RSVP.
+
+## Desplegar en Vercel (una vez)
+
+1. En [vercel.com](https://vercel.com) → **Add New → Project** → importa el repo `kobitxe/nunta_florentin_bianca`. Vercel detecta Vite automáticamente (build `npm run build`, output `dist`).
+2. En **Environment Variables** añade `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` con los mismos valores de `.env.local`.
+3. Deploy. Cada `git push` a `main` redespliega automáticamente.
+
+## Contenido editable
+
+- **Fechas, lugares, hora de la ceremonia:** `src/config/wedding.js` (cuando se confirme la hora, cambia `fechaISO` y pon `horaConfirmada: true`).
+- **Textos rumano/castellano:** `src/i18n/ro.js` y `src/i18n/es.js` (incluido el programa del día).
+- **Fotos de la galería:** añade URLs al array `GALERIA_FOTOS` de `src/config/wedding.js`. Pueden ser URLs públicas de Supabase Storage (bucket público `galeria`) o externas.
+
+## Ver las respuestas
+
+Supabase Dashboard → **Table Editor** → tablas `invitados` y `rsvps`. Las estadísticas públicas de la web se actualizan en vivo vía Realtime.
