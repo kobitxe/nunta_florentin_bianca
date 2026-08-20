@@ -533,10 +533,9 @@ button {
 
 /* Cuenta atrás: franja horizontal blanca dedicada, bajo el hero */
 .contador-seccion {
+  position: relative;
   background: #fff;
-  border-top: 1px solid var(--linea);
-  border-bottom: 1px solid var(--linea);
-  padding: 1.7rem 1.5rem;
+  padding: 4rem 1.5rem 2.6rem;
 }
 
 .contador {

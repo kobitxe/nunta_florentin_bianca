@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
 import { CEREMONIA } from '../config/wedding.js'
+import { Rasgado } from './Decor.jsx'
 
 function restante() {
   const diff = new Date(CEREMONIA.fechaISO) - Date.now()
@@ -27,6 +28,7 @@ export default function Contador() {
 
   return (
     <section className="contador-seccion" aria-label={t('hero.countdown.titlu')}>
+      <Rasgado className="seccion__corte seccion__corte--papel" />
       <div className="contador">
         <p className="eyebrow">{t('hero.countdown.titlu')}</p>
         <div className="countdown__cifras">
