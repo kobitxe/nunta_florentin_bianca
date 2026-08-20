@@ -37,6 +37,17 @@ Sin configurar Supabase la web funciona igualmente: el formulario RSVP y las est
 2. En **Environment Variables** añade `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` con los mismos valores de `.env.local`.
 3. Deploy. Cada `git push` a `main` redespliega automáticamente.
 
+## Invitaciones personalizadas y panel de administración
+
+- Cada invitación es un enlace personal: `https://tu-dominio/i/{token}` (individual o pareja). El invitado ve su nombre y solo confirma sí/no + restricciones + mensaje; no hay formulario abierto.
+- El panel está en `/admin` (login con Supabase Auth). Desde ahí se crean los enlaces, se copian o comparten por WhatsApp (plantilla en rumano o castellano), se ve el listado completo con cada respuesta y las estadísticas (sí / no / pendientes / personas confirmadas) en tiempo real. También se pueden borrar invitaciones.
+
+Configuración (una vez, tras `setup.sql`):
+
+1. **SQL Editor**: ejecuta [`supabase/migration-002-invitaciones.sql`](supabase/migration-002-invitaciones.sql). Añade token/tipo a `invitados` y ajusta RLS (solo el admin crea invitados; el invitado solo guarda su respuesta).
+2. **Authentication → Users → Add user**: crea el usuario admin (el email debe coincidir con el de la política SQL; por defecto `daniel.milenteev@gmail.com`) con contraseña y "Auto Confirm".
+3. **Authentication → Sign In / Providers**: desactiva "Allow new users to sign up".
+
 ## Contenido editable
 
 - **Fechas, lugares, hora de la ceremonia:** `src/config/wedding.js` (cuando se confirme la hora, cambia `fechaISO` y pon `horaConfirmada: true`).

@@ -6,10 +6,17 @@ import Detalles from './components/Detalles.jsx'
 import Timeline from './components/Timeline.jsx'
 import Galeria from './components/Galeria.jsx'
 import Rsvp from './components/Rsvp.jsx'
-import Stats from './components/Stats.jsx'
 import Footer from './components/Footer.jsx'
+import Admin from './pages/Admin.jsx'
 
 export default function App() {
+  const ruta = window.location.pathname
+
+  if (ruta === '/admin') return <Admin />
+
+  // Invitación personalizada: /i/{token}
+  const token = ruta.startsWith('/i/') ? decodeURIComponent(ruta.slice(3).replace(/\/$/, '')) : null
+
   return (
     <I18nProvider>
       <Carta />
@@ -19,8 +26,7 @@ export default function App() {
         <Detalles />
         <Timeline />
         <Galeria />
-        <Rsvp />
-        <Stats />
+        <Rsvp token={token} />
       </main>
       <Footer />
     </I18nProvider>

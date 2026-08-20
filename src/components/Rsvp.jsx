@@ -1,52 +1,153 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
-import { supabase, enviarRsvp } from '../lib/supabase.js'
+import { supabase, buscarInvitadoPorToken, obtenerRsvp, guardarRsvp } from '../lib/supabase.js'
 import Reveal from './Reveal.jsx'
 
-const FORM_INICIAL = {
-  nombre: '',
-  email: '',
-  telefono: '',
-  asiste: true,
-  numAcompanantes: 0,
-  restricciones: '',
-  mensaje: '',
-}
-
-export default function Rsvp() {
+// La invitación es personal: el invitado llega con /i/{token} y su nombre
+// viene de la URL, así que el formulario no pide datos personales.
+export default function Rsvp({ token }) {
   const { t } = useI18n()
-  const [form, setForm] = useState(FORM_INICIAL)
+  const [invitado, setInvitado] = useState(null)
+  const [cargando, setCargando] = useState(Boolean(token && supabase))
+  const [yaRespondio, setYaRespondio] = useState(false)
+  const [asiste, setAsiste] = useState(null)
+  const [restricciones, setRestricciones] = useState('')
+  const [mensaje, setMensaje] = useState('')
   const [estado, setEstado] = useState('idle') // idle | enviando | ok | error
-  const [aviso, setAviso] = useState(null)
 
-  const setCampo = (campo) => (e) => setForm({ ...form, [campo]: e.target.value })
+  useEffect(() => {
+    if (!token || !supabase) return
+    let activo = true
+    ;(async () => {
+      try {
+        const inv = await buscarInvitadoPorToken(token)
+        if (!activo) return
+        setInvitado(inv)
+        if (inv) {
+          const previo = await obtenerRsvp(inv.id)
+          if (!activo) return
+          if (previo) {
+            setYaRespondio(true)
+            setAsiste(previo.asiste)
+            setRestricciones(previo.restricciones || '')
+            setMensaje(previo.mensaje || '')
+          }
+        }
+      } finally {
+        if (activo) setCargando(false)
+      }
+    })()
+    return () => {
+      activo = false
+    }
+  }, [token])
+
+  const esPareja = invitado?.tipo === 'pareja'
+  const nombres = esPareja ? `${invitado.nombre} & ${invitado.nombre_pareja}` : invitado?.nombre
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    if (!form.nombre.trim()) {
-      setEstado('error')
-      setAviso(t('rsvp.faltaNombre'))
-      return
-    }
+    if (asiste === null) return
     setEstado('enviando')
-    setAviso(null)
     try {
-      await enviarRsvp({
-        nombre: form.nombre.trim(),
-        email: form.email.trim(),
-        telefono: form.telefono.trim(),
-        asiste: form.asiste,
-        numAcompanantes: form.asiste ? Number(form.numAcompanantes) : 0,
-        restricciones: form.restricciones.trim(),
-        mensaje: form.mensaje.trim(),
+      await guardarRsvp({
+        invitadoId: invitado.id,
+        esPareja,
+        asiste,
+        restricciones: restricciones.trim(),
+        mensaje: mensaje.trim(),
       })
       setEstado('ok')
-      setAviso(form.asiste ? t('rsvp.gracias') : t('rsvp.graciasNo'))
-      setForm(FORM_INICIAL)
+      setYaRespondio(true)
     } catch {
       setEstado('error')
-      setAviso(t('rsvp.error'))
     }
+  }
+
+  let contenido
+  if (!supabase) {
+    contenido = <p className="aviso aviso--info">{t('rsvp.sinConfig')}</p>
+  } else if (!token) {
+    contenido = <p className="aviso aviso--info">{t('rsvp.sinToken')}</p>
+  } else if (cargando) {
+    contenido = <p className="aviso aviso--info">{t('rsvp.cargando')}</p>
+  } else if (!invitado) {
+    contenido = <p className="aviso aviso--info">{t('rsvp.noEncontrado')}</p>
+  } else {
+    contenido = (
+      <Reveal>
+        <h3 className="rsvp__saludo">
+          <span className="rsvp__nombres">{nombres}</span>
+          {esPareja ? t('rsvp.saludoPareja') : t('rsvp.saludoIndividual')}
+        </h3>
+
+        {yaRespondio && estado !== 'ok' && <p className="aviso aviso--info">{t('rsvp.yaRespondido')}</p>}
+
+        <form onSubmit={onSubmit}>
+          <div className="campo">
+            <label>{esPareja ? t('rsvp.preguntaPareja') : t('rsvp.preguntaIndividual')}</label>
+            <div className="asiste" role="group">
+              <button
+                type="button"
+                className={`asiste__opcion${asiste === true ? ' activo' : ''}`}
+                aria-pressed={asiste === true}
+                onClick={() => setAsiste(true)}
+              >
+                {esPareja ? t('rsvp.daPareja') : t('rsvp.da')}
+              </button>
+              <button
+                type="button"
+                className={`asiste__opcion${asiste === false ? ' activo' : ''}`}
+                aria-pressed={asiste === false}
+                onClick={() => setAsiste(false)}
+              >
+                {esPareja ? t('rsvp.nuPareja') : t('rsvp.nu')}
+              </button>
+            </div>
+          </div>
+
+          {asiste === true && (
+            <div className="campo">
+              <label htmlFor="rsvp-restricciones">{t('rsvp.restricciones')}</label>
+              <input
+                id="rsvp-restricciones"
+                type="text"
+                placeholder={t('rsvp.restriccionesPlaceholder')}
+                value={restricciones}
+                onChange={(e) => setRestricciones(e.target.value)}
+              />
+            </div>
+          )}
+
+          {asiste !== null && (
+            <div className="campo">
+              <label htmlFor="rsvp-mensaje">{t('rsvp.mensaje')}</label>
+              <textarea
+                id="rsvp-mensaje"
+                placeholder={t('rsvp.mensajePlaceholder')}
+                value={mensaje}
+                onChange={(e) => setMensaje(e.target.value)}
+              />
+            </div>
+          )}
+
+          <button className="rsvp__enviar" type="submit" disabled={asiste === null || estado === 'enviando'}>
+            {estado === 'enviando' ? t('rsvp.enviando') : t('rsvp.enviar')}
+          </button>
+
+          {estado === 'ok' && (
+            <p className="aviso aviso--ok" role="status">
+              {asiste ? t('rsvp.gracias') : t('rsvp.graciasNo')}
+            </p>
+          )}
+          {estado === 'error' && (
+            <p className="aviso aviso--error" role="status">
+              {t('rsvp.error')}
+            </p>
+          )}
+        </form>
+      </Reveal>
+    )
   }
 
   return (
@@ -57,104 +158,7 @@ export default function Rsvp() {
           <h2 className="titulo">{t('rsvp.titlu')}</h2>
           <p className="rsvp__intro">{t('rsvp.intro')}</p>
         </Reveal>
-
-        {!supabase ? (
-          <p className="aviso aviso--info">{t('rsvp.sinConfig')}</p>
-        ) : (
-          <Reveal>
-            <form onSubmit={onSubmit} noValidate>
-              <div className="campo">
-                <label htmlFor="rsvp-nombre">{t('rsvp.nume')}</label>
-                <input
-                  id="rsvp-nombre"
-                  type="text"
-                  required
-                  placeholder={t('rsvp.numePlaceholder')}
-                  value={form.nombre}
-                  onChange={setCampo('nombre')}
-                />
-              </div>
-
-              <div className="campo">
-                <label htmlFor="rsvp-email">{t('rsvp.email')}</label>
-                <input id="rsvp-email" type="email" value={form.email} onChange={setCampo('email')} />
-              </div>
-
-              <div className="campo">
-                <label htmlFor="rsvp-telefono">{t('rsvp.telefon')}</label>
-                <input id="rsvp-telefono" type="tel" value={form.telefono} onChange={setCampo('telefono')} />
-              </div>
-
-              <div className="campo">
-                <label>{t('rsvp.asistencia')}</label>
-                <div className="asiste" role="group" aria-label={t('rsvp.asistencia')}>
-                  <button
-                    type="button"
-                    className={`asiste__opcion${form.asiste ? ' activo' : ''}`}
-                    aria-pressed={form.asiste}
-                    onClick={() => setForm({ ...form, asiste: true })}
-                  >
-                    {t('rsvp.da')}
-                  </button>
-                  <button
-                    type="button"
-                    className={`asiste__opcion${!form.asiste ? ' activo' : ''}`}
-                    aria-pressed={!form.asiste}
-                    onClick={() => setForm({ ...form, asiste: false })}
-                  >
-                    {t('rsvp.nu')}
-                  </button>
-                </div>
-              </div>
-
-              {form.asiste && (
-                <>
-                  <div className="campo">
-                    <label htmlFor="rsvp-acomp">{t('rsvp.acompanantes')}</label>
-                    <select id="rsvp-acomp" value={form.numAcompanantes} onChange={setCampo('numAcompanantes')}>
-                      {[0, 1, 2, 3, 4, 5].map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="campo">
-                    <label htmlFor="rsvp-restricciones">{t('rsvp.restricciones')}</label>
-                    <input
-                      id="rsvp-restricciones"
-                      type="text"
-                      placeholder={t('rsvp.restriccionesPlaceholder')}
-                      value={form.restricciones}
-                      onChange={setCampo('restricciones')}
-                    />
-                  </div>
-                </>
-              )}
-
-              <div className="campo">
-                <label htmlFor="rsvp-mensaje">{t('rsvp.mensaje')}</label>
-                <textarea
-                  id="rsvp-mensaje"
-                  placeholder={t('rsvp.mensajePlaceholder')}
-                  value={form.mensaje}
-                  onChange={setCampo('mensaje')}
-                />
-              </div>
-
-              <button className="rsvp__enviar" type="submit" disabled={estado === 'enviando'}>
-                {estado === 'enviando' ? t('rsvp.enviando') : t('rsvp.enviar')}
-              </button>
-
-              {aviso && (
-                <p className={`aviso ${estado === 'ok' ? 'aviso--ok' : 'aviso--error'}`} role="status">
-                  {aviso}
-                </p>
-              )}
-            </form>
-          </Reveal>
-        )}
+        {contenido}
       </div>
     </section>
   )
