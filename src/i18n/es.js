@@ -33,16 +33,19 @@ export default {
     titlu: 'Detalles del evento',
     ceremonie: {
       eticheta: 'Ceremonia religiosa',
+      fechaGrande: '5 de agosto',
       data: 'jueves, 5 de agosto de 2027',
       ora: '11:00 h',
       oraNota: 'la hora exacta se confirmará pronto',
     },
     receptie: {
       eticheta: 'La celebración',
+      fechaGrande: '8 de agosto',
       data: 'domingo, 8 de agosto de 2027',
       ora: '17:00 h',
     },
     ventMapa: 'Abrir en Google Maps',
+    fotosPronto: 'Fotos del lugar, muy pronto',
   },
   program: {
     eyebrow: 'Programa de los días',

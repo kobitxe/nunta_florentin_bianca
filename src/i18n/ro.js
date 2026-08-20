@@ -33,16 +33,19 @@ export default {
     titlu: 'Detaliile evenimentului',
     ceremonie: {
       eticheta: 'Cununia religioasă',
+      fechaGrande: '5 august',
       data: 'joi, 5 august 2027',
       ora: 'ora 11:00',
       oraNota: 'ora exactă va fi confirmată în curând',
     },
     receptie: {
       eticheta: 'Petrecerea',
+      fechaGrande: '8 august',
       data: 'duminică, 8 august 2027',
       ora: 'ora 17:00',
     },
     ventMapa: 'Deschide în Google Maps',
+    fotosPronto: 'Fotografii ale locației, în curând',
   },
   program: {
     eyebrow: 'Programul zilelor',

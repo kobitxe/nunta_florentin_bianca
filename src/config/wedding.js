@@ -23,3 +23,8 @@ export const RECEPCION = {
 // Fotos de la galería: Bianca pasará las definitivas.
 // Admite URLs externas o públicas de Supabase Storage.
 export const GALERIA_FOTOS = []
+
+// Fotos de los sitios para los carruseles de la sección Detalles
+// (iglesia de Brăila y restaurante de Mamaia). URLs o rutas de /public.
+export const FOTOS_CEREMONIA = []
+export const FOTOS_RECEPCION = []

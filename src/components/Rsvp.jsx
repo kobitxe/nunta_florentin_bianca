@@ -3,7 +3,6 @@ import { useI18n } from '../i18n/context.js'
 import { supabase, obtenerRsvp, guardarRsvp } from '../lib/supabase.js'
 import { nombresDe } from '../lib/nombres.js'
 import Reveal from './Reveal.jsx'
-import { Rasgado } from './Decor.jsx'
 
 // La invitación es personal: el invitado llega con /i/{token} y su nombre
 // viene de la URL, así que el formulario no pide datos personales.
@@ -142,7 +141,6 @@ export default function Rsvp({ token, invitado, cargando }) {
 
   return (
     <section className="seccion" id="rsvp">
-      <Rasgado className="seccion__corte seccion__corte--marfil" />
       <div className="seccion__inner rsvp">
         <Reveal>
           <p className="eyebrow">{t('rsvp.eyebrow')}</p>

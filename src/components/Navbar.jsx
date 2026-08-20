@@ -11,13 +11,15 @@ export default function Navbar() {
 
       <nav className="navbar__links">
         <a href="#detalii">{t('nav.detalii')}</a>
-        <a href="#program">{t('nav.program')}</a>
-        <a href="#galerie">{t('nav.galerie')}</a>
+        {/* <a href="#program">{t('nav.program')}</a> */}
+        {/* <a href="#galerie">{t('nav.galerie')}</a> */}
         <a href="#rsvp">{t('nav.rsvp')}</a>
       </nav>
 
       <div className="idiomas" role="group" aria-label="Limba / Idioma">
         {['ro', 'es'].map((cod) => (
+
+          
           <button
             key={cod}
             type="button"
