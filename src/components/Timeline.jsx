@@ -24,7 +24,7 @@ export default function Timeline() {
     <section className="seccion" id="program">
       <div className="seccion__inner">
         <Reveal>
-          <p className="eyebrow">{t('program.eyebrow')}</p>
+  
           <h2 className="titulo">{t('program.titlu')}</h2>
         </Reveal>
         <Reveal>

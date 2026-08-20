@@ -144,7 +144,6 @@ export default function Rsvp({ token, invitado, cargando }) {
     <section className="seccion" id="rsvp">
       <div className="seccion__inner rsvp">
         <Reveal>
-          <p className="eyebrow">{t('rsvp.eyebrow')}</p>
           <h2 className="titulo">{t('rsvp.titlu')}</h2>
           <p className="rsvp__intro">{t('rsvp.intro')}</p>
         </Reveal>

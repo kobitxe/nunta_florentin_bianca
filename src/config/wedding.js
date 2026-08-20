@@ -26,5 +26,5 @@ export const GALERIA_FOTOS = []
 
 // Fotos de los sitios para los carruseles de la sección Detalles
 // (iglesia de Brăila y restaurante de Mamaia). URLs o rutas de /public.
-export const FOTOS_CEREMONIA = []
-export const FOTOS_RECEPCION = []
+export const FOTOS_CEREMONIA = ['/iglesia-1.jpg', '/iglesia-2.jpg', '/iglesia-3.jpg', '/iglesia-4.jpg']
+export const FOTOS_RECEPCION = ['/tictac-1.jpg', '/tictac-2.jpg', '/tictac-3.jpg', '/tictac-4.jpg']
