@@ -736,26 +736,73 @@ button {
   }
 }
 
-/* Carrusel de fotos del sitio (scroll horizontal con snap) */
-.carrusel {
+/* Carrusel de fotos del sitio: scroll horizontal infinito */
+.carrusel-wrap {
+  position: relative;
   margin-top: 1.6rem;
+}
+
+/* degradados laterales: indican que hay más fotos */
+.carrusel-wrap::before,
+.carrusel-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2.2rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.carrusel-wrap::before {
+  left: 0;
+  background: linear-gradient(90deg, #fff, transparent);
+}
+
+.carrusel-wrap::after {
+  right: 0;
+  background: linear-gradient(270deg, #fff, transparent);
+}
+
+.carrusel {
   display: flex;
   gap: 0.7rem;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 0.3rem;
+  scrollbar-width: none;
+}
+
+.carrusel::-webkit-scrollbar {
+  display: none;
 }
 
 .carrusel img {
+  width: 14rem;
   height: 11rem;
+  object-fit: cover;
   border-radius: var(--radio);
   border: 1px solid var(--linea);
-  scroll-snap-align: center;
   flex: 0 0 auto;
 }
 
+.carrusel__hint {
+  margin-top: 0.6rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--taupe);
+}
+
+@media (min-width: 48rem) {
+  .carrusel__hint {
+    display: none;
+  }
+}
+
 .carrusel--vacio {
+  margin-top: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;

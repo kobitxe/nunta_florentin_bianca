@@ -2,21 +2,7 @@ import { useI18n } from '../i18n/context.js'
 import { CEREMONIA, RECEPCION, FOTOS_CEREMONIA, FOTOS_RECEPCION } from '../config/wedding.js'
 import Reveal from './Reveal.jsx'
 import { Rasgado } from './Decor.jsx'
-
-// Carrusel de fotos del sitio; sin fotos muestra el hueco reservado.
-function Carrusel({ fotos, nombre }) {
-  const { t } = useI18n()
-  if (fotos.length === 0) {
-    return <div className="carrusel carrusel--vacio">{t('detalii.fotosPronto')}</div>
-  }
-  return (
-    <div className="carrusel">
-      {fotos.map((url, i) => (
-        <img key={url} src={url} alt={`${nombre} ${i + 1}`} loading="lazy" />
-      ))}
-    </div>
-  )
-}
+import Carrusel from './Carrusel.jsx'
 
 // Banda horizontal de un día: fecha grande, datos, mapa y carrusel.
 function Dia({ etiqueta, fechaGrande, lugar, direccion, fecha, hora, nota, mapsEmbed, mapsLink, fotos }) {

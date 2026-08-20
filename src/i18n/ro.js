@@ -46,6 +46,7 @@ export default {
     },
     ventMapa: 'Deschide în Google Maps',
     fotosPronto: 'Fotografii ale locației, în curând',
+    desliza: 'glisează',
   },
   program: {
     eyebrow: 'Programul zilelor',
