@@ -16,12 +16,12 @@ function mensajeCompartir(inv, lang) {
   const url = urlDe(inv.token, lang)
   if (lang === 'ro') {
     return inv.tipo === 'pareja'
-      ? `Dragi ${nombres}, vă invităm cu drag la nunta noastră (Flo & Bianca), 5 & 8 august 2027. Deschideți invitația voastră aici: ${url}`
-      : `Dragă ${nombres}, te invităm cu drag la nunta noastră (Flo & Bianca), 5 & 8 august 2027. Deschide invitația ta aici: ${url}`
+      ? `Dragi ${nombres}, vă invităm cu drag la nunta noastră (Bianca & Florentin), 8 august 2027. Deschideți invitația voastră aici: ${url}`
+      : `Dragă ${nombres}, te invităm cu drag la nunta noastră (Bianca & Florentin), 8 august 2027. Deschide invitația ta aici: ${url}`
   }
   return inv.tipo === 'pareja'
-    ? `Hola ${nombres}, nos encantaría que nos acompañarais en nuestra boda (Flo & Bianca), 5 y 8 de agosto de 2027. Abrid vuestra invitación aquí: ${url}`
-    : `Hola ${nombres}, nos encantaría que nos acompañaras en nuestra boda (Flo & Bianca), 5 y 8 de agosto de 2027. Abre tu invitación aquí: ${url}`
+    ? `Hola ${nombres}, nos encantaría que nos acompañarais en nuestra boda (Bianca & Florentin), 8 de agosto de 2027. Abrid vuestra invitación aquí: ${url}`
+    : `Hola ${nombres}, nos encantaría que nos acompañaras en nuestra boda (Bianca & Florentin), 8 de agosto de 2027. Abre tu invitación aquí: ${url}`
 }
 
 const linkWhatsApp = (inv, lang) => `https://wa.me/?text=${encodeURIComponent(mensajeCompartir(inv, lang))}`

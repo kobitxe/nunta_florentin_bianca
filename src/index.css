@@ -108,6 +108,10 @@ button {
   color: #fff;
 }
 
+.seccion__corte--oscuro {
+  color: var(--tinta);
+}
+
 .eyebrow {
   font-family: var(--sans);
   font-size: 0.82rem;
@@ -124,280 +128,263 @@ button {
   margin-bottom: 2.5rem;
 }
 
-/* Aparición al hacer scroll */
+/* Aparición al hacer scroll: GSAP + ScrollTrigger animan opacidad y
+   desplazamiento; este opacity:0 es solo el estado antes de hidratar. */
 .reveal {
   opacity: 0;
-  transform: translateY(1.5rem);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
+}
+
+/* ── Selector de idioma flotante ────────────────────────── */
+.idiomas {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  right: 1rem;
+  z-index: 10;
+  display: flex;
+  gap: 0.45rem;
+  padding: 0.4rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--marfil) 72%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--linea);
+  box-shadow: 0 0.4rem 1.2rem rgba(51, 48, 42, 0.14);
+}
+
+/* Banderas circulares: la activa a color, la otra apagada */
+.idiomas__btn {
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  overflow: hidden;
+  filter: grayscale(0.35) brightness(0.68) saturate(0.75);
+  transition: filter 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.idiomas__btn svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.idiomas__btn:hover {
+  filter: grayscale(0.15) brightness(0.92);
+}
+
+.idiomas__btn.activo {
+  filter: none;
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 2px var(--marfil),
+    0 0 0 3.5px var(--salvia);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idiomas__btn {
     transition: none;
   }
 }
 
-/* ── Navbar ─────────────────────────────────────────────── */
-.navbar {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 1.5rem;
-  background: color-mix(in srgb, var(--papel) 90%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--linea);
-}
-
-.navbar__logo {
-  font-family: var(--script);
-  font-size: 1.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--tinta);
-}
-
-.navbar__logo em {
-  color: var(--salvia);
-  font-style: normal;
-}
-
-.navbar__links {
-  display: none;
-  gap: 1.8rem;
-}
-
-.navbar__links a {
-  font-size: 0.88rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--tinta);
-}
-
-.navbar__links a:hover {
-  color: var(--salvia);
-}
-
-.idiomas {
-  display: flex;
-  gap: 0.25rem;
-  border: 1px solid var(--linea);
-  border-radius: 999px;
-  padding: 0.2rem;
-}
-
-.idiomas__btn {
-  border: none;
-  background: none;
-  border-radius: 999px;
-  padding: 0.25rem 0.7rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--taupe);
-}
-
-.idiomas__btn.activo {
-  background: var(--salvia);
-  color: var(--marfil);
-}
-
-@media (min-width: 48rem) {
-  .navbar__links {
-    display: flex;
-  }
-}
-
 /* ── Carta de entrada ───────────────────────────────────── */
+/* La pantalla entera es el reverso de un sobre: cuatro pliegues
+   que se encuentran en el centro, sello de lacre en el cruce. */
 .carta {
   position: fixed;
   inset: 0;
   z-index: 50;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.4rem;
-  background:
-    radial-gradient(ellipse 75% 55% at 50% 30%, rgba(170, 183, 146, 0.16), transparent),
-    var(--tinta);
-  transition: opacity 0.7s ease 1s, visibility 0s linear 1.8s;
 }
 
 .carta--abierta {
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
 }
 
 .sobre {
-  position: relative;
-  width: min(20rem, 82vw);
-  aspect-ratio: 8 / 5;
-  border: none;
-  background: none;
-  padding: 0;
-  perspective: 60rem;
-  animation: sobre-flotar 3.5s ease-in-out infinite;
-}
-
-.carta--abierta .sobre {
-  animation: none;
-}
-
-@keyframes sobre-flotar {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-0.4rem);
-  }
-}
-
-/* Carta interior: asoma al abrirse */
-.sobre__papel {
   position: absolute;
-  inset: 7% 6%;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: var(--papel);
+  overflow: hidden;
+  perspective: 90rem;
+}
+
+.sobre:focus-visible {
+  outline-offset: -4px;
+}
+
+/* Interior del sobre: queda a la vista cuando la solapa gira */
+.sobre__interior {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 52%;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 0.9rem;
-  gap: 0.1rem;
-  background: var(--marfil);
-  border: 1px solid var(--linea);
-  border-radius: var(--radio);
-  transform: translateY(6%);
-  transition: transform 0.65s cubic-bezier(0.22, 0.9, 0.3, 1) 0.45s;
+  justify-content: center;
+  gap: 0.5rem;
+  background:
+    linear-gradient(to bottom, rgba(117, 133, 95, 0.07), transparent 60%),
+    var(--marfil);
 }
 
-.carta--abierta .sobre__papel {
-  transform: translateY(-58%);
-}
-
-.sobre__papel-nombres {
+.sobre__interior-nombres {
   font-family: var(--script);
-  font-size: 1.7rem;
+  font-size: clamp(2.4rem, 9vw, 3.6rem);
   color: var(--tinta);
 }
 
-.sobre__papel-fecha {
+.sobre__interior-fecha {
   font-family: var(--sans);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--salvia);
 }
 
-/* Bolsillo frontal del sobre: todo menos el hueco superior */
-.sobre__pocket {
+/* Alas laterales e inferior: triángulos tono sobre tono cuyas
+   aristas dibujan los pliegues diagonales del sobre */
+.sobre__ala {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(170deg, var(--marfil), var(--papel));
-  clip-path: polygon(0 0, 50% 48%, 100% 0, 100% 100%, 0 100%);
-  border-radius: var(--radio);
-  box-shadow: 0 1.2rem 2.5rem rgba(0, 0, 0, 0.35);
 }
 
-/* Destinatario escrito en el frontal del sobre, centrado en la zona
-   libre bajo el sello */
-.sobre__destinatario {
-  position: absolute;
-  top: 62%;
-  bottom: 0;
-  left: 8%;
-  right: 8%;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1rem, 4.2vw, 1.2rem);
-  letter-spacing: 0.04em;
-  color: var(--tinta);
+.sobre__ala--izq {
+  background: linear-gradient(105deg, #ede8da, #e6e0cf);
+  clip-path: polygon(0 0, 50% 52%, 0 100%);
 }
 
-/* Solapa: se abre girando hacia arriba */
+.sobre__ala--der {
+  background: linear-gradient(255deg, #ede8da, #e6e0cf);
+  clip-path: polygon(100% 0, 100% 100%, 50% 52%);
+}
+
+.sobre__ala--inf {
+  background: linear-gradient(to top, var(--papel), #ece6d6);
+  clip-path: polygon(0 100%, 50% 52%, 100% 100%);
+  filter: drop-shadow(0 -2px 3px rgba(51, 48, 42, 0.09));
+}
+
+/* Solapa superior: al abrir gira hacia arriba sobre su borde */
 .sobre__solapa {
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 52%;
+  inset: 0;
   z-index: 3;
-  background: linear-gradient(190deg, var(--papel), var(--salvia-clara));
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  border-radius: var(--radio) var(--radio) 0 0;
+  background: linear-gradient(to bottom, var(--marfil) 8%, #ece7d8 92%);
+  clip-path: polygon(0 0, 100% 0, 50% 52%);
+  filter: drop-shadow(0 3px 4px rgba(51, 48, 42, 0.13));
   transform-origin: top center;
   backface-visibility: hidden;
-  transition: transform 0.55s ease-in;
 }
 
-.carta--abierta .sobre__solapa {
-  transform: rotateX(180deg);
+/* Destinatario a mano, bajo el sello */
+.sobre__destinatario {
+  position: absolute;
+  top: 58%;
+  left: 8%;
+  right: 8%;
+  z-index: 3;
+  font-family: var(--script);
+  font-size: clamp(1.5rem, 6.5vw, 2.2rem);
+  line-height: 1.3;
+  color: var(--tinta);
+  text-align: center;
+  transform: rotate(-2.5deg);
 }
 
-/* Sello de lacre */
+/* Sello de lacre en el cruce de los pliegues */
 .sobre__sello {
   position: absolute;
   left: 50%;
   top: 52%;
   z-index: 4;
   transform: translate(-50%, -50%);
-  width: 3.4rem;
-  height: 3.4rem;
+  width: 4.6rem;
+  height: 4.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--salvia-clara), var(--salvia) 65%);
-  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.3);
+  background: radial-gradient(circle at 42% 34%, #8b9a76, var(--salvia) 60%, var(--salvia-oscura) 98%);
+  box-shadow:
+    0 0.25rem 0.7rem rgba(51, 48, 42, 0.22),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(51, 48, 42, 0.18);
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   color: var(--marfil);
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.carta--abierta .sobre__sello {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.7);
+/* Anillo interior grabado del sello */
+.sobre__sello::before {
+  content: '';
+  position: absolute;
+  inset: 0.35rem;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 249, 242, 0.45);
 }
 
 .carta__hint {
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--salvia-clara);
-  animation: hint-pulso 2.4s ease-in-out infinite;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: max(2.2rem, env(safe-area-inset-bottom));
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-.carta--abierta .carta__hint {
-  visibility: hidden;
+.carta__hint-dedo {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--taupe);
+  animation: dedo-toca 1.6s ease-in-out infinite;
+}
+
+@keyframes dedo-toca {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(0.5rem) scale(0.88);
+  }
+  50% {
+    transform: translateY(0.5rem) scale(0.88);
+  }
+  70% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.carta__hint-texto {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--taupe);
+  animation: hint-pulso 2.4s ease-in-out infinite;
 }
 
 @keyframes hint-pulso {
   0%,
   100% {
-    opacity: 0.55;
+    opacity: 0.45;
   }
   50% {
     opacity: 1;
@@ -405,15 +392,9 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sobre,
-  .carta__hint {
+  .carta__hint-dedo,
+  .carta__hint-texto {
     animation: none;
-  }
-  .carta,
-  .sobre__papel,
-  .sobre__solapa,
-  .sobre__sello {
-    transition: none;
   }
 }
 
@@ -427,27 +408,53 @@ button {
   justify-content: center;
   text-align: center;
   /* en móvil, aire extra arriba y abajo para las esquinas de rosas */
-  padding: 8.5rem 1.5rem 9rem;
+  padding: 6.5rem 1.5rem 9rem;
   overflow: hidden;
 }
 
 @media (min-width: 48rem) {
   .hero {
-    padding: 6.5rem 1.5rem 5rem;
+    padding: 5rem 1.5rem 5rem;
   }
+}
+
+/* Foto a sangre completa de fondo, con velo oscuro para que el texto
+   en blanco se lea encima en cualquier zona de la imagen */
+.hero__foto {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+}
+
+.hero__velo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(24, 21, 17, 0.62) 0%,
+    rgba(24, 21, 17, 0.32) 32%,
+    rgba(24, 21, 17, 0.34) 64%,
+    rgba(24, 21, 17, 0.66) 100%
+  );
 }
 
 /* rosas.png está orientada a la esquina inferior izquierda; se voltea
    con transform según la esquina donde se coloque */
 .hero__rosas {
   position: absolute;
+  z-index: 1;
   width: clamp(8.5rem, 26vw, 13rem);
   pointer-events: none;
-  opacity: 0.95;
+  opacity: 0.9;
 }
 
 .hero__rosas--tl {
-  top: 4rem;
+  top: 0;
   left: 0;
   transform: scaleY(-1);
 }
@@ -458,10 +465,18 @@ button {
   transform: scaleX(-1);
 }
 
+.hero__contenido {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .hero__saludo {
   font-family: var(--script);
   font-size: clamp(1.6rem, 6vw, 2.2rem);
-  color: var(--salvia);
+  color: var(--salvia-clara);
   margin-bottom: 0.8rem;
 }
 
@@ -470,27 +485,8 @@ button {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--taupe);
+  color: rgba(251, 249, 242, 0.85);
   margin-bottom: 1.6rem;
-}
-
-/* Foto en arco, como una invitación impresa */
-.hero__arco {
-  width: min(17rem, 68vw);
-  aspect-ratio: 3 / 4;
-  padding: 0.55rem;
-  border: 1px solid var(--linea);
-  border-radius: 50% 50% var(--radio) var(--radio) / 34% 34% var(--radio) var(--radio);
-  background: var(--marfil);
-  box-shadow: 0 1rem 2.4rem rgba(51, 48, 42, 0.12);
-}
-
-.hero__arco img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 22%;
-  border-radius: 50% 50% var(--radio) var(--radio) / 34% 34% var(--radio) var(--radio);
 }
 
 .hero__nombres {
@@ -498,11 +494,12 @@ button {
   font-weight: 500;
   font-size: clamp(2.3rem, 9vw, 4.4rem);
   line-height: 1.1;
-  margin-top: 1.6rem;
+  color: var(--marfil);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.3);
 }
 
 .hero__amp {
-  color: var(--salvia);
+  color: var(--salvia-clara);
 }
 
 .hero__fechabar {
@@ -514,7 +511,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--taupe);
+  color: rgba(251, 249, 242, 0.85);
 }
 
 .hero__fechabar-dias {
@@ -522,10 +519,10 @@ button {
   font-size: 1.9rem;
   font-weight: 400;
   letter-spacing: 0.02em;
-  color: var(--tinta);
+  color: var(--marfil);
   padding: 0 1.1rem;
-  border-left: 1px solid var(--linea);
-  border-right: 1px solid var(--linea);
+  border-left: 1px solid rgba(251, 249, 242, 0.35);
+  border-right: 1px solid rgba(251, 249, 242, 0.35);
 }
 
 .hero__ciudades {
@@ -534,13 +531,96 @@ button {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--salvia-clara);
+}
+
+/* ── Cita de apertura ───────────────────────────────────── */
+.intro-cita__inner {
+  max-width: 40rem;
+  text-align: center;
+}
+
+.intro-cita__cita {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  line-height: 1.5;
+  color: var(--tinta);
+}
+
+.intro-cita__nombres {
+  font-family: var(--script);
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  margin-top: 1.2rem;
+  color: var(--tinta);
+}
+
+.intro-cita__amp {
   color: var(--salvia);
 }
 
-/* Cuenta atrás: franja horizontal blanca dedicada, bajo el hero */
+.intro-cita__parrafo {
+  margin-top: 1.4rem;
+  color: var(--taupe);
+  line-height: 1.8;
+}
+
+/* ── Familia y nași ─────────────────────────────────────── */
+.familia .seccion__inner {
+  max-width: 38rem;
+  text-align: center;
+}
+
+.familia__cita {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 3.6vw, 1.4rem);
+  line-height: 1.55;
+  color: var(--tinta);
+}
+
+.familia__parejas {
+  margin-top: 1.6rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.familia__pareja {
+  font-family: var(--script);
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  color: var(--salvia-oscura);
+}
+
+.familia__memoria {
+  font-size: 0.85em;
+  vertical-align: middle;
+}
+
+.familia__divisor {
+  width: 3rem;
+  height: 1px;
+  margin: 2.6rem auto 2rem;
+  background: var(--linea);
+}
+
+.familia__eticheta {
+  margin-top: 1.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--salvia);
+}
+
+.familia__eticheta + .familia__pareja {
+  margin-top: 0.5rem;
+}
+
+/* Cuenta atrás: franja oscura dedicada, para marcar el instante clave
+   con letras claras encima */
 .contador-seccion {
   position: relative;
-  background: #fff;
+  background: var(--tinta);
   padding: 4rem 1.5rem 2.6rem;
 }
 
@@ -556,6 +636,40 @@ button {
 
 .contador .eyebrow {
   margin-bottom: 0;
+  color: var(--salvia-clara);
+}
+
+.contador__banner {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(251, 249, 242, 0.72);
+}
+
+.contador__banner-fecha {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 4.5vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--marfil);
+  padding: 0 1.1rem;
+  border-left: 1px solid rgba(251, 249, 242, 0.3);
+  border-right: 1px solid rgba(251, 249, 242, 0.3);
+}
+
+.contador__teaser {
+  max-width: 30rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: var(--papel);
+  margin: 0.2rem 0 1rem;
 }
 
 .countdown__cifras {
@@ -573,7 +687,7 @@ button {
   font-size: clamp(1.7rem, 6vw, 2.4rem);
   font-weight: 400;
   font-variant-numeric: tabular-nums;
-  color: var(--tinta);
+  color: var(--marfil);
 }
 
 .countdown__label {
@@ -581,7 +695,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--taupe);
+  color: rgba(251, 249, 242, 0.65);
 }
 
 /* ── Banda de foto con papel rasgado ────────────────────── */
@@ -648,9 +762,28 @@ button {
   text-align: center;
 }
 
-.dia + .dia,
-.reveal + .reveal .dia {
-  margin-top: 2rem;
+/* Conector entre las dos tarjetas: marca que son eventos seguidos
+   del mismo día, no lugares alternativos */
+.dia-conector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.9rem 0;
+}
+
+.dia-conector__linea {
+  width: 1px;
+  height: 1.6rem;
+  background: var(--linea);
+}
+
+.dia-conector__punto {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  border: 1px solid var(--salvia);
+  background: var(--marfil);
 }
 
 .dia__grid {
@@ -733,6 +866,10 @@ button {
     grid-template-columns: 1.05fr 1fr;
     gap: 2.2rem;
     align-items: stretch;
+  }
+
+  .dia__grid--sin-mapa {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -935,6 +1072,18 @@ button {
 .rsvp__intro {
   margin-bottom: 2rem;
   color: var(--taupe);
+}
+
+.rsvp__contacto {
+  margin-top: 2.4rem;
+  text-align: center;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--taupe);
+}
+
+.rsvp__contacto a {
+  font-weight: 600;
 }
 
 .rsvp__saludo {

@@ -1,22 +1,42 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { LuPointer } from 'react-icons/lu'
 import { useI18n } from '../i18n/context.js'
 import { nombresDe } from '../lib/nombres.js'
 
-const DURACION_APERTURA = 1800
-
 // Sobre de entrada: cubre la pantalla hasta que el invitado lo abre
-// con un click o con el primer intento de scroll.
+// con un click o con el primer intento de scroll. La apertura es un
+// timeline de GSAP: sello → solapa → interior → desvanecido del overlay.
 export default function Carta({ invitado }) {
   const { t } = useI18n()
   const [fase, setFase] = useState('cerrada') // cerrada | abriendo | oculta
+  const cartaRef = useRef(null)
+  const solapaRef = useRef(null)
+  const selloRef = useRef(null)
+  const interiorRef = useRef(null)
+  const hintRef = useRef(null)
 
   const abrir = () => setFase((f) => (f === 'cerrada' ? 'abriendo' : f))
 
   useEffect(() => {
     if (fase !== 'abriendo') return
-    const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const timer = setTimeout(() => setFase('oculta'), reducido ? 0 : DURACION_APERTURA)
-    return () => clearTimeout(timer)
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setFase('oculta')
+      return
+    }
+
+    gsap.set(interiorRef.current, { opacity: 0.35 })
+
+    const tl = gsap.timeline({ onComplete: () => setFase('oculta') })
+    tl.to(hintRef.current, { opacity: 0, y: 8, duration: 0.25, ease: 'power2.in' }, 0)
+      .to(selloRef.current, { scale: 0.85, duration: 0.12, ease: 'power2.in' }, 0)
+      .to(selloRef.current, { scale: 0, opacity: 0, rotate: 20, duration: 0.35, ease: 'back.in(1.6)' }, 0.12)
+      .to(solapaRef.current, { rotationX: 180, duration: 0.85, ease: 'power3.inOut' }, 0.1)
+      .to(interiorRef.current, { opacity: 1, duration: 0.7, ease: 'power2.out' }, 0.25)
+      .to(cartaRef.current, { opacity: 0, scale: 1.04, duration: 0.65, ease: 'power2.out' }, 1.05)
+
+    return () => tl.kill()
   }, [fase])
 
   // Sin scroll de fondo mientras la carta siga en pantalla.
@@ -48,22 +68,27 @@ export default function Carta({ invitado }) {
   if (fase === 'oculta') return null
 
   return (
-    <div className={`carta${fase === 'abriendo' ? ' carta--abierta' : ''}`}>
+    <div ref={cartaRef} className={`carta${fase === 'abriendo' ? ' carta--abierta' : ''}`}>
       <button type="button" className="sobre" onClick={abrir} aria-label={t('carta.abrir')}>
-        <span className="sobre__papel">
-          <span className="sobre__papel-nombres">Flo &amp; Bianca</span>
-          <span className="sobre__papel-fecha">{t('hero.datele')}</span>
+        <span className="sobre__interior" ref={interiorRef}>
+          <span className="sobre__interior-nombres">Bianca &amp; Florentin</span>
+          <span className="sobre__interior-fecha">{t('hero.datele')}</span>
         </span>
-        <span className="sobre__pocket" />
-        {invitado && (
-          <span className="sobre__destinatario">
-            {t('carta.para')} {nombresDe(invitado)}
-          </span>
-        )}
-        <span className="sobre__solapa" />
-        <span className="sobre__sello">F&amp;B</span>
+        <span className="sobre__ala sobre__ala--izq" />
+        <span className="sobre__ala sobre__ala--der" />
+        <span className="sobre__ala sobre__ala--inf" />
+        <span className="sobre__solapa" ref={solapaRef} />
+        <span className="sobre__destinatario">
+          {invitado ? `${t('carta.para')} ${nombresDe(invitado)}` : 'Bianca & Florentin'}
+        </span>
+        <span className="sobre__sello" ref={selloRef}>
+          B&amp;F
+        </span>
+        <span className="carta__hint" ref={hintRef}>
+          <LuPointer className="carta__hint-dedo" aria-hidden="true" />
+          <span className="carta__hint-texto">{t('carta.ajutor')}</span>
+        </span>
       </button>
-      <p className="carta__hint">{t('carta.abrir')}</p>
     </div>
   )
 }

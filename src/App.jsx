@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { I18nProvider } from './i18n/index.jsx'
 import { buscarInvitadoPorToken } from './lib/supabase.js'
 import Carta from './components/Carta.jsx'
-import Navbar from './components/Navbar.jsx'
+import Idiomas from './components/Idiomas.jsx'
 import Hero from './components/Hero.jsx'
+import IntroCita from './components/IntroCita.jsx'
+import Familia from './components/Familia.jsx'
 import Contador from './components/Contador.jsx'
 import Detalles from './components/Detalles.jsx'
 import FotoBanda from './components/FotoBanda.jsx'
@@ -32,9 +34,11 @@ export default function App() {
   return (
     <I18nProvider>
       <Carta invitado={invitado} />
-      <Navbar />
+      <Idiomas />
       <main>
         <Hero invitado={invitado} />
+        <IntroCita />
+        <Familia />
         <Contador />
         <Detalles />
         <FotoBanda />

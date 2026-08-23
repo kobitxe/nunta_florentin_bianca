@@ -22,7 +22,7 @@ export default function Galeria() {
             {hayFotos
               ? GALERIA_FOTOS.map((url, i) => (
                   <figure className="galeria__item" key={url}>
-                    <img src={url} alt={`Flo & Bianca ${i + 1}`} loading="lazy" />
+                    <img src={url} alt={`Bianca & Florentin ${i + 1}`} loading="lazy" />
                   </figure>
                 ))
               : Array.from({ length: PLACEHOLDERS }, (_, i) => (

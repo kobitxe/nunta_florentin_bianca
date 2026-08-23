@@ -7,18 +7,19 @@ export default {
   },
   carta: {
     abrir: 'Deschide invitația',
+    ajutor: 'Apasă sigiliul pentru a deschide',
     para: 'Pentru',
   },
   banda: {
-    texto: 'Cununia religioasă · 5 august 2027 · Brăila',
+    texto: 'Cununia religioasă · 8 august 2027 · Biserica Neagră',
   },
   hero: {
     holaPre: 'Bună, ',
     luna: 'august',
     anunt: 'Ne căsătorim',
     si: '&',
-    datele: '5 & 8 august 2027',
-    orase: 'Brăila · Mamaia',
+    datele: '8 august 2027',
+    orase: 'Mamaia',
     countdown: {
       titlu: 'Până la cununie',
       zile: 'zile',
@@ -28,18 +29,37 @@ export default {
     },
     cta: 'Confirmă prezența',
   },
+  intro: {
+    cita: 'Cu inimile pline de bucurie și emoții, ne pregătim să spunem „DA”',
+    parrafo:
+      'Iubirea ne-a adus aici, iar promisiunea unei vieți împreună ne poartă spre cel mai frumos început. Azi începe cea mai frumoasă parte a poveștii noastre: viața pe care o vom trăi împreună, pentru totdeauna.',
+  },
+  familia: {
+    citaParinti: 'Cu iubirea și binecuvântarea părinților noștri, iubirea noastră își începe cel mai frumos capitol',
+    citaNasi: 'În noul capitol al poveștii noastre, ne vor fi alături sufletele dragi nouă, nașii noștri',
+    nasiEticheta: 'Nașii noștri',
+    memoria: 'în memoria lui',
+  },
+  contador: {
+    banner: {
+      dia: 'Duminică',
+      fecha: '8 august 2027',
+      hora: '17:00',
+    },
+    teaser: 'Încă puțin și „noi doi” vom deveni „soț și soție”. Până atunci, numărăm împreună fiecare clipă!',
+  },
   detalii: {
-    eyebrow: 'Două momente, două orașe',
-    titlu: 'Detaliile evenimentului',
+    eyebrow: 'O singură zi, pentru totdeauna',
+    titlu: 'Ziua nunții',
     ceremonie: {
-      eticheta: 'Cununia religioasă',
-      fechaGrande: '5 august',
-      data: 'joi, 5 august 2027',
-      ora: 'ora 11:00',
-      oraNota: 'ora exactă va fi confirmată în curând',
+      eticheta: 'Programul zilei',
+      fechaGrande: '8 august',
+      data: 'duminică, 8 august 2027',
+      ora: 'Cununia religioasă · ora 16:00',
+      direccionNota: 'Adresa exactă va fi confirmată în curând',
     },
     receptie: {
-      eticheta: 'Petrecerea',
+      eticheta: 'Locația',
       fechaGrande: '8 august',
       data: 'duminică, 8 august 2027',
       ora: 'ora 17:00',
@@ -49,7 +69,7 @@ export default {
     desliza: 'glisează',
   },
   program: {
-    eyebrow: 'Programul zilelor',
+    eyebrow: 'Programul zilei',
     titlu: 'Cum vom sărbători',
     zi1: '5 august   Brăila',
     zi2: '8 august   Mamaia',
@@ -74,7 +94,7 @@ export default {
   rsvp: {
     eyebrow: 'Te așteptăm',
     titlu: 'Confirmă prezența',
-    intro: 'Te rugăm să ne spui până la 1 iunie 2027 dacă vei fi alături de noi.',
+    intro: 'Te rugăm să ne spui până la 1 iulie 2027 dacă vei fi alături de noi.',
     saludoIndividual: ', ești invitat la nunta noastră!',
     saludoPareja: ', sunteți invitați la nunta noastră!',
     preguntaIndividual: 'Vei fi alături de noi?',
@@ -83,7 +103,7 @@ export default {
     nu: 'Din păcate, nu pot',
     daPareja: 'Da, vom fi acolo',
     nuPareja: 'Din păcate, nu putem',
-    restricciones: 'Restricții alimentare (opțional)',
+    restricciones: 'Alergii sau intoleranțe alimentare (opțional)',
     restriccionesPlaceholder: 'ex. vegetarian, alergie la nuci…',
     mensaje: 'Un mesaj pentru miri (opțional)',
     mensajePlaceholder: 'Scrie-ne câteva cuvinte…',
@@ -97,9 +117,10 @@ export default {
     noEncontrado: 'Nu am găsit această invitație. Verifică linkul primit.',
     yaRespondido: 'Ați răspuns deja   puteți modifica răspunsul oricând.',
     sinConfig: 'Formularul va fi activ în curând.',
+    contactoAyuda: 'Dacă formularul nu funcționează sau ai întrebări, scrie-ne sau sună-ne:',
   },
   footer: {
     frase: 'Cu drag, vă așteptăm să sărbătorim împreună.',
-    firma: 'Flo & Bianca · august 2027',
+    firma: 'Bianca & Florentin · 8 august 2027',
   },
 }

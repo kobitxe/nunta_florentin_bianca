@@ -28,8 +28,14 @@ export default function Contador() {
 
   return (
     <section className="contador-seccion" aria-label={t('hero.countdown.titlu')}>
-      <Rasgado className="seccion__corte seccion__corte--papel" />
+      <Rasgado className="seccion__corte seccion__corte--marfil" />
       <div className="contador">
+        <div className="contador__banner">
+          <span>{t('contador.banner.dia')}</span>
+          <span className="contador__banner-fecha">{t('contador.banner.fecha')}</span>
+          <span>{t('contador.banner.hora')}</span>
+        </div>
+        <p className="contador__teaser">{t('contador.teaser')}</p>
         <p className="eyebrow">{t('hero.countdown.titlu')}</p>
         <div className="countdown__cifras">
           {['zile', 'ore', 'minute', 'secunde'].map((unidad) => (

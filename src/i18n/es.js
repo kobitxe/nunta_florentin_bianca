@@ -7,18 +7,19 @@ export default {
   },
   carta: {
     abrir: 'Abre la invitación',
+    ajutor: 'Toca el sello para abrir',
     para: 'Para',
   },
   banda: {
-    texto: 'Ceremonia religiosa · 5 de agosto de 2027 · Brăila',
+    texto: 'Ceremonia religiosa · 8 de agosto de 2027 · Biserica Neagră',
   },
   hero: {
     holaPre: '¡Hola, ',
     luna: 'agosto',
     anunt: 'Nos casamos',
     si: '&',
-    datele: '5 y 8 de agosto de 2027',
-    orase: 'Brăila · Mamaia',
+    datele: '8 de agosto de 2027',
+    orase: 'Mamaia',
     countdown: {
       titlu: 'Para la ceremonia',
       zile: 'días',
@@ -28,18 +29,37 @@ export default {
     },
     cta: 'Confirmar asistencia',
   },
+  intro: {
+    cita: 'Con el corazón lleno de alegría y emoción, nos preparamos para decir «SÍ»',
+    parrafo:
+      'El amor nos ha traído hasta aquí, y la promesa de una vida juntos nos lleva hacia el comienzo más bonito. Hoy empieza la parte más hermosa de nuestra historia: la vida que viviremos juntos, para siempre.',
+  },
+  familia: {
+    citaParinti: 'Con el amor y la bendición de nuestros padres, nuestro amor comienza su capítulo más hermoso',
+    citaNasi: 'En el nuevo capítulo de nuestra historia, nos acompañarán las almas que más queremos: nuestros padrinos',
+    nasiEticheta: 'Nuestros padrinos',
+    memoria: 'en memoria de',
+  },
+  contador: {
+    banner: {
+      dia: 'Domingo',
+      fecha: '8 de agosto de 2027',
+      hora: '17:00',
+    },
+    teaser: '¡Un poco más y «nosotros dos» seremos «marido y mujer»! Hasta entonces, contemos juntos cada instante.',
+  },
   detalii: {
-    eyebrow: 'Dos momentos, dos ciudades',
-    titlu: 'Detalles del evento',
+    eyebrow: 'Un solo día, para siempre',
+    titlu: 'El día de la boda',
     ceremonie: {
-      eticheta: 'Ceremonia religiosa',
-      fechaGrande: '5 de agosto',
-      data: 'jueves, 5 de agosto de 2027',
-      ora: '11:00 h',
-      oraNota: 'la hora exacta se confirmará pronto',
+      eticheta: 'El programa del día',
+      fechaGrande: '8 de agosto',
+      data: 'domingo, 8 de agosto de 2027',
+      ora: 'Ceremonia religiosa · 16:00 h',
+      direccionNota: 'La dirección exacta se confirmará pronto',
     },
     receptie: {
-      eticheta: 'La celebración',
+      eticheta: 'La ubicación',
       fechaGrande: '8 de agosto',
       data: 'domingo, 8 de agosto de 2027',
       ora: '17:00 h',
@@ -74,7 +94,7 @@ export default {
   rsvp: {
     eyebrow: 'Te esperamos',
     titlu: 'Confirmar asistencia',
-    intro: 'Por favor, dinos antes del 1 de junio de 2027 si nos acompañarás.',
+    intro: 'Por favor, dinos antes del 1 de julio de 2027 si nos acompañarás.',
     saludoIndividual: ', ¡estás invitado a nuestra boda!',
     saludoPareja: ', ¡estáis invitados a nuestra boda!',
     preguntaIndividual: '¿Nos acompañarás?',
@@ -83,7 +103,7 @@ export default {
     nu: 'Lamentablemente, no puedo',
     daPareja: 'Sí, allí estaremos',
     nuPareja: 'Lamentablemente, no podemos',
-    restricciones: 'Restricciones alimentarias (opcional)',
+    restricciones: 'Alergias o intolerancias alimentarias (opcional)',
     restriccionesPlaceholder: 'p. ej. vegetariano, alergia a los frutos secos…',
     mensaje: 'Un mensaje para los novios (opcional)',
     mensajePlaceholder: 'Escríbenos unas palabras…',
@@ -97,9 +117,10 @@ export default {
     noEncontrado: 'No hemos encontrado esta invitación. Revisa el enlace recibido.',
     yaRespondido: 'Ya habéis respondido   podéis cambiar la respuesta cuando queráis.',
     sinConfig: 'El formulario estará activo muy pronto.',
+    contactoAyuda: 'Si el formulario falla o tienes dudas, escríbenos o llámanos:',
   },
   footer: {
     frase: 'Con cariño, os esperamos para celebrarlo juntos.',
-    firma: 'Flo & Bianca · agosto 2027',
+    firma: 'Bianca & Florentin · 8 de agosto de 2027',
   },
 }

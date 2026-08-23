@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
 import { supabase, obtenerRsvp, guardarRsvp } from '../lib/supabase.js'
 import { nombresDe } from '../lib/nombres.js'
+import { CONTACTO } from '../config/wedding.js'
 import Reveal from './Reveal.jsx'
 
 // La invitación es personal: el invitado llega con /i/{token} y su nombre
@@ -148,6 +149,17 @@ export default function Rsvp({ token, invitado, cargando }) {
           <p className="rsvp__intro">{t('rsvp.intro')}</p>
         </Reveal>
         {contenido}
+        <p className="rsvp__contacto">
+          {t('rsvp.contactoAyuda')}
+          <br />
+          <a href={`tel:${CONTACTO.bianca.tel}`}>
+            {CONTACTO.bianca.nombre} · {CONTACTO.bianca.numero}
+          </a>
+          {' · '}
+          <a href={`tel:${CONTACTO.florentin.tel}`}>
+            {CONTACTO.florentin.nombre} · {CONTACTO.florentin.numero}
+          </a>
+        </p>
       </div>
     </section>
   )
