@@ -40,7 +40,7 @@ export default function Carrusel({ fotos, nombre }) {
         ))}
       </div>
       <p className="carrusel__hint" aria-hidden="true">
-        ← {t('detalii.desliza')} →
+        ← →
       </p>
     </div>
   )

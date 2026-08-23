@@ -13,24 +13,28 @@ export default function Hero({ invitado }) {
       <Rosas className="hero__rosas hero__rosas--br" />
 
       <div className="hero__contenido">
-        {invitado && (
-          <p className="hero__saludo">
-            {t('hero.holaPre')}
-            {nombresDe(invitado)}!
-          </p>
-        )}
-        <p className="hero__anuncio">{t('hero.anunt')}</p>
-
-        <h1 className="hero__nombres">
-          Bianca <span className="hero__amp">&amp;</span> Florentin
-        </h1>
-
-        <div className="hero__fechabar">
-          <span>{t('hero.luna')}</span>
-          <span className="hero__fechabar-dias">8</span>
-          <span>2027</span>
+        <div className="hero__arriba">
+          {invitado && (
+            <p className="hero__saludo">
+              {t('hero.holaPre')}
+              {nombresDe(invitado)}!
+            </p>
+          )}
+          <p className="hero__anuncio">{t('hero.anunt')}</p>
         </div>
-        <p className="hero__ciudades">{t('hero.orase')}</p>
+
+        <div className="hero__abajo">
+          <h1 className="hero__nombres">
+            Bianca <span className="hero__amp">&amp;</span> Florentin
+          </h1>
+
+          <div className="hero__fechabar">
+            <span>{t('hero.luna')}</span>
+            <span className="hero__fechabar-dias">8</span>
+            <span>2027</span>
+          </div>
+          <p className="hero__ciudades">{t('hero.orase')}</p>
+        </div>
       </div>
     </section>
   )

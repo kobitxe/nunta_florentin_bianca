@@ -66,7 +66,6 @@ export default {
     },
     ventMapa: 'Abrir en Google Maps',
     fotosPronto: 'Fotos del lugar, muy pronto',
-    desliza: 'desliza',
   },
   program: {
     eyebrow: 'Programa de los días',
