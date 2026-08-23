@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { LuPointer } from 'react-icons/lu'
 import { useI18n } from '../i18n/context.js'
-import { nombresDe } from '../lib/nombres.js'
+import { nombresDe, nombreDesdeToken } from '../lib/nombres.js'
 
 // Sobre de entrada: cubre la pantalla hasta que el invitado lo abre
 // con un click o con el primer intento de scroll. La apertura es un
 // timeline de GSAP: sello → solapa → interior → desvanecido del overlay.
-export default function Carta({ invitado }) {
+export default function Carta({ invitado, token }) {
   const { t } = useI18n()
   const [fase, setFase] = useState('cerrada') // cerrada | abriendo | oculta
   const cartaRef = useRef(null)
@@ -67,6 +67,8 @@ export default function Carta({ invitado }) {
 
   if (fase === 'oculta') return null
 
+  const nombreDestinatario = invitado ? nombresDe(invitado) : nombreDesdeToken(token)
+
   return (
     <div ref={cartaRef} className={`carta${fase === 'abriendo' ? ' carta--abierta' : ''}`}>
       <button type="button" className="sobre" onClick={abrir} aria-label={t('carta.abrir')}>
@@ -78,9 +80,11 @@ export default function Carta({ invitado }) {
         <span className="sobre__ala sobre__ala--der" />
         <span className="sobre__ala sobre__ala--inf" />
         <span className="sobre__solapa" ref={solapaRef} />
-        <span className="sobre__destinatario">
-          {invitado ? `${t('carta.para')} ${nombresDe(invitado)}` : 'Bianca & Florentin'}
-        </span>
+        {nombreDestinatario && (
+          <span className="sobre__destinatario">
+            {t('carta.para')} {nombreDestinatario}
+          </span>
+        )}
         <span className="sobre__sello" ref={selloRef}>
           B&amp;F
         </span>

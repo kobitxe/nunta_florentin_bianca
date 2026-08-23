@@ -33,7 +33,7 @@ export default function App() {
 
   return (
     <I18nProvider>
-      <Carta invitado={invitado} />
+      <Carta invitado={invitado} token={token} />
       <Idiomas />
       <main>
         <Hero invitado={invitado} />

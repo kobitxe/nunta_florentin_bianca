@@ -60,7 +60,10 @@ function slug(texto) {
 
 export async function crearInvitacion({ tipo, nombre, nombrePareja }) {
   if (!supabase) throw new Error('supabase-not-configured')
-  const base = slug(tipo === 'pareja' ? `${nombre}-${nombrePareja}` : nombre)
+  // Los dos nombres de una pareja se unen con "_" (slug() nunca produce
+  // ese carácter) para poder distinguirlos luego en nombreDesdeToken()
+  // y reconstruir el "&" antes de que responda el backend.
+  const base = tipo === 'pareja' ? `${slug(nombre)}_${slug(nombrePareja)}` : slug(nombre)
   const token = `${base}-${Math.random().toString(36).slice(2, 6)}`
   const { data, error } = await supabase
     .from('invitados')
