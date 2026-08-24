@@ -33,7 +33,7 @@ export default function Familia() {
           <div className="familia__divisor" aria-hidden="true" />
           <p className="familia__cita">{t('familia.citaNasi')}</p>
           <p className="familia__eticheta">{t('familia.nasiEticheta')}</p>
-          <p className="familia__pareja">Nina &amp; Alexandru</p>
+          <p className="familia__pareja">Nina &amp; Alexandru Ahtamon</p>
         </Reveal>
       </div>
     </section>

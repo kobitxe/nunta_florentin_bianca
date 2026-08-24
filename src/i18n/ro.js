@@ -36,7 +36,7 @@ export default {
   },
   familia: {
     citaParinti: 'Cu iubirea și binecuvântarea părinților noștri, iubirea noastră își începe cel mai frumos capitol',
-    citaNasi: 'În noul capitol al poveștii noastre, ne vor fi alături sufletele dragi nouă, nașii noștri',
+    citaNasi: 'În noul capitol al poveștii noastre, ne vor fi alături sufletele dragi nouă',
     nasiEticheta: 'Nașii noștri',
     memoria: 'în memoria lui',
   },
@@ -65,7 +65,6 @@ export default {
       ora: 'ora 17:00',
     },
     ventMapa: 'Deschide în Google Maps',
-    fotosPronto: 'Fotografii ale locației, în curând',
   },
   program: {
     eyebrow: 'Programul zilei',
@@ -93,7 +92,7 @@ export default {
   rsvp: {
     eyebrow: 'Te așteptăm',
     titlu: 'Confirmă prezența',
-    intro: 'Te rugăm să ne spui până la 1 iulie 2027 dacă vei fi alături de noi.',
+    intro: 'Ne dorim să fiți parte din povestea noastră. Vă rugăm să ne confirmați prezența până la 1 iulie 2027.',
     saludoIndividual: ', ești invitat la nunta noastră!',
     saludoPareja: ', sunteți invitați la nunta noastră!',
     preguntaIndividual: 'Vei fi alături de noi?',

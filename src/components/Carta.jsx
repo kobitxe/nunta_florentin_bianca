@@ -34,7 +34,14 @@ export default function Carta({ invitado, token }) {
       .to(selloRef.current, { scale: 0, opacity: 0, rotate: 20, duration: 0.35, ease: 'back.in(1.6)' }, 0.12)
       .to(solapaRef.current, { rotationX: 180, duration: 0.85, ease: 'power3.inOut' }, 0.1)
       .to(interiorRef.current, { opacity: 1, duration: 0.7, ease: 'power2.out' }, 0.25)
-      .to(cartaRef.current, { opacity: 0, scale: 1.04, duration: 0.65, ease: 'power2.out' }, 1.05)
+      // Los nombres se quedan un momento en pantalla, totalmente opacos,
+      // para dar tiempo a leerlos antes de que empiece el desvanecido.
+      .to(interiorRef.current, { opacity: 1, duration: 0.55 }, 0.95)
+      // El texto interior se desvanece antes que el resto del sobre, para
+      // que no quede a medio camino superpuesto (y por tanto ilegible)
+      // con el texto del Hero mientras el sobre entero pierde opacidad.
+      .to(interiorRef.current, { opacity: 0, duration: 0.3, ease: 'power2.in' }, 1.5)
+      .to(cartaRef.current, { opacity: 0, scale: 1.04, duration: 0.65, ease: 'power2.out' }, 1.55)
 
     return () => tl.kill()
   }, [fase])

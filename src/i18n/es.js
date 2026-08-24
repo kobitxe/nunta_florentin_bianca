@@ -36,7 +36,7 @@ export default {
   },
   familia: {
     citaParinti: 'Con el amor y la bendición de nuestros padres, nuestro amor comienza su capítulo más hermoso',
-    citaNasi: 'En el nuevo capítulo de nuestra historia, nos acompañarán las almas que más queremos: nuestros padrinos',
+    citaNasi: 'En el nuevo capítulo de nuestra historia, nos acompañarán las almas que más queremos',
     nasiEticheta: 'Nuestros padrinos',
     memoria: 'en memoria de',
   },
@@ -65,7 +65,6 @@ export default {
       ora: '17:00 h',
     },
     ventMapa: 'Abrir en Google Maps',
-    fotosPronto: 'Fotos del lugar, muy pronto',
   },
   program: {
     eyebrow: 'Programa de los días',
@@ -93,7 +92,7 @@ export default {
   rsvp: {
     eyebrow: 'Te esperamos',
     titlu: 'Confirmar asistencia',
-    intro: 'Por favor, dinos antes del 1 de julio de 2027 si nos acompañarás.',
+    intro: 'Queremos que forméis parte de nuestra historia. Por favor, confirmadnos vuestra asistencia antes del 1 de julio de 2027.',
     saludoIndividual: ', ¡estás invitado a nuestra boda!',
     saludoPareja: ', ¡estáis invitados a nuestra boda!',
     preguntaIndividual: '¿Nos acompañarás?',

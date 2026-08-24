@@ -8,7 +8,6 @@ import IntroCita from './components/IntroCita.jsx'
 import Familia from './components/Familia.jsx'
 import Contador from './components/Contador.jsx'
 import Detalles from './components/Detalles.jsx'
-import FotoBanda from './components/FotoBanda.jsx'
 import Rsvp from './components/Rsvp.jsx'
 import Footer from './components/Footer.jsx'
 import Admin from './pages/Admin.jsx'
@@ -41,7 +40,6 @@ export default function App() {
         <Familia />
         <Contador />
         <Detalles />
-        <FotoBanda />
         <Rsvp token={token} invitado={invitado} cargando={cargandoInvitado} />
       </main>
       <Footer />

@@ -7,6 +7,7 @@ export default function Hero({ invitado }) {
 
   return (
     <section className="hero" id="top">
+      <img className="hero__foto-fondo" src="/novios.jpeg" alt="" aria-hidden="true" />
       <img className="hero__foto" src="/novios.jpeg" alt="" aria-hidden="true" />
       <div className="hero__velo" />
       <Rosas className="hero__rosas hero__rosas--tl" />

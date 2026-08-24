@@ -10,7 +10,6 @@ export const CEREMONIA = {
   lugar: 'Biserica Neagră',
   direccion: null,
   mapsLink: null,
-  mapsEmbed: null,
 }
 
 export const RECEPCION = {
@@ -18,8 +17,6 @@ export const RECEPCION = {
   lugar: 'Restaurant Terasa Tic Tac Mamaia',
   direccion: 'Bulevardul Mamaia, Constanța',
   mapsLink: 'https://maps.app.goo.gl/jKUJbrnZ2ZwZRFZR7',
-  mapsEmbed:
-    'https://www.google.com/maps?q=Restaurant+Terasa+Tic+Tac+Mamaia,+Bulevardul+Mamaia,+Constan%C8%9Ba&output=embed',
 }
 
 // Teléfonos de contacto por si falla el formulario de RSVP.
@@ -32,8 +29,6 @@ export const CONTACTO = {
 // Admite URLs externas o públicas de Supabase Storage.
 export const GALERIA_FOTOS = []
 
-// Fotos de los sitios para los carruseles de la sección Detalles.
-// FOTOS_CEREMONIA son provisionales (de la iglesia de Brăila, no de
-// Biserica Neagră); Bianca las sustituirá cuando tenga las nuevas.
-export const FOTOS_CEREMONIA = ['/iglesia-1.jpg', '/iglesia-2.jpg', '/iglesia-3.jpg', '/iglesia-4.jpg']
-export const FOTOS_RECEPCION = ['/tictac-1.jpg', '/tictac-2.jpg', '/tictac-3.jpg', '/tictac-4.jpg']
+// Foto del sitio para la sección Detalles.
+export const FOTO_CEREMONIA = '/misa.jpeg'
+export const FOTO_RECEPCION = '/tictac.jpeg'
