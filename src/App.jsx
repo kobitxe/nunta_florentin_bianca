@@ -31,15 +31,15 @@ export default function App() {
   if (ruta === '/admin') return <Admin />
 
   return (
-    <I18nProvider>
+    <I18nProvider invitado={invitado}>
       <Carta invitado={invitado} token={token} />
-      <Idiomas />
+      <Idiomas variante={invitado?.variante ?? 'sin_misa'} />
       <main>
         <Hero invitado={invitado} />
         <IntroCita />
         <Familia />
         <Contador />
-        <Detalles />
+        <Detalles invitado={invitado} />
         <Rsvp token={token} invitado={invitado} cargando={cargandoInvitado} />
       </main>
       <Footer />
