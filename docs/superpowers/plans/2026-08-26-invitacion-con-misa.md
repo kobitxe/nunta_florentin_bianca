@@ -6,7 +6,7 @@
 
 **Architecture:** Dos columnas nuevas en `invitados` (`variante`, `idioma`) gobiernan qué ve el sitio público (tarjeta extra en Detalles, idioma inicial, banderas disponibles) y qué banderita se muestra en el listado del admin. El panel admin pide el idioma en un popup antes de crear una invitación `con_misa`. Todo el resto del código (RSVP, estadísticas, tokens) queda igual.
 
-**Tech Stack:** React 19 + Vite, Supabase (Postgres + Auth), sin framework de testing (el proyecto no tiene test runner instalado — la verificación es `npm run build` + comprobación manual en `npm run dev`, siguiendo el patrón ya establecido en este repo).
+**Tech Stack:** React 19 + Vite, Supabase (Postgres + Auth), sin framework de testing (el proyecto no tiene test runner instalado - la verificación es `npm run build` + comprobación manual en `npm run dev`, siguiendo el patrón ya establecido en este repo).
 
 **Spec:** `docs/superpowers/specs/2026-08-26-invitacion-con-misa-design.md`
 
@@ -14,13 +14,13 @@
 
 - No introducir ningún framework de testing nuevo: este repo no tiene uno y no es parte del alcance. La verificación de cada tarea es `npm run build` (debe compilar sin errores) más los pasos manuales descritos en la propia tarea.
 - Idiomas soportados: `ro` (rumano, por defecto), `es` (español), `ru` (ruso). Variantes de invitación: `sin_misa` (por defecto, comportamiento actual) y `con_misa`.
-- Datos reales de la misa (no inventar otros): fecha `2027-08-05T11:00:00+03:00`, lugar `Biserica Ortodoxă de Rit Vechi «Vovidenia»`, dirección `Strada Reșița 76, Brăila`, maps `https://maps.app.goo.gl/TZY2cbGt27xjeFCRA?g_st=iw`, foto `/misa.jpeg` (ya existe en `public/`). Hora pendiente de confirmar — se muestra como "11:00 (por confirmar)" / equivalentes.
+- Datos reales de la misa (no inventar otros): fecha `2027-08-05T11:00:00+03:00`, lugar `Biserica Ortodoxă de Rit Vechi «Vovidenia»`, dirección `Strada Reșița 76, Brăila`, maps `https://maps.app.goo.gl/TZY2cbGt27xjeFCRA?g_st=iw`, foto `/misa.jpeg` (ya existe en `public/`). Hora pendiente de confirmar - se muestra como "11:00 (por confirmar)" / equivalentes.
 - Seguir el estilo del código existente: componentes funcionales, nombres de variables en español, sin comentarios explicativos salvo que documenten un porqué no obvio (patrón ya usado en `wedding.js`, `nombres.js`, `Carta.jsx`).
 - No tocar el flujo de RSVP, estadísticas del admin, ni las políticas RLS existentes.
 
 ---
 
-### Task 1: Base de datos — migración y capa de acceso (`supabase.js`)
+### Task 1: Base de datos - migración y capa de acceso (`supabase.js`)
 
 **Files:**
 - Create: `supabase/migration-003-invitacion-con-misa.sql`
@@ -28,7 +28,7 @@
 
 **Interfaces:**
 - Produces: `buscarInvitadoPorToken(token)` ahora resuelve `{ id, nombre, nombre_pareja, tipo, variante, idioma }`.
-- Produces: `crearInvitacion({ tipo, nombre, nombrePareja, variante, idioma })` — `variante` es `'sin_misa' | 'con_misa'`; `idioma` es `'ro'|'es'|'ru'|null`.
+- Produces: `crearInvitacion({ tipo, nombre, nombrePareja, variante, idioma })` - `variante` es `'sin_misa' | 'con_misa'`; `idioma` es `'ro'|'es'|'ru'|null`.
 
 - [ ] **Step 1: Crear la migración SQL**
 
@@ -131,7 +131,7 @@ export async function crearInvitacion({ tipo, nombre, nombrePareja, variante, id
 - [ ] **Step 4: Verificar que compila**
 
 Run: `npm run build`
-Expected: build verde, sin errores (Admin.jsx todavía llama a `crearInvitacion` con la firma vieja hasta la Tarea 6 — eso es solo un desajuste de tipos en tiempo de ejecución, no rompe la compilación de Vite).
+Expected: build verde, sin errores (Admin.jsx todavía llama a `crearInvitacion` con la firma vieja hasta la Tarea 6 - eso es solo un desajuste de tipos en tiempo de ejecución, no rompe la compilación de Vite).
 
 - [ ] **Step 5: Commit**
 
@@ -149,7 +149,7 @@ git commit -m "feat: columnas variante/idioma en invitados y soporte en supabase
 - Modify: `src/components/Idiomas.jsx` (reescritura completa)
 
 **Interfaces:**
-- Produces: `export const BANDERAS` desde `src/lib/banderas.jsx` — objeto `{ ro: { nombre, svg }, es: { nombre, svg }, ru: { nombre, svg } }`. Consumido por `Idiomas.jsx` (Tarea 2) y por `Admin.jsx` (Tarea 6).
+- Produces: `export const BANDERAS` desde `src/lib/banderas.jsx` - objeto `{ ro: { nombre, svg }, es: { nombre, svg }, ru: { nombre, svg } }`. Consumido por `Idiomas.jsx` (Tarea 2) y por `Admin.jsx` (Tarea 6).
 - Consumes: nada nuevo (usa `useI18n` de `src/i18n/context.js`, ya existente).
 - Produces: `<Idiomas variante="sin_misa" | "con_misa" />` (prop opcional, default `'sin_misa'`).
 
@@ -260,7 +260,7 @@ git commit -m "refactor: extraer banderas a módulo compartido y soportar 3 idio
 - Create: `src/i18n/ru.js`
 
 **Interfaces:**
-- Produces: `export default { nav, carta, banda, hero, intro, familia, contador, detalii, program, galerie, rsvp, footer }` — mismo shape exacto que `src/i18n/es.js` y `src/i18n/ro.js` (todas las mismas claves, sin claves de más ni de menos).
+- Produces: `export default { nav, carta, banda, hero, intro, familia, contador, detalii, program, galerie, rsvp, footer }` - mismo shape exacto que `src/i18n/es.js` y `src/i18n/ro.js` (todas las mismas claves, sin claves de más ni de menos).
 - Consumes: ninguna dependencia de otras tareas.
 
 - [ ] **Step 1: Crear `src/i18n/ru.js`**
@@ -317,7 +317,7 @@ export default {
     teaser: 'Ещё немного, и «мы двое» станем «мужем и женой»! А пока будем вместе считать каждое мгновение.',
   },
   detalii: {
-    eyebrow: 'Один день — навсегда',
+    eyebrow: 'Один день - навсегда',
     titlu: 'День свадьбы',
     ceremonie: {
       eticheta: 'Венчание',
@@ -337,8 +337,8 @@ export default {
   program: {
     eyebrow: 'Программа дней',
     titlu: 'Как мы будем праздновать',
-    zi1: '5 августа — Брэила',
-    zi2: '8 августа — Мамая',
+    zi1: '5 августа - Брэила',
+    zi2: '8 августа - Мамая',
     evenimente1: [
       { ora: '10:30', text: 'Прибытие гостей в церковь' },
       { ora: '11:00', text: 'Венчание' },
@@ -381,7 +381,7 @@ export default {
     cargando: 'Загрузка приглашения…',
     sinToken: 'Приглашение именное. Если вы не получили свою ссылку, спросите у жениха и невесты.',
     noEncontrado: 'Мы не нашли это приглашение. Проверьте полученную ссылку.',
-    yaRespondido: 'Вы уже ответили — вы можете изменить ответ в любое время.',
+    yaRespondido: 'Вы уже ответили - вы можете изменить ответ в любое время.',
     sinConfig: 'Форма скоро заработает.',
     contactoAyuda: 'Если форма не работает или у вас есть вопросы, напишите или позвоните нам:',
   },
@@ -413,7 +413,7 @@ git commit -m "feat: traducción completa al ruso (best-effort, pendiente de rev
 
 **Interfaces:**
 - Consumes: `src/i18n/ru.js` default export (Tarea 3).
-- Produces: `<I18nProvider invitado={invitado}>` — prop `invitado` opcional, shape `{ idioma?: 'ro'|'es'|'ru', ... }`. El contexto expuesto (`idioma`, `cambiarIdioma`, `t`) no cambia de forma.
+- Produces: `<I18nProvider invitado={invitado}>` - prop `invitado` opcional, shape `{ idioma?: 'ro'|'es'|'ru', ... }`. El contexto expuesto (`idioma`, `cambiarIdioma`, `t`) no cambia de forma.
 
 - [ ] **Step 1: Reescribir `src/i18n/index.jsx`**
 
@@ -452,7 +452,7 @@ export function I18nProvider({ children, invitado }) {
   }
 
   // Cuando llegan los datos del invitado (fetch async en App.jsx) y trae
-  // un idioma guardado, se adopta como idioma de la página — salvo que el
+  // un idioma guardado, se adopta como idioma de la página - salvo que el
   // enlace ya forzara uno explícito con ?lang=.
   useEffect(() => {
     if (!invitado?.idioma) return
@@ -504,7 +504,7 @@ git commit -m "feat: soportar diccionario ruso y sincronizar idioma con el guard
 
 **Interfaces:**
 - Consumes: `CEREMONIA` de `wedding.js`; claves `detalii.ceremonie.*` de los diccionarios i18n (ya existen, se actualiza su contenido).
-- Produces: `<Detalles invitado={invitado} />` — prop `invitado` opcional, usa `invitado?.variante`.
+- Produces: `<Detalles invitado={invitado} />` - prop `invitado` opcional, usa `invitado?.variante`.
 
 - [ ] **Step 1: Actualizar el comentario y `CEREMONIA` en `src/config/wedding.js`**
 
@@ -786,7 +786,7 @@ git commit -m "feat: propagar invitado/variante a I18nProvider, Idiomas y Detall
 
 ---
 
-### Task 7: Panel admin — variante, popup de idioma al crear y banderita en el listado
+### Task 7: Panel admin - variante, popup de idioma al crear y banderita en el listado
 
 **Files:**
 - Modify: `src/pages/Admin.jsx` (reescritura completa)

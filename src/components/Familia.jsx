@@ -1,6 +1,7 @@
 import { useI18n } from '../i18n/context.js'
 import Reveal from './Reveal.jsx'
 import { Rasgado } from './Decor.jsx'
+import Paloma from './Paloma.jsx'
 
 // Padres y nași (padrinos): la bendición que acompaña a los novios.
 // La paloma junto a un nombre marca a quien ya no está con nosotros.
@@ -24,6 +25,7 @@ export default function Familia() {
                 title={`${t('familia.memoria')} Ignat`}
               >
                 🕊️
+                <Paloma />
               </span>
             </p>
           </div>

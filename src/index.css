@@ -660,8 +660,26 @@ button {
 }
 
 .familia__memoria {
+  position: relative;
+  display: inline-block;
   font-size: 0.85em;
   vertical-align: middle;
+}
+
+/* Paloma: nace justo detrás del emoji y se aleja desvaneciéndose (ver
+   la animación en Paloma.jsx, que anima x/y/opacity con GSAP). */
+.paloma-vuelo {
+  position: absolute;
+  left: 0.15em;
+  top: 0.1em;
+  width: 1.1em;
+  pointer-events: none;
+}
+
+.paloma-vuelo svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .familia__divisor {

@@ -5,7 +5,7 @@ const SECCIONES = [
 ]
 
 // Navegación del panel: barra lateral fija en escritorio, barra superior
-// (marca + cerrar sesión) y barra inferior de pestañas en móvil — pensada
+// (marca + cerrar sesión) y barra inferior de pestañas en móvil - pensada
 // para usarse con el pulgar en vez de un menú hamburguesa.
 export default function Sidebar({ seccion, onCambiarSeccion, email, onCerrarSesion }) {
   return (

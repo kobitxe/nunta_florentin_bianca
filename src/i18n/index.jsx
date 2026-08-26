@@ -22,12 +22,6 @@ export function I18nProvider({ children, invitado }) {
     return guardado in diccionarios ? guardado : 'ro'
   })
 
-  // Cuando llegan los datos del invitado (fetch async en App.jsx) y trae un
-  // idioma guardado, se adopta como idioma de la página — salvo que el enlace
-  // ya forzara uno explícito con ?lang=. Ajuste de estado durante el render
-  // (patrón documentado de React para "adjusting state when a prop changes"),
-  // guardado por la comparación con idiomaGuestAplicado para que solo se
-  // dispare una vez por cambio real.
   const [idiomaGuestAplicado, setIdiomaGuestAplicado] = useState(null)
   const idiomaGuest = invitado?.idioma
   if (idiomaGuest && idiomaGuest !== idiomaGuestAplicado && !langParam && idiomaGuest in diccionarios) {
@@ -35,7 +29,7 @@ export function I18nProvider({ children, invitado }) {
     setIdioma(idiomaGuest)
   }
 
-  // Sincroniza el idioma activo con el DOM y localStorage — efecto puro (sin
+  // Sincroniza el idioma activo con el DOM y localStorage - efecto puro (sin
   // setState dentro), disparado por cualquier cambio de idioma, manual o del
   // invitado.
   useEffect(() => {

@@ -30,7 +30,7 @@ Dato de la misa (confirmado por el usuario):
 3. Sitio público: tarjeta nueva del 5 de agosto (solo variante `con_misa`),
    idioma ruso completo, selector de idioma con 2 o 3 banderas según
    variante.
-4. Traducción `ru.js`, best-effort de Claude — recomendar revisión por
+4. Traducción `ru.js`, best-effort de Claude - recomendar revisión por
    hablante nativo antes de enviar invitaciones reales.
 
 Fuera de alcance: RSVP no cambia (misma tabla `rsvps`, sin distinción de
@@ -89,7 +89,7 @@ el admin autenticado, y `select` para `anon`).
 **Listado (`lista-inv`):**
 
 - Cada `inv-card` de variante `con_misa` muestra una banderita pequeña junto
-  al chip de tipo, según `inv.idioma` (🇷🇴 / 🇷🇺 / 🇪🇸 — mismo estilo visual que
+  al chip de tipo, según `inv.idioma` (🇷🇴 / 🇷🇺 / 🇪🇸 - mismo estilo visual que
   las banderas de `Idiomas.jsx`, reutilizando los SVG). Las `sin_misa` no
   llevan bandera (no tienen idioma guardado).
 
@@ -151,7 +151,7 @@ que en los otros dos diccionarios.
   }
   ```
 - Añadir `export const FOTO_CEREMONIA = '/misa.jpeg'` (ya existe, revisar si
-  ya está declarada — actualmente sí lo está, solo hay que confirmar que
+  ya está declarada - actualmente sí lo está, solo hay que confirmar que
   apunta al archivo correcto).
 - Actualizar el comentario que dice "tendrá su propia invitación aparte" ya
   que deja de ser cierto.
