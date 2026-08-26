@@ -1,6 +1,6 @@
 # Flo & Bianca Invitación de boda
 
-Invitación web bilingüe (rumano/castellano) para la boda de Flo & Bianca.
+Invitación web para la boda de Flo & Bianca, con dos variantes: la base (rumano/castellano) y "Con Misa" (rumano/ruso/castellano, añade la cununia religioasă del 5 de agosto).
 
 - **Ceremonia:** 5 agosto 2027 · Biserica „Vovidenia", Brăila
 - **Recepción:** 8 agosto 2027, 17:00 · Restaurant Terasa Tic Tac, Mamaia
@@ -40,18 +40,18 @@ Sin configurar Supabase la web funciona igualmente: el formulario RSVP y las est
 ## Invitaciones personalizadas y panel de administración
 
 - Cada invitación es un enlace personal: `https://tu-dominio/i/{token}` (individual o pareja). El invitado ve su nombre y solo confirma sí/no + restricciones + mensaje; no hay formulario abierto.
-- El panel está en `/admin` (login con Supabase Auth). Desde ahí se crean los enlaces, se copian o comparten por WhatsApp (plantilla en rumano o castellano), se ve el listado completo con cada respuesta y las estadísticas (sí / no / pendientes / personas confirmadas) en tiempo real. También se pueden borrar invitaciones.
+- El panel está en `/admin` (login con Supabase Auth). Desde ahí se crean los enlaces, se copian o comparten por WhatsApp (plantilla en rumano o castellano), se ve el listado completo con cada respuesta y las estadísticas (sí / no / pendientes / personas confirmadas) en tiempo real. También se pueden borrar invitaciones. Al crear una invitación se elige también la variante (Sin Misa / Con Misa); si es "Con Misa", un segundo paso pide el idioma (rumano/ruso/castellano), que queda guardado y se muestra como una banderita en el listado.
 
 Configuración (una vez, tras `setup.sql`):
 
-1. **SQL Editor**: ejecuta [`supabase/migration-002-invitaciones.sql`](supabase/migration-002-invitaciones.sql). Añade token/tipo a `invitados` y ajusta RLS (solo el admin crea invitados; el invitado solo guarda su respuesta).
+1. **SQL Editor**: ejecuta [`supabase/migration-002-invitaciones.sql`](supabase/migration-002-invitaciones.sql) y luego [`supabase/migration-003-invitacion-con-misa.sql`](supabase/migration-003-invitacion-con-misa.sql). Añaden token/tipo/variante/idioma a `invitados` y ajustan RLS (solo el admin crea invitados; el invitado solo guarda su respuesta).
 2. **Authentication → Users → Add user**: crea el usuario admin (el email debe coincidir con el de la política SQL; por defecto `daniel.milenteev@gmail.com`) con contraseña y "Auto Confirm".
 3. **Authentication → Sign In / Providers**: desactiva "Allow new users to sign up".
 
 ## Contenido editable
 
 - **Fechas, lugares, hora de la ceremonia:** `src/config/wedding.js` (cuando se confirme la hora, cambia `fechaISO` y pon `horaConfirmada: true`).
-- **Textos rumano/castellano:** `src/i18n/ro.js` y `src/i18n/es.js` (incluido el programa del día).
+- **Textos rumano/castellano/ruso:** `src/i18n/ro.js`, `src/i18n/es.js` y `src/i18n/ru.js` (incluido el programa del día). La invitación "Sin Misa" solo usa rumano/castellano; la variante "Con Misa" añade el ruso y la tarjeta de la misa del 5 de agosto.
 - **Fotos de la galería:** añade URLs al array `GALERIA_FOTOS` de `src/config/wedding.js`. Pueden ser URLs públicas de Supabase Storage (bucket público `galeria`) o externas.
 
 ## Ver las respuestas
