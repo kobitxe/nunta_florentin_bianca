@@ -100,8 +100,18 @@ function Login() {
   )
 }
 
+// Desde que rsvps.invitado_id tiene restricción unique (migration-004),
+// PostgREST embebe la relación como objeto ("uno a uno") en vez de lista;
+// esto acepta las dos formas por si el caché de esquema de Supabase tarda
+// en refrescarse tras el cambio.
+function primerRsvp(inv) {
+  const r = inv.rsvps
+  if (!r) return null
+  return Array.isArray(r) ? (r[0] ?? null) : r
+}
+
 function estadoDe(inv) {
-  const r = inv.rsvps?.[0]
+  const r = primerRsvp(inv)
   if (!r) return 'pendiente'
   return r.asiste ? 'si' : 'no'
 }
@@ -290,7 +300,7 @@ function Panel({ email }) {
         <ul className="lista-inv">
           {lista.map((inv) => {
             const estado = estadoDe(inv)
-            const r = inv.rsvps?.[0]
+            const r = primerRsvp(inv)
             return (
               <li className="inv-card" key={inv.id}>
                 <div className="inv-card__top">
