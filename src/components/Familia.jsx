@@ -24,7 +24,7 @@ export default function Familia() {
                 aria-label={`${t('familia.memoria')} Ignat`}
                 title={`${t('familia.memoria')} Ignat`}
               >
-                🕊️
+                
                 <Paloma />
               </span>
             </p>
