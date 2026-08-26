@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { I18nContext } from './context.js'
 import ro from './ro.js'
 import es from './es.js'
@@ -11,35 +11,39 @@ export function I18nProvider({ children, invitado }) {
   // Si el enlace trae ?lang= explícito, manda sobre cualquier idioma
   // guardado en la invitación (el admin lo usa para forzar un idioma
   // puntual al compartir, sin tocar el idioma guardado del invitado).
-  const langParamRef = useRef(null)
+  const [langParam] = useState(() => {
+    const param = new URLSearchParams(window.location.search).get('lang')
+    return param in diccionarios ? param : null
+  })
 
   const [idioma, setIdioma] = useState(() => {
-    const param = new URLSearchParams(window.location.search).get('lang')
-    if (param in diccionarios) {
-      langParamRef.current = param
-      return param
-    }
+    if (langParam) return langParam
     const guardado = localStorage.getItem(STORAGE_KEY)
     return guardado in diccionarios ? guardado : 'ro'
   })
 
-  const cambiarIdioma = (nuevo) => {
-    setIdioma(nuevo)
-    localStorage.setItem(STORAGE_KEY, nuevo)
-    document.documentElement.lang = nuevo
+  // Cuando llegan los datos del invitado (fetch async en App.jsx) y trae un
+  // idioma guardado, se adopta como idioma de la página — salvo que el enlace
+  // ya forzara uno explícito con ?lang=. Ajuste de estado durante el render
+  // (patrón documentado de React para "adjusting state when a prop changes"),
+  // guardado por la comparación con idiomaGuestAplicado para que solo se
+  // dispare una vez por cambio real.
+  const [idiomaGuestAplicado, setIdiomaGuestAplicado] = useState(null)
+  const idiomaGuest = invitado?.idioma
+  if (idiomaGuest && idiomaGuest !== idiomaGuestAplicado && !langParam && idiomaGuest in diccionarios) {
+    setIdiomaGuestAplicado(idiomaGuest)
+    setIdioma(idiomaGuest)
   }
 
-  // Cuando llegan los datos del invitado (fetch async en App.jsx) y trae
-  // un idioma guardado, se adopta como idioma de la página — salvo que el
-  // enlace ya forzara uno explícito con ?lang=.
+  // Sincroniza el idioma activo con el DOM y localStorage — efecto puro (sin
+  // setState dentro), disparado por cualquier cambio de idioma, manual o del
+  // invitado.
   useEffect(() => {
-    const lang = invitado?.idioma
-    if (!lang || langParamRef.current || !(lang in diccionarios)) return
-    if (lang === idioma) return
-    setIdioma(lang)
-    localStorage.setItem(STORAGE_KEY, lang)
-    document.documentElement.lang = lang
-  }, [invitado, idioma])
+    localStorage.setItem(STORAGE_KEY, idioma)
+    document.documentElement.lang = idioma
+  }, [idioma])
+
+  const cambiarIdioma = (nuevo) => setIdioma(nuevo)
 
   // t('rsvp.titlu') → valor del diccionario activo, con fallback a rumano.
   const t = (clave) => {
