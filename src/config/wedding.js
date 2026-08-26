@@ -1,15 +1,16 @@
 // Datos reales de la boda. Un único punto de verdad para fechas y lugares.
-// La misa del 5 de agosto en Brăila tendrá su propia invitación aparte
-// (en ruso/rumano); esta invitación cubre solo el día del 8 de agosto.
+// La invitación "con misa" (variante/idioma en la tabla invitados) añade
+// la tarjeta de la cununia religioasă del 5 de agosto; la invitación base
+// ("sin misa") solo muestra el día 8 de agosto.
 
 export const CEREMONIA = {
-  fechaISO: '2027-08-08T16:00:00+03:00',
-  horaConfirmada: true,
-  // Dirección aún pendiente: Bianca la pasará más adelante.
-  direccionConfirmada: false,
-  lugar: 'Biserica Neagră',
-  direccion: null,
-  mapsLink: null,
+  fechaISO: '2027-08-05T11:00:00+03:00',
+  // Hora provisional (~11:00): pendiente de confirmación final.
+  horaConfirmada: false,
+  direccionConfirmada: true,
+  lugar: 'Biserica Ortodoxă de Rit Vechi «Vovidenia»',
+  direccion: 'Strada Reșița 76, Brăila',
+  mapsLink: 'https://maps.app.goo.gl/TZY2cbGt27xjeFCRA?g_st=iw',
 }
 
 export const RECEPCION = {

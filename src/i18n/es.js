@@ -52,11 +52,11 @@ export default {
     eyebrow: 'Un solo día, para siempre',
     titlu: 'El día de la boda',
     ceremonie: {
-      eticheta: 'El programa del día',
-      fechaGrande: '8 de agosto',
-      data: 'domingo, 8 de agosto de 2027',
-      ora: 'Ceremonia religiosa · 16:00 h',
-      direccionNota: 'La dirección exacta se confirmará pronto',
+      eticheta: 'La ceremonia religiosa',
+      fechaGrande: '5 de agosto',
+      data: 'jueves, 5 de agosto de 2027',
+      ora: '11:00 h (hora por confirmar)',
+      direccionNota: 'La hora exacta se confirmará en los próximos días',
     },
     receptie: {
       eticheta: 'La ubicación',

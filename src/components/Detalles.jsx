@@ -35,8 +35,9 @@ function Dia({ etiqueta, fechaGrande, lugar, direccion, fecha, hora, nota, mapsL
   )
 }
 
-export default function Detalles() {
+export default function Detalles({ invitado }) {
   const { t } = useI18n()
+  const conMisa = invitado?.variante === 'con_misa'
 
   return (
     <section className="seccion seccion--marfil" id="detalii">
@@ -46,6 +47,21 @@ export default function Detalles() {
           <p className="eyebrow">{t('detalii.eyebrow')}</p>
           <h2 className="titulo">{t('detalii.titlu')}</h2>
         </Reveal>
+
+        {conMisa && (
+          <Reveal>
+            <Dia
+              etiqueta={t('detalii.ceremonie.eticheta')}
+              fechaGrande={t('detalii.ceremonie.fechaGrande')}
+              lugar={CEREMONIA.lugar}
+              direccion={CEREMONIA.direccion}
+              fecha={t('detalii.ceremonie.data')}
+              hora={t('detalii.ceremonie.ora')}
+              mapsLink={CEREMONIA.mapsLink}
+              foto={FOTO_CEREMONIA}
+            />
+          </Reveal>
+        )}
 
         <Reveal>
           <Dia
@@ -59,7 +75,6 @@ export default function Detalles() {
             foto={FOTO_RECEPCION}
           />
         </Reveal>
-        
       </div>
     </section>
   )

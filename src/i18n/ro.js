@@ -52,11 +52,11 @@ export default {
     eyebrow: 'O singură zi, pentru totdeauna',
     titlu: 'Ziua nunții',
     ceremonie: {
-      eticheta: 'Programul zilei',
-      fechaGrande: '8 august',
-      data: 'duminică, 8 august 2027',
-      ora: 'Cununia religioasă · ora 16:00',
-      direccionNota: 'Adresa exactă va fi confirmată în curând',
+      eticheta: 'Cununia religioasă',
+      fechaGrande: '5 august',
+      data: 'joi, 5 august 2027',
+      ora: 'ora 11:00 (se confirmă)',
+      direccionNota: 'Ora exactă se confirmă în curând',
     },
     receptie: {
       eticheta: 'Locația',
