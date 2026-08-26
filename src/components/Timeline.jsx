@@ -3,10 +3,13 @@ import Reveal from './Reveal.jsx'
 
 function Dia({ titulo, eventos }) {
   return (
+    <>
     <div className="timeline__dia">
+    
       <h3>{titulo}</h3>
       <ul className="timeline__lista">
         {eventos.map((ev) => (
+          
           <li className="timeline__item" key={`${ev.ora}-${ev.text}`}>
             <div className="timeline__hora">{ev.ora}</div>
             <div className="timeline__texto">{ev.text}</div>
@@ -14,6 +17,8 @@ function Dia({ titulo, eventos }) {
         ))}
       </ul>
     </div>
+    </>
+    
   )
 }
 
@@ -30,6 +35,7 @@ export default function Timeline() {
         <Reveal>
           <div className="timeline">
             <Dia titulo={t('program.zi1')} eventos={t('program.evenimente1')} />
+            
             <Dia titulo={t('program.zi2')} eventos={t('program.evenimente2')} />
           </div>
         </Reveal>

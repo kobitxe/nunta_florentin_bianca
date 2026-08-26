@@ -847,34 +847,46 @@ button {
 
 /* ── Detalles: banda horizontal por día ─────────────────── */
 .dia {
+  display: flex;
+  flex-direction: row;
+  gap: 1.6rem;
+  justify-content: space-between;
   background: #fff;
+  margin-top: 40px;
   border: 1px solid var(--linea);
-  border-radius: var(--radio);
+  border-radius: 1.25rem;
   padding: 2rem 1.6rem;
+  box-shadow: 0 0.4rem 1.4rem rgba(51, 48, 42, 0.07);
 }
 
-/* Conector entre las dos tarjetas: marca que son eventos seguidos
-   del mismo día, no lugares alternativos */
+@media (max-width: 860px) {
+  .dia {
+      flex-direction: column;
+      justify-content: center;
+  }
+}
+
+/* Conector entre las dos tarjetas (invitaciones "con misa"): línea +
+   icono, simboliza la sucesión cronológica de un evento al siguiente. */
 .dia-conector {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.9rem 0;
+  padding: 0.6rem 0;
 }
 
 .dia-conector__linea {
   width: 1px;
-  height: 1.6rem;
+  height: 1.8rem;
   background: var(--linea);
 }
 
-.dia-conector__punto {
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  border: 1px solid var(--salvia);
-  background: var(--marfil);
+.dia-conector__icono {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--salvia);
 }
 
 .dia__etiqueta {
@@ -949,6 +961,7 @@ button {
    de la misa, que es 9:16) en vez de deformarlas. */
 .dia__foto {
   margin-top: 1.6rem;
+  max-width: 28rem;
 }
 
 .dia__foto-titulo {
@@ -976,6 +989,11 @@ button {
   display: grid;
   gap: 3rem;
 }
+
+.timeline__dia {
+  margin-top: 10px !important;
+}
+
 
 .timeline__dia h3 {
   font-size: 1.3rem;
