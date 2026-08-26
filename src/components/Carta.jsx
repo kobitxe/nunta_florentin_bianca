@@ -118,8 +118,8 @@ export default function Carta({ invitado, token, denegado, avisoVisible, onCerra
       </button>
 
       {denegado && avisoVisible && (
-        <div className="modal" onClick={onCerrarAviso}>
-          <div className="modal__card" onClick={(e) => e.stopPropagation()}>
+        <div className="modal">
+          <div className="modal__card">
             <p>{t('carta.bloqueadaTexto')}</p>
             <button className="rsvp__enviar" type="button" onClick={onCerrarAviso}>
               {t('carta.bloqueadaBoton')}
