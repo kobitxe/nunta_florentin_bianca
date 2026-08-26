@@ -1294,7 +1294,7 @@ button {
 @media (min-width: 48rem) {
   .crear__fila {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
     gap: 1rem;
   }
 }
@@ -1386,6 +1386,21 @@ button {
   color: var(--taupe);
 }
 
+.bandera-mini {
+  display: inline-flex;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: none;
+}
+
+.bandera-mini svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .acciones {
   display: flex;
   flex-wrap: wrap;
@@ -1468,7 +1483,7 @@ button {
 
 .modal__opciones {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
   gap: 0.8rem;
   margin-bottom: 1rem;
 }

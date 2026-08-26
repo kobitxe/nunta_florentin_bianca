@@ -7,9 +7,13 @@ import {
   fijarAsistencia,
   suscribirRsvps,
 } from '../lib/supabase.js'
+import { BANDERAS } from '../lib/banderas.jsx'
 
 const urlDe = (token, lang) => `${window.location.origin}/i/${token}${lang ? `?lang=${lang}` : ''}`
 const nombresDe = (inv) => (inv.tipo === 'pareja' ? `${inv.nombre} & ${inv.nombre_pareja}` : inv.nombre)
+
+const IDIOMAS_LABEL = { ro: 'Rumano', es: 'Español', ru: 'Ruso' }
+const IDIOMAS_POR_VARIANTE = { sin_misa: ['ro', 'es'], con_misa: ['ro', 'ru', 'es'] }
 
 function mensajeCompartir(inv, lang) {
   const nombres = nombresDe(inv)
@@ -19,12 +23,41 @@ function mensajeCompartir(inv, lang) {
       ? `Dragi ${nombres}, vă invităm cu drag la nunta noastră (Bianca & Florentin), 8 august 2027. Deschideți invitația voastră aici: ${url}`
       : `Dragă ${nombres}, te invităm cu drag la nunta noastră (Bianca & Florentin), 8 august 2027. Deschide invitația ta aici: ${url}`
   }
+  if (lang === 'ru') {
+    return inv.tipo === 'pareja'
+      ? `Дорогие ${nombres}, приглашаем вас на нашу свадьбу (Bianca & Florentin), 8 августа 2027 года. Откройте своё приглашение здесь: ${url}`
+      : `Дорогой(ая) ${nombres}, приглашаем тебя на нашу свадьбу (Bianca & Florentin), 8 августа 2027 года. Открой своё приглашение здесь: ${url}`
+  }
   return inv.tipo === 'pareja'
     ? `Hola ${nombres}, nos encantaría que nos acompañarais en nuestra boda (Bianca & Florentin), 8 de agosto de 2027. Abrid vuestra invitación aquí: ${url}`
     : `Hola ${nombres}, nos encantaría que nos acompañaras en nuestra boda (Bianca & Florentin), 8 de agosto de 2027. Abre tu invitación aquí: ${url}`
 }
 
 const linkWhatsApp = (inv, lang) => `https://wa.me/?text=${encodeURIComponent(mensajeCompartir(inv, lang))}`
+
+// Popup genérico "¿en qué idioma?", reutilizado tanto para compartir un
+// enlace ya creado como para elegir el idioma al crear una invitación
+// "con misa" (antes de guardarla).
+function ModalIdioma({ titulo, pregunta, idiomas, onElegir, onCancelar }) {
+  return (
+    <div className="modal" onClick={onCancelar}>
+      <div className="modal__card" onClick={(e) => e.stopPropagation()}>
+        <h3>{titulo}</h3>
+        <p>{pregunta}</p>
+        <div className="modal__opciones">
+          {idiomas.map((cod) => (
+            <button key={cod} className="rsvp__enviar" type="button" onClick={() => onElegir(cod)}>
+              {IDIOMAS_LABEL[cod]}
+            </button>
+          ))}
+        </div>
+        <button className="btn-mini" type="button" onClick={onCancelar}>
+          Cancelar
+        </button>
+      </div>
+    </div>
+  )
+}
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -78,11 +111,13 @@ function Panel({ email }) {
   const [lista, setLista] = useState([])
   const [error, setError] = useState(null)
   const [tipo, setTipo] = useState('individual')
+  const [variante, setVariante] = useState('sin_misa')
   const [nombre, setNombre] = useState('')
   const [nombrePareja, setNombrePareja] = useState('')
   const [creando, setCreando] = useState(false)
   const [copiado, setCopiado] = useState(null)
   const [dialogo, setDialogo] = useState(null) // { inv, accion: 'copiar' | 'whatsapp' }
+  const [crearPendiente, setCrearPendiente] = useState(null) // datos del formulario a falta del idioma
 
   const refrescar = useCallback(() => {
     listarInvitaciones()
@@ -98,20 +133,36 @@ function Panel({ email }) {
     return suscribirRsvps(refrescar)
   }, [refrescar])
 
-  const onCrear = async (e) => {
-    e.preventDefault()
-    if (!nombre.trim() || (tipo === 'pareja' && !nombrePareja.trim())) return
+  const ejecutarCreacion = async (datos) => {
     setCreando(true)
     try {
-      await crearInvitacion({ tipo, nombre: nombre.trim(), nombrePareja: nombrePareja.trim() })
+      await crearInvitacion(datos)
       setNombre('')
       setNombrePareja('')
+      setVariante('sin_misa')
       refrescar()
     } catch {
       setError('No se pudo crear la invitación.')
     } finally {
       setCreando(false)
     }
+  }
+
+  const onCrear = async (e) => {
+    e.preventDefault()
+    if (!nombre.trim() || (tipo === 'pareja' && !nombrePareja.trim())) return
+    const datos = { tipo, nombre: nombre.trim(), nombrePareja: nombrePareja.trim(), variante }
+    if (variante === 'con_misa') {
+      setCrearPendiente(datos)
+      return
+    }
+    await ejecutarCreacion({ ...datos, idioma: null })
+  }
+
+  const elegirIdiomaCreacion = async (lang) => {
+    const datos = crearPendiente
+    setCrearPendiente(null)
+    await ejecutarCreacion({ ...datos, idioma: lang })
   }
 
   const onBorrar = async (inv) => {
@@ -134,7 +185,8 @@ function Panel({ email }) {
   }
 
   // Copiar y WhatsApp preguntan primero el idioma; el enlace lleva ?lang=
-  // para que la invitación se abra directamente en ese idioma.
+  // para que la invitación se abra directamente en ese idioma. No cambia
+  // el idioma guardado del invitado, solo el del enlace puntual.
   const elegirIdioma = async (lang) => {
     const { inv, accion } = dialogo
     setDialogo(null)
@@ -188,6 +240,13 @@ function Panel({ email }) {
             </select>
           </div>
           <div className="campo">
+            <label htmlFor="crear-variante">Invitación</label>
+            <select id="crear-variante" value={variante} onChange={(e) => setVariante(e.target.value)}>
+              <option value="sin_misa">Sin Misa</option>
+              <option value="con_misa">Con Misa</option>
+            </select>
+          </div>
+          <div className="campo">
             <label htmlFor="crear-nombre">Nombre</label>
             <input
               id="crear-nombre"
@@ -232,6 +291,14 @@ function Panel({ email }) {
                 <div className="inv-card__top">
                   <strong className="inv-card__nombre">{nombresDe(inv)}</strong>
                   <span className="chip chip--tipo">{inv.tipo}</span>
+                  {inv.variante === 'con_misa' && (
+                    <span className="chip chip--tipo">Con Misa</span>
+                  )}
+                  {inv.variante === 'con_misa' && inv.idioma && BANDERAS[inv.idioma] && (
+                    <span className="bandera-mini" title={BANDERAS[inv.idioma].nombre}>
+                      {BANDERAS[inv.idioma].svg}
+                    </span>
+                  )}
                   {estado === 'si' && <span className="chip chip--si">Sí</span>}
                   {estado === 'no' && <span className="chip chip--no">No</span>}
                   {estado === 'pendiente' && <span className="chip chip--pend">Pendiente</span>}
@@ -261,25 +328,37 @@ function Panel({ email }) {
       )}
 
       {dialogo && (
-        <div className="modal" onClick={() => setDialogo(null)}>
-          <div className="modal__card" onClick={(e) => e.stopPropagation()}>
-            <h3>{dialogo.accion === 'copiar' ? 'Copiar enlace' : 'Enviar por WhatsApp'}</h3>
-            <p>
+        <ModalIdioma
+          titulo={dialogo.accion === 'copiar' ? 'Copiar enlace' : 'Enviar por WhatsApp'}
+          pregunta={
+            <>
               ¿En qué idioma para <strong>{nombresDe(dialogo.inv)}</strong>?
-            </p>
-            <div className="modal__opciones">
-              <button className="rsvp__enviar" type="button" onClick={() => elegirIdioma('ro')}>
-                Rumano
-              </button>
-              <button className="rsvp__enviar" type="button" onClick={() => elegirIdioma('es')}>
-                Español
-              </button>
-            </div>
-            <button className="btn-mini" type="button" onClick={() => setDialogo(null)}>
-              Cancelar
-            </button>
-          </div>
-        </div>
+            </>
+          }
+          idiomas={IDIOMAS_POR_VARIANTE[dialogo.inv.variante] ?? IDIOMAS_POR_VARIANTE.sin_misa}
+          onElegir={elegirIdioma}
+          onCancelar={() => setDialogo(null)}
+        />
+      )}
+
+      {crearPendiente && (
+        <ModalIdioma
+          titulo="Nueva invitación"
+          pregunta={
+            <>
+              ¿En qué idioma quieres que le aparezca a{' '}
+              <strong>
+                {crearPendiente.tipo === 'pareja'
+                  ? `${crearPendiente.nombre} & ${crearPendiente.nombrePareja}`
+                  : crearPendiente.nombre}
+              </strong>
+              ?
+            </>
+          }
+          idiomas={IDIOMAS_POR_VARIANTE.con_misa}
+          onElegir={elegirIdiomaCreacion}
+          onCancelar={() => setCrearPendiente(null)}
+        />
       )}
     </div>
   )
