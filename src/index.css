@@ -1089,6 +1089,65 @@ button {
   color: var(--salvia);
 }
 
+/* ── Confirmación de envío del RSVP (sustituye al formulario) ────── */
+.rsvp__enviado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2.5rem 0 1.5rem;
+  text-align: center;
+}
+
+.rsvp__enviado-texto {
+  max-width: 28rem;
+  font-size: 1.1rem;
+}
+
+.enviado-check {
+  width: 4.5rem;
+  height: 4.5rem;
+  color: var(--salvia);
+}
+
+.enviado-check__circulo {
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-dasharray: 227;
+  stroke-dashoffset: 227;
+  animation: enviado-circulo 0.6s ease-out forwards;
+}
+
+.enviado-check__marca {
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: enviado-marca 0.35s ease-out 0.55s forwards;
+}
+
+@keyframes enviado-circulo {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes enviado-marca {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enviado-check__circulo,
+  .enviado-check__marca {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
 .campo {
   margin-bottom: 1.4rem;
 }

@@ -7,6 +7,17 @@ export function Rosas({ className = '' }) {
   return <img className={className} src="/rosas.png" alt="" aria-hidden="true" loading="lazy" />
 }
 
+// Check animado (círculo + marca dibujándose con stroke-dasharray) para
+// confirmar el envío del RSVP sin depender de un gif externo.
+export function EnviadoCheck({ className = '' }) {
+  return (
+    <svg className={`enviado-check ${className}`} viewBox="0 0 80 80" aria-hidden="true">
+      <circle className="enviado-check__circulo" cx="40" cy="40" r="36" fill="none" />
+      <path className="enviado-check__marca" d="M24 41 L35 52 L57 28" fill="none" />
+    </svg>
+  )
+}
+
 export function Rasgado({ className = '' }) {
   return (
     <svg className={`rasgado ${className}`} viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">

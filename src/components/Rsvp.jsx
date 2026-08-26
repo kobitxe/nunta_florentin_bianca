@@ -4,6 +4,7 @@ import { supabase, obtenerRsvp, guardarRsvp } from '../lib/supabase.js'
 import { nombresDe } from '../lib/nombres.js'
 import { CONTACTO } from '../config/wedding.js'
 import Reveal from './Reveal.jsx'
+import { EnviadoCheck } from './Decor.jsx'
 
 // La invitación es personal: el invitado llega con /i/{token} y su nombre
 // viene de la URL, así que el formulario no pide datos personales.
@@ -63,6 +64,17 @@ export default function Rsvp({ token, invitado, cargando }) {
     contenido = <p className="aviso aviso--info">{t('rsvp.cargando')}</p>
   } else if (!invitado) {
     contenido = <p className="aviso aviso--info">{t('rsvp.noEncontrado')}</p>
+  } else if (estado === 'ok') {
+    // Tras enviar, se oculta el formulario entero (nada de inputs) y se
+    // muestra solo la confirmación con el check animado.
+    contenido = (
+      <Reveal>
+        <div className="rsvp__enviado" role="status">
+          <EnviadoCheck />
+          <p className="rsvp__enviado-texto">{asiste ? t('rsvp.gracias') : t('rsvp.graciasNo')}</p>
+        </div>
+      </Reveal>
+    )
   } else {
     contenido = (
       <Reveal>
@@ -71,7 +83,7 @@ export default function Rsvp({ token, invitado, cargando }) {
           {esPareja ? t('rsvp.saludoPareja') : t('rsvp.saludoIndividual')}
         </h3>
 
-        {yaRespondio && estado !== 'ok' && <p className="aviso aviso--info">{t('rsvp.yaRespondido')}</p>}
+        {yaRespondio && <p className="aviso aviso--info">{t('rsvp.yaRespondido')}</p>}
 
         <form onSubmit={onSubmit}>
           <div className="campo">
@@ -126,11 +138,6 @@ export default function Rsvp({ token, invitado, cargando }) {
             {estado === 'enviando' ? t('rsvp.enviando') : t('rsvp.enviar')}
           </button>
 
-          {estado === 'ok' && (
-            <p className="aviso aviso--ok" role="status">
-              {asiste ? t('rsvp.gracias') : t('rsvp.graciasNo')}
-            </p>
-          )}
           {estado === 'error' && (
             <p className="aviso aviso--error" role="status">
               {t('rsvp.error')}
