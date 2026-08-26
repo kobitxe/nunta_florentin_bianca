@@ -672,8 +672,9 @@ button {
   position: absolute;
   left: 0.15em;
   top: 0.1em;
-  width: 1.1em;
+  width: 1.5em;
   pointer-events: none;
+  filter: drop-shadow(0 0.05em 0.09em rgba(51, 48, 42, 0.4));
 }
 
 .paloma-vuelo svg {

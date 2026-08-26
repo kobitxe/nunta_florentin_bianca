@@ -39,8 +39,8 @@ export default function Paloma() {
         <path
           d="M20 12 C14 2 4 2 0 8 C6 8 12 10 16 14 L20 18 L24 14 C28 10 34 8 40 8 C36 2 26 2 20 12 Z"
           fill="#ffffff"
-          stroke="var(--linea)"
-          strokeWidth="0.6"
+          stroke="var(--taupe)"
+          strokeWidth="1.6"
           strokeLinejoin="round"
         />
       </svg>

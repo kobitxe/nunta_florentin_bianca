@@ -32,12 +32,15 @@ export default function Respuestas({ lista }) {
               <li className="respuesta-card" key={inv.id}>
                 <div className="respuesta-card__top">
                   <strong className="inv-card__nombre">{nombresDe(inv)}</strong>
-                  {estado === 'si' && <span className="chip chip--si">Sí</span>}
-                  {estado === 'no' && <span className="chip chip--no">No</span>}
-                  {estado === 'pendiente' && <span className="chip chip--pend">Pendiente</span>}
+                  
                   {r?.fecha_respuesta && (
                     <span className="respuesta-card__fecha">{formatoFecha(r.fecha_respuesta)}</span>
                   )}
+
+                  {estado === 'si' && <span className="chip chip--si">Sí</span>}
+                  {estado === 'no' && <span className="chip chip--no">No</span>}
+                  {estado === 'pendiente' && <span className="chip chip--pend">Pendiente</span>}
+                 
                 </div>
                 {!r && <p className="tabla__detalle">Todavía no ha respondido.</p>}
                 {r?.restricciones && <div className="tabla__detalle">🍽 {r.restricciones}</div>}
