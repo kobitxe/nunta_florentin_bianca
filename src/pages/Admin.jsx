@@ -117,6 +117,7 @@ function Panel({ email }) {
   const [copiado, setCopiado] = useState(null)
   const [dialogo, setDialogo] = useState(null) // { inv, accion: 'copiar' | 'whatsapp' }
   const [crearPendiente, setCrearPendiente] = useState(null) // datos del formulario a falta del idioma
+  const [menuAbierto, setMenuAbierto] = useState(null) // id de la invitación con el menú de acciones abierto
 
   const refrescar = useCallback(() => {
     listarInvitaciones()
@@ -132,6 +133,16 @@ function Panel({ email }) {
     return suscribirRsvps(refrescar)
   }, [refrescar])
 
+  // Cierra el menú de "más acciones" al pulsar fuera de él.
+  useEffect(() => {
+    if (!menuAbierto) return
+    const onClickFuera = (e) => {
+      if (!e.target.closest('.inv-card__menu-wrap')) setMenuAbierto(null)
+    }
+    document.addEventListener('click', onClickFuera)
+    return () => document.removeEventListener('click', onClickFuera)
+  }, [menuAbierto])
+
   const ejecutarCreacion = async (datos) => {
     setCreando(true)
     try {
@@ -140,8 +151,8 @@ function Panel({ email }) {
       setNombrePareja('')
       setVariante('sin_misa')
       refrescar()
-    } catch {
-      setError('No se pudo crear la invitación.')
+    } catch (err) {
+      setError(`No se pudo crear la invitación.${err?.message ? ` (${err.message})` : ''}`)
     } finally {
       setCreando(false)
     }
@@ -164,8 +175,8 @@ function Panel({ email }) {
     try {
       await borrarInvitacion(inv.id)
       refrescar()
-    } catch {
-      setError('No se pudo borrar la invitación.')
+    } catch (err) {
+      setError(`No se pudo borrar la invitación.${err?.message ? ` (${err.message})` : ''}`)
     }
   }
 
@@ -173,8 +184,8 @@ function Panel({ email }) {
     try {
       await fijarAsistencia(inv, estado)
       refrescar()
-    } catch {
-      setError('No se pudo cambiar el estado.')
+    } catch (err) {
+      setError(`No se pudo cambiar el estado.${err?.message ? ` (${err.message})` : ''}`)
     }
   }
 
@@ -292,21 +303,57 @@ function Panel({ email }) {
                 </div>
                 {r?.restricciones && <div className="tabla__detalle">🍽 {r.restricciones}</div>}
                 {r?.mensaje && <div className="tabla__detalle">💬 {r.mensaje}</div>}
-                <div className="acciones">
-                  <button className="btn-mini" type="button" onClick={() => setDialogo({ inv, accion: 'copiar' })}>
-                    {copiado === inv.id ? 'Copiado' : 'Copiar enlace'}
+
+                <div className="inv-card__menu-wrap">
+                  <button
+                    className="inv-card__menu-btn"
+                    type="button"
+                    aria-label="Más acciones"
+                    aria-expanded={menuAbierto === inv.id}
+                    onClick={() => setMenuAbierto(menuAbierto === inv.id ? null : inv.id)}
+                  >
+                    <span />
+                    <span />
+                    <span />
                   </button>
-                  <label className="estado-editar">
-                    Estado:
-                    <select value={estado} onChange={(e) => onEstado(inv, e.target.value)}>
-                      <option value="si">Sí</option>
-                      <option value="no">No</option>
-                      <option value="pendiente">Pendiente</option>
-                    </select>
-                  </label>
-                  <button className="btn-mini btn-mini--borrar" type="button" onClick={() => onBorrar(inv)}>
-                    Borrar
-                  </button>
+                  {menuAbierto === inv.id && (
+                    <div className="inv-card__menu">
+                      <button
+                        className="btn-mini"
+                        type="button"
+                        onClick={() => {
+                          setMenuAbierto(null)
+                          setDialogo({ inv, accion: 'copiar' })
+                        }}
+                      >
+                        {copiado === inv.id ? 'Copiado' : 'Copiar enlace'}
+                      </button>
+                      <label className="inv-card__menu-estado">
+                        Cambiar estado
+                        <select
+                          value={estado}
+                          onChange={(e) => {
+                            onEstado(inv, e.target.value)
+                            setMenuAbierto(null)
+                          }}
+                        >
+                          <option value="si">Sí</option>
+                          <option value="no">No</option>
+                          <option value="pendiente">Pendiente</option>
+                        </select>
+                      </label>
+                      <button
+                        className="btn-mini btn-mini--borrar"
+                        type="button"
+                        onClick={() => {
+                          setMenuAbierto(null)
+                          onBorrar(inv)
+                        }}
+                      >
+                        Borrar
+                      </button>
+                    </div>
+                  )}
                 </div>
               </li>
             )

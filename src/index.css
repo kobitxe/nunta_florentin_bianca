@@ -1382,10 +1382,11 @@ button {
 }
 
 .inv-card {
+  position: relative;
   background: var(--marfil);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
-  padding: 1rem 1.1rem;
+  padding: 1rem 2.6rem 1rem 1.1rem;
 }
 
 .inv-card__top {
@@ -1402,25 +1403,86 @@ button {
   overflow-wrap: anywhere;
 }
 
-.inv-card .acciones {
-  margin-top: 0.8rem;
-}
-
-.inv-card .acciones .btn-mini {
-  flex: 1 1 auto;
-  text-align: center;
-  padding: 0.5rem 0.7rem;
-}
-
 @media (min-width: 48rem) {
   .lista-inv {
     grid-template-columns: 1fr 1fr;
   }
+}
 
-  .inv-card .acciones .btn-mini {
-    flex: 0 0 auto;
-    padding: 0.28rem 0.65rem;
-  }
+/* Botón de "más acciones" (3 líneas) y su ventanita desplegable */
+.inv-card__menu-wrap {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+}
+
+.inv-card__menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.22rem;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--marfil);
+}
+
+.inv-card__menu-btn span {
+  display: block;
+  width: 1rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--taupe);
+}
+
+.inv-card__menu-btn:hover span,
+.inv-card__menu-btn[aria-expanded='true'] span {
+  background: var(--salvia-oscura);
+}
+
+.inv-card__menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 11rem;
+  padding: 0.5rem;
+  background: var(--marfil);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  box-shadow: 0 0.4rem 1.2rem rgba(51, 48, 42, 0.18);
+}
+
+.inv-card__menu .btn-mini {
+  width: 100%;
+  text-align: left;
+}
+
+.inv-card__menu-estado {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--taupe);
+  padding: 0.2rem 0;
+}
+
+.inv-card__menu-estado select {
+  font: inherit;
+  text-transform: none;
+  font-weight: 400;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 0.35rem 0.5rem;
 }
 
 .tabla__detalle {
@@ -1474,12 +1536,6 @@ button {
   height: 100%;
 }
 
-.acciones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
 .btn-mini {
   display: inline-block;
   border: 1px solid var(--linea);
@@ -1501,24 +1557,6 @@ button {
 .btn-mini--borrar:hover {
   border-color: #a04a3a;
   color: #a04a3a;
-}
-
-/* Edición manual del estado de asistencia */
-.estado-editar {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.75rem;
-  color: var(--taupe);
-}
-
-.estado-editar select {
-  font: inherit;
-  color: var(--tinta);
-  background: var(--marfil);
-  border: 1px solid var(--linea);
-  border-radius: var(--radio);
-  padding: 0.28rem 0.5rem;
 }
 
 .modal {

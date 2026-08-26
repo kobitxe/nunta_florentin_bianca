@@ -50,7 +50,8 @@ export default function Rsvp({ token, invitado, cargando }) {
       })
       setEstado('ok')
       setYaRespondio(true)
-    } catch {
+    } catch (err) {
+      console.error('guardarRsvp falló:', err)
       setEstado('error')
     }
   }
