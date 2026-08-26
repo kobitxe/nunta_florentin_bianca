@@ -8,13 +8,18 @@ const ORDEN_POR_VARIANTE = {
 
 // Selector de idioma flotante: la bandera activa a todo color, las demás
 // apagadas hasta que se pasa por encima o se selecciona. Las invitaciones
-// "con misa" muestran también la bandera rusa.
-export default function Idiomas({ variante = 'sin_misa' }) {
+// "con misa" muestran también la bandera rusa. `encima` lo sube por delante
+// de la carta (para el aviso de acceso bloqueado, que si no la tapa).
+export default function Idiomas({ variante = 'sin_misa', encima = false }) {
   const { idioma, cambiarIdioma } = useI18n()
   const codigos = ORDEN_POR_VARIANTE[variante] ?? ORDEN_POR_VARIANTE.sin_misa
 
   return (
-    <div className="idiomas" role="group" aria-label="Limba / Idioma / Язык">
+    <div
+      className={`idiomas${encima ? ' idiomas--encima' : ''}`}
+      role="group"
+      aria-label="Limba / Idioma / Язык"
+    >
       {codigos.map((cod) => {
         const { nombre, svg } = BANDERAS[cod]
         return (

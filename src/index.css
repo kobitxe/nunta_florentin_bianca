@@ -156,6 +156,13 @@ button {
   box-shadow: 0 0.4rem 1.2rem rgba(51, 48, 42, 0.14);
 }
 
+/* Con la carta bloqueada (.carta z-index 50 / .modal z-index 60), el
+   selector se sube por delante de las dos para poder cambiar de idioma
+   el aviso de acceso denegado. */
+.idiomas--encima {
+  z-index: 65;
+}
+
 /* Banderas circulares: la activa a color, la otra apagada */
 .idiomas__btn {
   width: 2.1rem;

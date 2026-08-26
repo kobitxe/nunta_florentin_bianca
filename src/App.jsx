@@ -38,7 +38,7 @@ export default function App() {
   return (
     <I18nProvider invitado={invitado}>
       <Carta invitado={invitado} token={token} denegado={denegado} />
-      <Idiomas variante={invitado?.variante ?? 'sin_misa'} />
+      <Idiomas variante={invitado?.variante ?? 'sin_misa'} encima={denegado} />
       <main>
         <Hero invitado={invitado} />
         <IntroCita />

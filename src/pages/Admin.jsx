@@ -7,7 +7,6 @@ import {
   fijarAsistencia,
   suscribirRsvps,
 } from '../lib/supabase.js'
-import { BANDERAS } from '../lib/banderas.jsx'
 
 const urlDe = (token, lang) => `${window.location.origin}/i/${token}${lang ? `?lang=${lang}` : ''}`
 const nombresDe = (inv) => (inv.tipo === 'pareja' ? `${inv.nombre} & ${inv.nombre_pareja}` : inv.nombre)
@@ -287,11 +286,6 @@ function Panel({ email }) {
                   <strong className="inv-card__nombre">{nombresDe(inv)}</strong>
                   <span className="chip chip--tipo">{inv.tipo}</span>
                   <span className="chip chip--tipo">{inv.variante === 'con_misa' ? 'Con Misa' : 'Sin Misa'}</span>
-                  {inv.idioma && BANDERAS[inv.idioma] && (
-                    <span className="bandera-mini" title={BANDERAS[inv.idioma].nombre}>
-                      {BANDERAS[inv.idioma].svg}
-                    </span>
-                  )}
                   {estado === 'si' && <span className="chip chip--si">Sí</span>}
                   {estado === 'no' && <span className="chip chip--no">No</span>}
                   {estado === 'pendiente' && <span className="chip chip--pend">Pendiente</span>}
