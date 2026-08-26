@@ -33,16 +33,13 @@ export function I18nProvider({ children, invitado }) {
   // un idioma guardado, se adopta como idioma de la página — salvo que el
   // enlace ya forzara uno explícito con ?lang=.
   useEffect(() => {
-    if (!invitado?.idioma) return
-    if (langParamRef.current) return
-    if (!(invitado.idioma in diccionarios)) return
-    setIdioma((actual) => {
-      if (actual === invitado.idioma) return actual
-      localStorage.setItem(STORAGE_KEY, invitado.idioma)
-      document.documentElement.lang = invitado.idioma
-      return invitado.idioma
-    })
-  }, [invitado])
+    const lang = invitado?.idioma
+    if (!lang || langParamRef.current || !(lang in diccionarios)) return
+    if (lang === idioma) return
+    setIdioma(lang)
+    localStorage.setItem(STORAGE_KEY, lang)
+    document.documentElement.lang = lang
+  }, [invitado, idioma])
 
   // t('rsvp.titlu') → valor del diccionario activo, con fallback a rumano.
   const t = (clave) => {

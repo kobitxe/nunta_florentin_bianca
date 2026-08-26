@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/context.js'
-import { CEREMONIA } from '../config/wedding.js'
+import { RECEPCION } from '../config/wedding.js'
 import { Rasgado } from './Decor.jsx'
 
 function restante() {
-  const diff = new Date(CEREMONIA.fechaISO) - Date.now()
+  const diff = new Date(RECEPCION.fechaISO) - Date.now()
   if (diff <= 0) return null
   return {
     zile: Math.floor(diff / 86400000),
