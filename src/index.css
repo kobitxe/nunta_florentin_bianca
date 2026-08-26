@@ -1514,7 +1514,7 @@ button {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: clamp(7rem, 22vw, 10rem);
+  width: clamp(3.5rem, 10vw, 5rem);
   transform: scaleX(-1);
   pointer-events: none;
   opacity: 0.85;
