@@ -148,15 +148,10 @@ function Panel({ email }) {
     }
   }
 
-  const onCrear = async (e) => {
+  const onCrear = (e) => {
     e.preventDefault()
     if (!nombre.trim() || (tipo === 'pareja' && !nombrePareja.trim())) return
-    const datos = { tipo, nombre: nombre.trim(), nombrePareja: nombrePareja.trim(), variante }
-    if (variante === 'con_misa') {
-      setCrearPendiente(datos)
-      return
-    }
-    await ejecutarCreacion({ ...datos, idioma: null })
+    setCrearPendiente({ tipo, nombre: nombre.trim(), nombrePareja: nombrePareja.trim(), variante })
   }
 
   const elegirIdiomaCreacion = async (lang) => {
@@ -291,10 +286,8 @@ function Panel({ email }) {
                 <div className="inv-card__top">
                   <strong className="inv-card__nombre">{nombresDe(inv)}</strong>
                   <span className="chip chip--tipo">{inv.tipo}</span>
-                  {inv.variante === 'con_misa' && (
-                    <span className="chip chip--tipo">Con Misa</span>
-                  )}
-                  {inv.variante === 'con_misa' && inv.idioma && BANDERAS[inv.idioma] && (
+                  <span className="chip chip--tipo">{inv.variante === 'con_misa' ? 'Con Misa' : 'Sin Misa'}</span>
+                  {inv.idioma && BANDERAS[inv.idioma] && (
                     <span className="bandera-mini" title={BANDERAS[inv.idioma].nombre}>
                       {BANDERAS[inv.idioma].svg}
                     </span>
@@ -355,7 +348,7 @@ function Panel({ email }) {
               ?
             </>
           }
-          idiomas={IDIOMAS_POR_VARIANTE.con_misa}
+          idiomas={IDIOMAS_POR_VARIANTE[crearPendiente.variante] ?? IDIOMAS_POR_VARIANTE.sin_misa}
           onElegir={elegirIdiomaCreacion}
           onCancelar={() => setCrearPendiente(null)}
         />
