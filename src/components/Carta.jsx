@@ -7,10 +7,9 @@ import { nombresDe, nombreDesdeToken } from '../lib/nombres.js'
 // Sobre de entrada: cubre la pantalla hasta que el invitado lo abre
 // con un click o con el primer intento de scroll. La apertura es un
 // timeline de GSAP: sello → solapa → interior → desvanecido del overlay.
-export default function Carta({ invitado, token, denegado }) {
+export default function Carta({ invitado, token, denegado, avisoVisible, onCerrarAviso }) {
   const { t } = useI18n()
   const [fase, setFase] = useState('cerrada') // cerrada | abriendo | oculta
-  const [avisoVisible, setAvisoVisible] = useState(true)
   const cartaRef = useRef(null)
   const solapaRef = useRef(null)
   const selloRef = useRef(null)
@@ -119,10 +118,10 @@ export default function Carta({ invitado, token, denegado }) {
       </button>
 
       {denegado && avisoVisible && (
-        <div className="modal" onClick={() => setAvisoVisible(false)}>
+        <div className="modal" onClick={onCerrarAviso}>
           <div className="modal__card" onClick={(e) => e.stopPropagation()}>
             <p>{t('carta.bloqueadaTexto')}</p>
-            <button className="rsvp__enviar" type="button" onClick={() => setAvisoVisible(false)}>
+            <button className="rsvp__enviar" type="button" onClick={onCerrarAviso}>
               {t('carta.bloqueadaBoton')}
             </button>
           </div>

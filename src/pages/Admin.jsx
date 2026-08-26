@@ -294,7 +294,7 @@ function Panel({ email }) {
                 {r?.mensaje && <div className="tabla__detalle">💬 {r.mensaje}</div>}
                 <div className="acciones">
                   <button className="btn-mini" type="button" onClick={() => setDialogo({ inv, accion: 'copiar' })}>
-                    {copiado === inv.id ? '✓ Copiado' : '🔗 Copiar enlace'}
+                    {copiado === inv.id ? 'Copiado' : 'Copiar enlace'}
                   </button>
                   <label className="estado-editar">
                     Estado:

@@ -19,6 +19,7 @@ export default function App() {
 
   const [invitado, setInvitado] = useState(null)
   const [cargandoInvitado, setCargandoInvitado] = useState(Boolean(token))
+  const [avisoVisible, setAvisoVisible] = useState(true)
 
   useEffect(() => {
     if (!token) return
@@ -37,8 +38,17 @@ export default function App() {
 
   return (
     <I18nProvider invitado={invitado}>
-      <Carta invitado={invitado} token={token} denegado={denegado} />
-      <Idiomas variante={invitado?.variante ?? 'sin_misa'} encima={denegado} />
+      <Carta
+        invitado={invitado}
+        token={token}
+        denegado={denegado}
+        avisoVisible={avisoVisible}
+        onCerrarAviso={() => setAvisoVisible(false)}
+      />
+      <Idiomas
+        variante={denegado ? 'con_misa' : (invitado?.variante ?? 'sin_misa')}
+        encima={denegado && avisoVisible}
+      />
       <main>
         <Hero invitado={invitado} />
         <IntroCita />
