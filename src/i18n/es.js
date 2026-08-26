@@ -115,7 +115,7 @@ export default {
     cargando: 'Cargando la invitación…',
     sinToken: 'La invitación es personal. Si no has recibido tu enlace, pídeselo a los novios.',
     noEncontrado: 'No hemos encontrado esta invitación. Revisa el enlace recibido.',
-    yaRespondido: 'Ya habéis respondido   podéis cambiar la respuesta cuando queráis.',
+    yaRespondido: 'Ya habéis respondido pero podéis cambiar la respuesta cuando queráis.',
     sinConfig: 'El formulario estará activo muy pronto.',
     contactoAyuda: 'Si el formulario falla o tienes dudas, escríbenos o llámanos:',
   },
