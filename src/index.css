@@ -206,6 +206,13 @@ button {
   pointer-events: none;
 }
 
+/* El filtro va en el sobre, no en .carta: el popup de aviso es hijo de
+   .carta y no debe salir también en blanco y negro. */
+.carta--bloqueada .sobre {
+  filter: grayscale(1);
+  cursor: default;
+}
+
 .sobre {
   position: absolute;
   inset: 0;

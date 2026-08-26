@@ -21,7 +21,7 @@ function Dia({ etiqueta, fechaGrande, lugar, direccion, fecha, hora, nota, mapsL
         {nota && <p className="dia__nota">{nota}</p>}
         {mapsLink && (
           <a className="dia__boton-mapa" href={mapsLink} target="_blank" rel="noreferrer">
-            {t('detalii.ventMapa')} ↗
+            {t('detalii.ventMapa')}
           </a>
         )}
       </div>

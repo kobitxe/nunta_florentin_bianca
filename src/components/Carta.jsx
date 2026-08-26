@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { LuPointer } from 'react-icons/lu'
 import { useI18n } from '../i18n/context.js'
@@ -7,16 +7,22 @@ import { nombresDe, nombreDesdeToken } from '../lib/nombres.js'
 // Sobre de entrada: cubre la pantalla hasta que el invitado lo abre
 // con un click o con el primer intento de scroll. La apertura es un
 // timeline de GSAP: sello → solapa → interior → desvanecido del overlay.
-export default function Carta({ invitado, token }) {
+export default function Carta({ invitado, token, denegado }) {
   const { t } = useI18n()
   const [fase, setFase] = useState('cerrada') // cerrada | abriendo | oculta
+  const [avisoVisible, setAvisoVisible] = useState(true)
   const cartaRef = useRef(null)
   const solapaRef = useRef(null)
   const selloRef = useRef(null)
   const interiorRef = useRef(null)
   const hintRef = useRef(null)
 
-  const abrir = () => setFase((f) => (f === 'cerrada' ? 'abriendo' : f))
+  // Sin invitación válida, el sobre se queda cerrado para siempre: no
+  // reacciona a clics ni a gestos de scroll/teclado.
+  const abrir = useCallback(() => {
+    if (denegado) return
+    setFase((f) => (f === 'cerrada' ? 'abriendo' : f))
+  }, [denegado])
 
   useEffect(() => {
     if (fase !== 'abriendo') return
@@ -57,7 +63,7 @@ export default function Carta({ invitado, token }) {
 
   // El primer gesto de scroll también abre la carta.
   useEffect(() => {
-    if (fase !== 'cerrada') return
+    if (fase !== 'cerrada' || denegado) return
     const onGesto = () => abrir()
     const onTecla = (e) => {
       if (['ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) abrir()
@@ -70,15 +76,24 @@ export default function Carta({ invitado, token }) {
       window.removeEventListener('touchmove', onGesto)
       window.removeEventListener('keydown', onTecla)
     }
-  }, [fase])
+  }, [fase, denegado, abrir])
 
   if (fase === 'oculta') return null
 
-  const nombreDestinatario = invitado ? nombresDe(invitado) : nombreDesdeToken(token)
+  const nombreDestinatario = denegado ? null : invitado ? nombresDe(invitado) : nombreDesdeToken(token)
 
   return (
-    <div ref={cartaRef} className={`carta${fase === 'abriendo' ? ' carta--abierta' : ''}`}>
-      <button type="button" className="sobre" onClick={abrir} aria-label={t('carta.abrir')}>
+    <div
+      ref={cartaRef}
+      className={`carta${fase === 'abriendo' ? ' carta--abierta' : ''}${denegado ? ' carta--bloqueada' : ''}`}
+    >
+      <button
+        type="button"
+        className="sobre"
+        onClick={abrir}
+        disabled={denegado}
+        aria-label={denegado ? t('carta.bloqueadaTexto') : t('carta.abrir')}
+      >
         <span className="sobre__interior" ref={interiorRef}>
           <span className="sobre__interior-nombres">Bianca &amp; Florentin</span>
           <span className="sobre__interior-fecha">{t('hero.datele')}</span>
@@ -95,11 +110,24 @@ export default function Carta({ invitado, token }) {
         <span className="sobre__sello" ref={selloRef}>
           B&amp;F
         </span>
-        <span className="carta__hint" ref={hintRef}>
-          <LuPointer className="carta__hint-dedo" aria-hidden="true" />
-          <span className="carta__hint-texto">{t('carta.ajutor')}</span>
-        </span>
+        {!denegado && (
+          <span className="carta__hint" ref={hintRef}>
+            <LuPointer className="carta__hint-dedo" aria-hidden="true" />
+            <span className="carta__hint-texto">{t('carta.ajutor')}</span>
+          </span>
+        )}
       </button>
+
+      {denegado && avisoVisible && (
+        <div className="modal" onClick={() => setAvisoVisible(false)}>
+          <div className="modal__card" onClick={(e) => e.stopPropagation()}>
+            <p>{t('carta.bloqueadaTexto')}</p>
+            <button className="rsvp__enviar" type="button" onClick={() => setAvisoVisible(false)}>
+              {t('carta.bloqueadaBoton')}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

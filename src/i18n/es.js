@@ -9,6 +9,8 @@ export default {
     abrir: 'Abre la invitación',
     ajutor: 'Toca el sello para abrir',
     para: 'Para',
+    bloqueadaTexto: 'Si no has recibido invitación no puedes entrar. Utiliza el enlace personalizado que te hemos mandado.',
+    bloqueadaBoton: 'Entendido',
   },
   banda: {
     texto: 'Ceremonia religiosa · 8 de agosto de 2027 · Biserica Neagră',

@@ -9,6 +9,8 @@ export default {
     abrir: 'Deschide invitația',
     ajutor: 'Apasă sigiliul pentru a deschide',
     para: 'Pentru',
+    bloqueadaTexto: 'Dacă nu ai primit o invitație, nu poți intra. Folosește linkul personalizat pe care ți l-am trimis.',
+    bloqueadaBoton: 'Am înțeles',
   },
   banda: {
     texto: 'Cununia religioasă · 8 august 2027 · Biserica Neagră',

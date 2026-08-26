@@ -30,9 +30,14 @@ export default function App() {
 
   if (ruta === '/admin') return <Admin />
 
+  // Sin token (URL base) o token que no corresponde a ninguna invitación:
+  // no se deja pasar. cargandoInvitado evita el falso "denegado" mientras
+  // la búsqueda del token todavía está en curso.
+  const denegado = !cargandoInvitado && !invitado
+
   return (
     <I18nProvider invitado={invitado}>
-      <Carta invitado={invitado} token={token} />
+      <Carta invitado={invitado} token={token} denegado={denegado} />
       <Idiomas variante={invitado?.variante ?? 'sin_misa'} />
       <main>
         <Hero invitado={invitado} />
