@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { crearInvitacion, borrarInvitacion, fijarAsistencia } from '../../lib/supabase.js'
 import ModalIdioma from './ModalIdioma.jsx'
-import { urlDe, nombresDe, estadoDe, linkWhatsApp, IDIOMAS_POR_VARIANTE } from './helpers.js'
+import { urlDe, nombresDe, estadoDe, IDIOMAS_POR_VARIANTE } from './helpers.js'
 
 export default function Invitaciones({ lista, refrescar }) {
   const [error, setError] = useState(null)
@@ -11,7 +11,7 @@ export default function Invitaciones({ lista, refrescar }) {
   const [nombrePareja, setNombrePareja] = useState('')
   const [creando, setCreando] = useState(false)
   const [copiado, setCopiado] = useState(null)
-  const [dialogo, setDialogo] = useState(null) // { inv, accion: 'copiar' | 'whatsapp' }
+  const [dialogo, setDialogo] = useState(null) // invitación a la que copiar el enlace
   const [crearPendiente, setCrearPendiente] = useState(null) // datos del formulario a falta del idioma
   const [menuAbierto, setMenuAbierto] = useState(null) // id de la invitación con el menú de acciones abierto
 
@@ -74,19 +74,15 @@ export default function Invitaciones({ lista, refrescar }) {
     }
   }
 
-  // Copiar y WhatsApp preguntan primero el idioma; el enlace lleva ?lang=
-  // para que la invitación se abra directamente en ese idioma. No cambia
-  // el idioma guardado del invitado, solo el del enlace puntual.
+  // Copiar pregunta primero el idioma; el enlace lleva ?lang= para que la
+  // invitación se abra directamente en ese idioma. No cambia el idioma
+  // guardado del invitado, solo el del enlace puntual.
   const elegirIdioma = async (lang) => {
-    const { inv, accion } = dialogo
+    const inv = dialogo
     setDialogo(null)
-    if (accion === 'copiar') {
-      await navigator.clipboard.writeText(urlDe(inv.token, lang))
-      setCopiado(inv.id)
-      setTimeout(() => setCopiado(null), 1500)
-    } else {
-      window.open(linkWhatsApp(inv, lang), '_blank', 'noopener')
-    }
+    await navigator.clipboard.writeText(urlDe(inv.token, lang))
+    setCopiado(inv.id)
+    setTimeout(() => setCopiado(null), 1500)
   }
 
   return (
@@ -179,20 +175,10 @@ export default function Invitaciones({ lista, refrescar }) {
                         type="button"
                         onClick={() => {
                           setMenuAbierto(null)
-                          setDialogo({ inv, accion: 'copiar' })
+                          setDialogo(inv)
                         }}
                       >
                         {copiado === inv.id ? 'Copiado' : 'Copiar enlace'}
-                      </button>
-                      <button
-                        className="btn-mini"
-                        type="button"
-                        onClick={() => {
-                          setMenuAbierto(null)
-                          setDialogo({ inv, accion: 'whatsapp' })
-                        }}
-                      >
-                        Enviar por WhatsApp
                       </button>
                       <label className="inv-card__menu-estado">
                         Cambiar estado
@@ -229,13 +215,13 @@ export default function Invitaciones({ lista, refrescar }) {
 
       {dialogo && (
         <ModalIdioma
-          titulo={dialogo.accion === 'copiar' ? 'Copiar enlace' : 'Enviar por WhatsApp'}
+          titulo="Copiar enlace"
           pregunta={
             <>
-              ¿En qué idioma para <strong>{nombresDe(dialogo.inv)}</strong>?
+              ¿En qué idioma para <strong>{nombresDe(dialogo)}</strong>?
             </>
           }
-          idiomas={IDIOMAS_POR_VARIANTE[dialogo.inv.variante] ?? IDIOMAS_POR_VARIANTE.sin_misa}
+          idiomas={IDIOMAS_POR_VARIANTE[dialogo.variante] ?? IDIOMAS_POR_VARIANTE.sin_misa}
           onElegir={elegirIdioma}
           onCancelar={() => setDialogo(null)}
         />
