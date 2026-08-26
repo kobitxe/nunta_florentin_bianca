@@ -13,7 +13,7 @@ export async function buscarInvitadoPorToken(token) {
   if (!supabase) return null
   const { data, error } = await supabase
     .from('invitados')
-    .select('id, nombre, nombre_pareja, tipo')
+    .select('id, nombre, nombre_pareja, tipo, variante, idioma')
     .eq('token', token)
     .maybeSingle()
   if (error) throw error
@@ -58,7 +58,7 @@ function slug(texto) {
     .replace(/(^-|-$)/g, '')
 }
 
-export async function crearInvitacion({ tipo, nombre, nombrePareja }) {
+export async function crearInvitacion({ tipo, nombre, nombrePareja, variante, idioma }) {
   if (!supabase) throw new Error('supabase-not-configured')
   // Los dos nombres de una pareja se unen con "_" (slug() nunca produce
   // ese carácter) para poder distinguirlos luego en nombreDesdeToken()
@@ -67,7 +67,14 @@ export async function crearInvitacion({ tipo, nombre, nombrePareja }) {
   const token = `${base}-${Math.random().toString(36).slice(2, 6)}`
   const { data, error } = await supabase
     .from('invitados')
-    .insert({ nombre, nombre_pareja: tipo === 'pareja' ? nombrePareja : null, tipo, token })
+    .insert({
+      nombre,
+      nombre_pareja: tipo === 'pareja' ? nombrePareja : null,
+      tipo,
+      token,
+      variante,
+      idioma: idioma ?? null,
+    })
     .select()
     .single()
   if (error) throw error
