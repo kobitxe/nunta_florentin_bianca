@@ -60,5 +60,9 @@ create policy "anon lee rsvps"
 -- dashboard de Supabase (Table Editor), que usa el rol service_role.
 
 -- ── Realtime (estadísticas en vivo) ─────────────────────────────────────
+-- En un DO block con excepción para poder volver a ejecutar este script
+-- sin que falle si la tabla ya está en la publicación.
 
-alter publication supabase_realtime add table public.rsvps;
+do $$ begin
+  alter publication supabase_realtime add table public.rsvps;
+exception when duplicate_object then null; end $$;
