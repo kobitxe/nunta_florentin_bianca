@@ -55,8 +55,8 @@ export default {
       eticheta: 'Cununia religioasă',
       fechaGrande: '5 august',
       data: 'joi, 5 august 2027',
-      ora: 'ora 11:00 (se confirmă)',
-      direccionNota: 'Ora exactă se confirmă în curând',
+      ora: 'ora 11:00',
+      direccionNota: null,
     },
     receptie: {
       eticheta: 'Locația',

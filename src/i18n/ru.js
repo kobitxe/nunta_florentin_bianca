@@ -55,8 +55,8 @@ export default {
       eticheta: 'Венчание',
       fechaGrande: '5 августа',
       data: 'четверг, 5 августа 2027',
-      ora: '11:00 (время уточняется)',
-      direccionNota: 'Точное время скоро подтвердят',
+      ora: '11:00',
+      direccionNota: null,
     },
     receptie: {
       eticheta: 'Место проведения',

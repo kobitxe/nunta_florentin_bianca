@@ -55,8 +55,8 @@ export default {
       eticheta: 'La ceremonia religiosa',
       fechaGrande: '5 de agosto',
       data: 'jueves, 5 de agosto de 2027',
-      ora: '11:00 h (hora por confirmar)',
-      direccionNota: 'La hora exacta se confirmará en los próximos días',
+      ora: '11:00 h',
+      direccionNota: null,
     },
     receptie: {
       eticheta: 'La ubicación',

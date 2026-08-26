@@ -5,8 +5,7 @@
 
 export const CEREMONIA = {
   fechaISO: '2027-08-05T11:00:00+03:00',
-  // Hora provisional (~11:00): pendiente de confirmación final.
-  horaConfirmada: false,
+  horaConfirmada: true,
   direccionConfirmada: true,
   lugar: 'Biserica Ortodoxă de Rit Vechi «Vovidenia»',
   direccion: 'Strada Reșița 76, Brăila',
