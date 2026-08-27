@@ -473,7 +473,7 @@ button {
   object-fit: cover;
   object-position: center 25%;
   display: none;
-  filter: blur(50px) saturate(1.15) brightness(0.85);
+  filter: blur(24px) saturate(1.15) brightness(0.85);
   transform: scale(1.2);
 }
 
@@ -1323,6 +1323,35 @@ button {
   color: var(--taupe);
 }
 
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 70;
+  margin-top: 0;
+  max-width: calc(100vw - 2rem);
+  box-shadow: 0 0.5rem 1.4rem rgba(51, 48, 42, 0.18);
+  animation: toast-entrada 0.25s ease;
+}
+
+@keyframes toast-entrada {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0.6rem);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}
+
 /* ── Stats (panel) ──────────────────────────────────────── */
 .stats {
   display: grid;
@@ -1392,15 +1421,14 @@ button {
   text-align: center;
 }
 
-/* Barra lateral fija en escritorio; barra superior + barra de pestañas
-   abajo en móvil (más cómoda con el pulgar que un menú hamburguesa). */
+/* Barra lateral fija en escritorio; en móvil/tablet, barra superior con
+   menú hamburguesa que abre un panel deslizante desde la izquierda. */
 .admin-layout {
   display: flex;
   min-height: 100svh;
 }
 
-.admin-topbar,
-.admin-tabbar {
+.admin-topbar {
   display: none;
 }
 
@@ -1483,14 +1511,37 @@ button {
   .admin-topbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 0.9rem;
     padding: 0.9rem 1.1rem;
     background: var(--marfil);
     border-bottom: 1px solid var(--linea);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 20;
+  }
+
+  .admin-hamburguesa {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.24rem;
+    width: 2.3rem;
+    height: 2.3rem;
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    background: var(--papel);
+  }
+
+  .admin-hamburguesa span {
+    display: block;
+    width: 1.05rem;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--taupe);
   }
 
   .admin-topbar__marca {
@@ -1499,34 +1550,62 @@ button {
   }
 
   .admin-main {
-    padding: 1.5rem 1rem 6rem;
+    padding: calc(4.6rem + env(safe-area-inset-top, 0px)) 1rem 3rem;
   }
 
-  .admin-tabbar {
-    display: flex;
+  .admin-topbar {
+    padding-top: max(0.9rem, env(safe-area-inset-top, 0px));
+  }
+
+  .admin-drawer__fondo {
     position: fixed;
-    left: 0;
-    right: 0;
+    inset: 0;
+    z-index: 29;
+    background: rgba(51, 48, 42, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .admin-drawer__fondo.abierto {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .admin-drawer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
     bottom: 0;
-    z-index: 20;
+    left: 0;
+    z-index: 30;
+    width: min(78vw, 17rem);
+    padding: 1.6rem 1.2rem;
+    padding-top: max(1.6rem, env(safe-area-inset-top));
     background: var(--marfil);
-    border-top: 1px solid var(--linea);
-    padding-bottom: env(safe-area-inset-bottom, 0);
+    border-right: 1px solid var(--linea);
+    box-shadow: 0.5rem 0 1.6rem rgba(51, 48, 42, 0.14);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
   }
 
-  .admin-tabbar__btn {
-    flex: 1;
-    padding: 0.75rem 0.5rem;
-    text-align: center;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--taupe);
-    border-top: 2px solid transparent;
+  .admin-drawer.abierto {
+    transform: translateX(0);
   }
 
-  .admin-tabbar__btn.activo {
-    color: var(--salvia-oscura);
-    border-top-color: var(--salvia);
+  @media (prefers-reduced-motion: reduce) {
+    .admin-drawer__fondo,
+    .admin-drawer {
+      transition: none;
+    }
+  }
+}
+
+@media (min-width: 64rem) {
+  .admin-drawer,
+  .admin-drawer__fondo {
+    display: none;
   }
 }
 
@@ -1711,6 +1790,20 @@ button {
   font-size: 1.05rem;
   margin-right: auto;
   overflow-wrap: anywhere;
+}
+
+.inv-card__bandera {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.inv-card__bandera svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 @media (min-width: 48rem) {
@@ -1922,6 +2015,32 @@ button {
 .modal__opciones .rsvp__enviar {
   margin-top: 0;
   padding: 0.8rem;
+}
+
+.modal__card--form {
+  max-width: 24rem;
+  text-align: left;
+}
+
+.modal__card--form h3 {
+  text-align: center;
+}
+
+.modal__card--form .campo {
+  margin-bottom: 1rem;
+}
+
+.modal__acciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+.modal__acciones .rsvp__enviar {
+  margin-top: 0;
+  padding: 0.8rem 1.6rem;
 }
 
 /* ── Footer ─────────────────────────────────────────────── */

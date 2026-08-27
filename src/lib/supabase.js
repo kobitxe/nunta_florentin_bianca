@@ -115,6 +115,20 @@ export async function fijarAsistencia(inv, estado) {
   if (error) throw error
 }
 
+export async function actualizarInvitacion(id, { nombre, nombrePareja, tipo, variante, idioma }) {
+  if (!supabase) throw new Error('supabase-not-configured')
+  const { error } = await supabase
+    .from('invitados')
+    .update({
+      nombre,
+      nombre_pareja: tipo === 'pareja' ? nombrePareja : null,
+      variante,
+      idioma: idioma ?? null,
+    })
+    .eq('id', id)
+  if (error) throw error
+}
+
 export async function borrarInvitacion(id) {
   if (!supabase) throw new Error('supabase-not-configured')
   const { error } = await supabase.from('invitados').delete().eq('id', id)

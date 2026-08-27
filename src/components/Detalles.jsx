@@ -44,7 +44,7 @@ export default function Detalles({ invitado }) {
       <Rasgado className="seccion__corte seccion__corte--oscuro" />
       <div className="seccion__inner">
         <Reveal>
-          <p className="eyebrow">{t('detalii.eyebrow')}</p>
+
           <h2 className="titulo">{t('detalii.titlu')}</h2>
         </Reveal>
 

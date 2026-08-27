@@ -11,7 +11,7 @@ import { EnviadoCheck } from './Decor.jsx'
 export default function Rsvp({ token, invitado, cargando }) {
   const { t } = useI18n()
   const [yaRespondio, setYaRespondio] = useState(false)
-  const [asiste, setAsiste] = useState(null)
+  const [asiste, setAsiste] = useState(true)
   const [restricciones, setRestricciones] = useState('')
   const [mensaje, setMensaje] = useState('')
   const [estado, setEstado] = useState('idle') // idle | enviando | ok | error
@@ -38,7 +38,6 @@ export default function Rsvp({ token, invitado, cargando }) {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    if (asiste === null) return
     setEstado('enviando')
     try {
       await guardarRsvp({
@@ -110,7 +109,7 @@ export default function Rsvp({ token, invitado, cargando }) {
             </div>
           </div>
 
-          {asiste === true && (
+          {asiste && (
             <div className="campo">
               <label htmlFor="rsvp-restricciones">{t('rsvp.restricciones')}</label>
               <input
@@ -123,19 +122,17 @@ export default function Rsvp({ token, invitado, cargando }) {
             </div>
           )}
 
-          {asiste !== null && (
-            <div className="campo">
-              <label htmlFor="rsvp-mensaje">{t('rsvp.mensaje')}</label>
-              <textarea
-                id="rsvp-mensaje"
-                placeholder={t('rsvp.mensajePlaceholder')}
-                value={mensaje}
-                onChange={(e) => setMensaje(e.target.value)}
-              />
-            </div>
-          )}
+          <div className="campo">
+            <label htmlFor="rsvp-mensaje">{t('rsvp.mensaje')}</label>
+            <textarea
+              id="rsvp-mensaje"
+              placeholder={t('rsvp.mensajePlaceholder')}
+              value={mensaje}
+              onChange={(e) => setMensaje(e.target.value)}
+            />
+          </div>
 
-          <button className="rsvp__enviar" type="submit" disabled={asiste === null || estado === 'enviando'}>
+          <button className="rsvp__enviar" type="submit" disabled={estado === 'enviando'}>
             {estado === 'enviando' ? t('rsvp.enviando') : t('rsvp.enviar')}
           </button>
 

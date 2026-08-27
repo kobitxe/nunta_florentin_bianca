@@ -17,7 +17,7 @@ export default function Familia() {
           <div className="familia__parejas">
             <p className="familia__pareja">Livia &amp; Danuț Larie</p>
             <p className="familia__pareja">
-              Paula Izot &amp; Ignat Abaianitz{' '}
+              Paula Izot &amp; Ignat Abaianitz 🕊️{' '}
               <span
                 className="familia__memoria"
                 role="img"

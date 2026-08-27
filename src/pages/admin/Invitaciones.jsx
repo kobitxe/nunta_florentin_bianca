@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
-import { crearInvitacion, borrarInvitacion, fijarAsistencia } from '../../lib/supabase.js'
+import { useEffect, useRef, useState } from 'react'
+import { crearInvitacion, actualizarInvitacion, borrarInvitacion, fijarAsistencia } from '../../lib/supabase.js'
 import ModalIdioma from './ModalIdioma.jsx'
+import ModalEditar from './ModalEditar.jsx'
+import { BANDERAS } from '../../lib/banderas.jsx'
 import { urlDe, nombresDe, estadoDe, IDIOMAS_POR_VARIANTE } from './helpers.js'
 
 export default function Invitaciones({ lista, refrescar }) {
@@ -10,10 +12,11 @@ export default function Invitaciones({ lista, refrescar }) {
   const [nombre, setNombre] = useState('')
   const [nombrePareja, setNombrePareja] = useState('')
   const [creando, setCreando] = useState(false)
-  const [copiado, setCopiado] = useState(null)
-  const [dialogo, setDialogo] = useState(null) // invitación a la que copiar el enlace
+  const [aviso, setAviso] = useState(null) // toast de confirmación (p. ej. al copiar el enlace)
+  const [editando, setEditando] = useState(null) // invitación abierta en el modal de edición
   const [crearPendiente, setCrearPendiente] = useState(null) // datos del formulario a falta del idioma
   const [menuAbierto, setMenuAbierto] = useState(null) // id de la invitación con el menú de acciones abierto
+  const avisoTimeout = useRef(null)
 
   // Cierra el menú de "más acciones" al pulsar fuera de él.
   useEffect(() => {
@@ -24,6 +27,14 @@ export default function Invitaciones({ lista, refrescar }) {
     document.addEventListener('click', onClickFuera)
     return () => document.removeEventListener('click', onClickFuera)
   }, [menuAbierto])
+
+  useEffect(() => () => clearTimeout(avisoTimeout.current), [])
+
+  const mostrarAviso = (mensaje, tipo = 'ok') => {
+    clearTimeout(avisoTimeout.current)
+    setAviso({ mensaje, tipo })
+    avisoTimeout.current = setTimeout(() => setAviso(null), 2500)
+  }
 
   const ejecutarCreacion = async (datos) => {
     setCreando(true)
@@ -74,15 +85,22 @@ export default function Invitaciones({ lista, refrescar }) {
     }
   }
 
-  // Copiar pregunta primero el idioma; el enlace lleva ?lang= para que la
-  // invitación se abra directamente en ese idioma. No cambia el idioma
-  // guardado del invitado, solo el del enlace puntual.
-  const elegirIdioma = async (lang) => {
-    const inv = dialogo
-    setDialogo(null)
-    await navigator.clipboard.writeText(urlDe(inv.token, lang))
-    setCopiado(inv.id)
-    setTimeout(() => setCopiado(null), 1500)
+  // El enlace se copia directamente en el idioma ya guardado de la
+  // invitación (elegido al crearla o corregido luego desde "Editar").
+  const copiarEnlace = async (inv) => {
+    try {
+      await navigator.clipboard.writeText(urlDe(inv.token, inv.idioma))
+      mostrarAviso(`Enlace de ${nombresDe(inv)} copiado.`)
+    } catch {
+      mostrarAviso('No se pudo copiar el enlace.', 'error')
+    }
+  }
+
+  const onGuardarEdicion = async (datos) => {
+    const inv = editando
+    await actualizarInvitacion(inv.id, { ...datos, tipo: inv.tipo })
+    setEditando(null)
+    refrescar()
   }
 
   return (
@@ -95,8 +113,8 @@ export default function Invitaciones({ lista, refrescar }) {
           <div className="campo">
             <label htmlFor="crear-tipo">Tipo</label>
             <select id="crear-tipo" value={tipo} onChange={(e) => setTipo(e.target.value)}>
-              <option value="individual">Individual (Estás invitado)</option>
-              <option value="pareja">Pareja (Estáis invitados)</option>
+              <option value="individual">Individual</option>
+              <option value="pareja">Pareja</option>
             </select>
           </div>
           <div className="campo">
@@ -148,6 +166,11 @@ export default function Invitaciones({ lista, refrescar }) {
             return (
               <li className="inv-card" key={inv.id}>
                 <div className="inv-card__top">
+                  {inv.idioma && BANDERAS[inv.idioma] && (
+                    <span className="inv-card__bandera" title={BANDERAS[inv.idioma].nombre}>
+                      {BANDERAS[inv.idioma].svg}
+                    </span>
+                  )}
                   <strong className="inv-card__nombre">{nombresDe(inv)}</strong>
                   <span className="chip chip--tipo">{inv.tipo}</span>
                   <span className="chip chip--tipo">{inv.variante === 'con_misa' ? 'Con Misa' : 'Sin Misa'}</span>
@@ -175,10 +198,20 @@ export default function Invitaciones({ lista, refrescar }) {
                         type="button"
                         onClick={() => {
                           setMenuAbierto(null)
-                          setDialogo(inv)
+                          copiarEnlace(inv)
                         }}
                       >
-                        {copiado === inv.id ? 'Copiado' : 'Copiar enlace'}
+                        Copiar enlace
+                      </button>
+                      <button
+                        className="btn-mini"
+                        type="button"
+                        onClick={() => {
+                          setMenuAbierto(null)
+                          setEditando(inv)
+                        }}
+                      >
+                        Editar
                       </button>
                       <label className="inv-card__menu-estado">
                         Cambiar estado
@@ -213,18 +246,8 @@ export default function Invitaciones({ lista, refrescar }) {
         </ul>
       )}
 
-      {dialogo && (
-        <ModalIdioma
-          titulo="Copiar enlace"
-          pregunta={
-            <>
-              ¿En qué idioma para <strong>{nombresDe(dialogo)}</strong>?
-            </>
-          }
-          idiomas={IDIOMAS_POR_VARIANTE[dialogo.variante] ?? IDIOMAS_POR_VARIANTE.sin_misa}
-          onElegir={elegirIdioma}
-          onCancelar={() => setDialogo(null)}
-        />
+      {editando && (
+        <ModalEditar inv={editando} onGuardar={onGuardarEdicion} onCancelar={() => setEditando(null)} />
       )}
 
       {crearPendiente && (
@@ -245,6 +268,12 @@ export default function Invitaciones({ lista, refrescar }) {
           onElegir={elegirIdiomaCreacion}
           onCancelar={() => setCrearPendiente(null)}
         />
+      )}
+
+      {aviso && (
+        <div className={`toast aviso aviso--${aviso.tipo === 'error' ? 'error' : 'ok'}`} role="status">
+          {aviso.mensaje}
+        </div>
       )}
     </div>
   )
