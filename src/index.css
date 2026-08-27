@@ -34,6 +34,10 @@ html {
      sigue funcionando igual, solo se oculta la barra en sí. */
   scrollbar-width: none;
   -ms-overflow-style: none;
+  /* Ningún elemento debe crear scroll lateral (p. ej. la paloma de
+     Familia.jsx vuela unos px fuera de su párrafo en móvil); esto lo
+     recorta sin tener que perseguir cada desbordamiento decorativo. */
+  overflow-x: hidden;
 }
 
 html::-webkit-scrollbar {
@@ -41,6 +45,9 @@ html::-webkit-scrollbar {
 }
 
 body {
+  /* En iOS Safari, overflow-x:hidden solo en <html> no basta para frenar
+     el rebote elástico lateral si algo excede el ancho; repetido aquí. */
+  overflow-x: hidden;
   font-family: var(--sans);
   font-weight: 400;
   font-size: 1.05rem;
