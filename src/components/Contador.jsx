@@ -36,7 +36,6 @@ export default function Contador() {
           <span>{t('contador.banner.hora')}</span>
         </div>
         <p className="contador__teaser">{t('contador.teaser')}</p>
-        <p className="eyebrow">{t('hero.countdown.titlu')}</p>
         <div className="countdown__cifras">
           {['zile', 'ore', 'minute', 'secunde'].map((unidad) => (
             <div className="countdown__bloque" key={unidad}>
