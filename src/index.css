@@ -562,6 +562,17 @@ button {
   width: 100%;
 }
 
+/* Subir el bloque de arriba para que "NOS CASAMOS" no tape el pelo del novio */
+.hero__arriba {
+  margin-top: -3rem;
+}
+
+@media (min-width: 48rem) {
+  .hero__arriba {
+    margin-top: -1.5rem;
+  }
+}
+
 .hero__saludo {
   font-family: var(--script);
   font-size: clamp(1.6rem, 6vw, 2.2rem);
