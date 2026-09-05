@@ -1,3 +1,4 @@
+import { LuUtensilsCrossed, LuBaby, LuMessageCircle } from 'react-icons/lu'
 import { nombresDe, estadoDe, primerRsvp } from './helpers.js'
 
 function formatoFecha(iso) {
@@ -43,8 +44,27 @@ export default function Respuestas({ lista }) {
                  
                 </div>
                 {!r && <p className="tabla__detalle">Todavía no ha respondido.</p>}
-                {r?.restricciones && <div className="tabla__detalle">🍽 {r.restricciones}</div>}
-                {r?.mensaje && <div className="tabla__detalle">💬 {r.mensaje}</div>}
+                {r?.restricciones && (
+                  <div className="tabla__detalle tabla__detalle--con-icono">
+                    <LuUtensilsCrossed size={14} aria-hidden="true" />
+                    <span>{r.restricciones}</span>
+                  </div>
+                )}
+                {r?.num_ninos > 0 && (
+                  <div className="tabla__detalle tabla__detalle--con-icono">
+                    <LuBaby size={14} aria-hidden="true" />
+                    <span>
+                      {r.num_ninos} {r.num_ninos === 1 ? 'niño' : 'niños'}
+                      {r.edades_ninos ? ` · edades ${r.edades_ninos}` : ''}
+                    </span>
+                  </div>
+                )}
+                {r?.mensaje && (
+                  <div className="tabla__detalle tabla__detalle--con-icono">
+                    <LuMessageCircle size={14} aria-hidden="true" />
+                    <span>{r.mensaje}</span>
+                  </div>
+                )}
               </li>
             )
           })}

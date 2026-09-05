@@ -24,15 +24,25 @@ export async function obtenerRsvp(invitadoId) {
   if (!supabase) return null
   const { data, error } = await supabase
     .from('rsvps')
-    .select('asiste, restricciones, mensaje')
+    .select('asiste, restricciones, mensaje, num_ninos, edades_ninos')
     .eq('invitado_id', invitadoId)
     .maybeSingle()
   if (error) throw error
   return data
 }
 
-export async function guardarRsvp({ invitadoId, esPareja, asiste, restricciones, mensaje }) {
+export async function guardarRsvp({
+  invitadoId,
+  esPareja,
+  asiste,
+  restricciones,
+  mensaje,
+  numNinos,
+  edadesNinos,
+}) {
   if (!supabase) throw new Error('supabase-not-configured')
+  // Los niños y sus edades solo tienen sentido si el invitado asiste.
+  const ninos = asiste ? Math.max(0, Math.min(6, Number(numNinos) || 0)) : 0
   const { error } = await supabase.from('rsvps').upsert(
     {
       invitado_id: invitadoId,
@@ -40,6 +50,8 @@ export async function guardarRsvp({ invitadoId, esPareja, asiste, restricciones,
       num_acompanantes: asiste && esPareja ? 1 : 0,
       restricciones: restricciones || null,
       mensaje: mensaje || null,
+      num_ninos: ninos,
+      edades_ninos: ninos > 0 && edadesNinos ? edadesNinos : null,
       fecha_respuesta: new Date().toISOString(),
     },
     { onConflict: 'invitado_id' },
@@ -85,7 +97,7 @@ export async function listarInvitaciones() {
   if (!supabase) return []
   const { data, error } = await supabase
     .from('invitados')
-    .select('*, rsvps(asiste, restricciones, mensaje, fecha_respuesta)')
+    .select('*, rsvps(asiste, restricciones, mensaje, num_ninos, edades_ninos, fecha_respuesta)')
     .not('token', 'is', null)
     .order('created_at', { ascending: false })
   if (error) throw error

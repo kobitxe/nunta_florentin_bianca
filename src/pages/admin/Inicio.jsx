@@ -1,5 +1,5 @@
 import GraficoBarras from './GraficoBarras.jsx'
-import { estadoDe } from './helpers.js'
+import { estadoDe, primerRsvp } from './helpers.js'
 
 export default function Inicio({ lista }) {
   const confirmadas = lista.filter((i) => estadoDe(i) === 'si')
@@ -12,7 +12,16 @@ export default function Inicio({ lista }) {
     { num: confirmadas.length, label: 'Han dicho sí' },
     { num: noAsisten.length, label: 'Han dicho no' },
     { num: pendientes.length, label: 'Faltan por confirmar' },
-    { num: confirmadas.reduce((sum, i) => sum + (i.tipo === 'pareja' ? 2 : 1), 0), label: 'Personas confirmadas' },
+  ]
+
+  // "Confirmados" separa adultos (pareja = 2, individual = 1) de niños
+  // (num_ninos de cada respuesta), para planificar los menús.
+  const adultosConfirmados = confirmadas.reduce((sum, i) => sum + (i.tipo === 'pareja' ? 2 : 1), 0)
+  const ninosConfirmados = confirmadas.reduce((sum, i) => sum + (primerRsvp(i)?.num_ninos || 0), 0)
+  const confirmados = [
+    { num: adultosConfirmados, label: 'Adultos' },
+    { num: ninosConfirmados, label: 'Niños' },
+    { num: adultosConfirmados + ninosConfirmados, label: 'Total' },
   ]
 
   const porIdioma = { ro: 0, ru: 0, es: 0 }
@@ -42,6 +51,18 @@ export default function Inicio({ lista }) {
             <div className="stats__label">{s.label}</div>
           </div>
         ))}
+      </div>
+
+      <div className="admin-grafico-card admin-confirmados">
+        <h3>Confirmados</h3>
+        <div className="stats stats--confirmados">
+          {confirmados.map((s) => (
+            <div className="stats__celda" key={s.label}>
+              <div className="stats__num">{s.num}</div>
+              <div className="stats__label">{s.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="admin-graficos">

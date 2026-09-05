@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { crearInvitacion, actualizarInvitacion, borrarInvitacion, fijarAsistencia } from '../../lib/supabase.js'
+import { confirmar } from '../../lib/alertas.js'
 import ModalIdioma from './ModalIdioma.jsx'
 import ModalEditar from './ModalEditar.jsx'
 import { BANDERAS } from '../../lib/banderas.jsx'
@@ -65,7 +66,14 @@ export default function Invitaciones({ lista, refrescar }) {
   }
 
   const onBorrar = async (inv) => {
-    if (!window.confirm(`¿Borrar la invitación de ${nombresDe(inv)}? También se borra su respuesta.`)) return
+    const ok = await confirmar({
+      titulo: `¿Borrar la invitación de ${nombresDe(inv)}?`,
+      texto: 'También se borrará su respuesta.',
+      confirmar: 'Borrar',
+      cancelar: 'Cancelar',
+      peligro: true,
+    })
+    if (!ok) return
     try {
       await borrarInvitacion(inv.id)
       refrescar()
