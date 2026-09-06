@@ -55,7 +55,6 @@ export default function Respuestas({ lista }) {
                     <LuBaby size={14} aria-hidden="true" />
                     <span>
                       {r.num_ninos} {r.num_ninos === 1 ? 'niño' : 'niños'}
-                      {r.edades_ninos ? ` · edades ${r.edades_ninos}` : ''}
                     </span>
                   </div>
                 )}

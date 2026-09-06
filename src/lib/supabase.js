@@ -24,7 +24,7 @@ export async function obtenerRsvp(invitadoId) {
   if (!supabase) return null
   const { data, error } = await supabase
     .from('rsvps')
-    .select('asiste, restricciones, mensaje, num_ninos, edades_ninos')
+    .select('asiste, restricciones, mensaje, num_ninos')
     .eq('invitado_id', invitadoId)
     .maybeSingle()
   if (error) throw error
@@ -38,11 +38,12 @@ export async function guardarRsvp({
   restricciones,
   mensaje,
   numNinos,
-  edadesNinos,
 }) {
   if (!supabase) throw new Error('supabase-not-configured')
-  // Los niños y sus edades solo tienen sentido si el invitado asiste.
-  const ninos = asiste ? Math.max(0, Math.min(6, Number(numNinos) || 0)) : 0
+  // El número de niños solo tiene sentido si el invitado asiste. El tope de 20
+  // es una salvaguarda para no romper el check de la BD (el formulario no
+  // muestra ningún máximo).
+  const ninos = asiste ? Math.max(0, Math.min(20, Number(numNinos) || 0)) : 0
   const { error } = await supabase.from('rsvps').upsert(
     {
       invitado_id: invitadoId,
@@ -51,7 +52,8 @@ export async function guardarRsvp({
       restricciones: restricciones || null,
       mensaje: mensaje || null,
       num_ninos: ninos,
-      edades_ninos: ninos > 0 && edadesNinos ? edadesNinos : null,
+      // Ya no se piden las edades; se limpia cualquier valor antiguo al reenviar.
+      edades_ninos: null,
       fecha_respuesta: new Date().toISOString(),
     },
     { onConflict: 'invitado_id' },
@@ -97,7 +99,7 @@ export async function listarInvitaciones() {
   if (!supabase) return []
   const { data, error } = await supabase
     .from('invitados')
-    .select('*, rsvps(asiste, restricciones, mensaje, num_ninos, edades_ninos, fecha_respuesta)')
+    .select('*, rsvps(asiste, restricciones, mensaje, num_ninos, fecha_respuesta)')
     .not('token', 'is', null)
     .order('created_at', { ascending: false })
   if (error) throw error
