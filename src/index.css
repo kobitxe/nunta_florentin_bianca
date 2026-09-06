@@ -580,6 +580,11 @@ button {
   margin-bottom: 0.8rem;
 }
 
+/* Separa un poco la "!" del nombre en el saludo del Hero. */
+.hero__saludo-excl {
+  margin-left: 0.2em;
+}
+
 .hero__anuncio {
   font-size: 0.88rem;
   font-weight: 600;

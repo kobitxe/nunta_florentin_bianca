@@ -18,7 +18,8 @@ export default function Hero({ invitado }) {
           {invitado && (
             <p className="hero__saludo">
               {t('hero.holaPre')}
-              {nombresDe(invitado)}!
+              {nombresDe(invitado)}
+              <span className="hero__saludo-excl">!</span>
             </p>
           )}
           <p className="hero__anuncio">{t('hero.anunt')}</p>
