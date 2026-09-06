@@ -51,12 +51,25 @@ export default function Carta({ invitado, token, denegado, avisoVisible, onCerra
     return () => tl.kill()
   }, [fase])
 
-  // Sin scroll de fondo mientras la carta siga en pantalla.
+  // Sin scroll de fondo mientras la carta siga en pantalla, para que al
+  // abrirla el Hero aparezca siempre desde arriba y no a media página.
+  // `overflow: hidden` no basta: no frena el scroll táctil de iOS ni el
+  // inercial de algunos trackpads, así que además se cancela el gesto.
   useEffect(() => {
     if (fase === 'oculta') return
+    const html = document.documentElement
+    const overflowBodyPrevio = document.body.style.overflow
+    const overflowHtmlPrevio = html.style.overflow
     document.body.style.overflow = 'hidden'
+    html.style.overflow = 'hidden'
+    const bloquearGesto = (e) => e.preventDefault()
+    window.addEventListener('wheel', bloquearGesto, { passive: false })
+    window.addEventListener('touchmove', bloquearGesto, { passive: false })
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.overflow = overflowBodyPrevio
+      html.style.overflow = overflowHtmlPrevio
+      window.removeEventListener('wheel', bloquearGesto)
+      window.removeEventListener('touchmove', bloquearGesto)
     }
   }, [fase])
 

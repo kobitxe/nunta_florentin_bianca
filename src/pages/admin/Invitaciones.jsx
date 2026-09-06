@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { crearInvitacion, actualizarInvitacion, borrarInvitacion, fijarAsistencia } from '../../lib/supabase.js'
+import {
+  crearInvitacion,
+  actualizarInvitacion,
+  actualizarNumNinos,
+  borrarInvitacion,
+  fijarAsistencia,
+} from '../../lib/supabase.js'
 import { confirmar } from '../../lib/alertas.js'
 import ModalIdioma from './ModalIdioma.jsx'
 import ModalEditar from './ModalEditar.jsx'
@@ -106,7 +112,11 @@ export default function Invitaciones({ lista, refrescar }) {
 
   const onGuardarEdicion = async (datos) => {
     const inv = editando
-    await actualizarInvitacion(inv.id, { ...datos, tipo: inv.tipo })
+    const { numNinos, ...datosInv } = datos
+    await actualizarInvitacion(inv.id, { ...datosInv, tipo: inv.tipo })
+    // El número de niños vive en la respuesta (rsvps), no en la invitación:
+    // solo llega definido cuando el invitado ya confirmó que asiste.
+    if (numNinos !== undefined) await actualizarNumNinos(inv.id, numNinos)
     setEditando(null)
     refrescar()
   }

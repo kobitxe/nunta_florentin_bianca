@@ -129,6 +129,19 @@ export async function fijarAsistencia(inv, estado) {
   if (error) throw error
 }
 
+// Corrige el número de niños de una respuesta ya existente desde el panel.
+// Solo tiene sentido si el invitado ya confirmó que asiste; el tope de 20
+// es el mismo que el check de la BD y el del formulario público.
+export async function actualizarNumNinos(invitadoId, numNinos) {
+  if (!supabase) throw new Error('supabase-not-configured')
+  const ninos = Math.max(0, Math.min(20, Math.floor(Number(numNinos) || 0)))
+  const { error } = await supabase
+    .from('rsvps')
+    .update({ num_ninos: ninos, edades_ninos: null })
+    .eq('invitado_id', invitadoId)
+  if (error) throw error
+}
+
 export async function actualizarInvitacion(id, { nombre, nombrePareja, tipo, variante, idioma }) {
   if (!supabase) throw new Error('supabase-not-configured')
   const { error } = await supabase

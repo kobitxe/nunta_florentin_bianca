@@ -1,16 +1,27 @@
 import { useState } from 'react'
-import { IDIOMAS_LABEL, IDIOMAS_POR_VARIANTE } from './helpers.js'
+import { IDIOMAS_LABEL, IDIOMAS_POR_VARIANTE, primerRsvp } from './helpers.js'
 
-// Modal para corregir una invitación ya creada: nombre(s), si lleva misa
-// e idioma. El tipo (individual/pareja) no se toca aquí, se fija al crear.
+const MAX_NINOS = 20
+
+// Modal para corregir una invitación ya creada: nombre(s), si lleva misa,
+// idioma y, si el invitado ya confirmó que asiste, el número de niños.
+// El tipo (individual/pareja) no se toca aquí, se fija al crear.
 export default function ModalEditar({ inv, onGuardar, onCancelar }) {
+  const rsvp = primerRsvp(inv)
+  const puedeEditarNinos = rsvp?.asiste === true
+
   const [nombre, setNombre] = useState(inv.nombre ?? '')
   const [nombrePareja, setNombrePareja] = useState(inv.nombre_pareja ?? '')
   const [variante, setVariante] = useState(inv.variante ?? 'sin_misa')
   const [idioma, setIdioma] = useState(inv.idioma ?? '')
+  const [numNinos, setNumNinos] = useState(rsvp?.num_ninos ?? 0)
   const [guardando, setGuardando] = useState(false)
 
   const idiomasDisponibles = IDIOMAS_POR_VARIANTE[variante] ?? IDIOMAS_POR_VARIANTE.sin_misa
+
+  const cambiarNumNinos = (raw) => {
+    setNumNinos(Math.max(0, Math.min(MAX_NINOS, Math.floor(Number(raw) || 0))))
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -22,6 +33,7 @@ export default function ModalEditar({ inv, onGuardar, onCancelar }) {
         nombrePareja: nombrePareja.trim(),
         variante,
         idioma: idioma || null,
+        numNinos: puedeEditarNinos ? numNinos : undefined,
       })
     } finally {
       setGuardando(false)
@@ -82,6 +94,20 @@ export default function ModalEditar({ inv, onGuardar, onCancelar }) {
               ))}
             </select>
           </div>
+          {puedeEditarNinos && (
+            <div className="campo">
+              <label htmlFor="editar-ninos">Número de niños</label>
+              <input
+                id="editar-ninos"
+                type="number"
+                inputMode="numeric"
+                min="0"
+                max={MAX_NINOS}
+                value={numNinos}
+                onChange={(e) => cambiarNumNinos(e.target.value)}
+              />
+            </div>
+          )}
           <div className="modal__acciones">
             <button className="btn-mini" type="button" onClick={onCancelar}>
               Cancelar
