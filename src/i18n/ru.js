@@ -16,6 +16,7 @@ export default {
     texto: 'Венчание · 8 августа 2027 · Biserica Neagră',
   },
   hero: {
+    holaExcl: '',
     holaPre: 'Привет, ',
     luna: 'августа',
     anunt: 'Мы женимся',

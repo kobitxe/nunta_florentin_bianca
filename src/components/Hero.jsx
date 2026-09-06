@@ -17,6 +17,9 @@ export default function Hero({ invitado }) {
         <div className="hero__arriba">
           {invitado && (
             <p className="hero__saludo">
+              {t('hero.holaExcl') ? (
+                <span className="hero__saludo-excl hero__saludo-excl--ini">{t('hero.holaExcl')}</span>
+              ) : null}
               {t('hero.holaPre')}
               {nombresDe(invitado)}
               <span className="hero__saludo-excl">!</span>

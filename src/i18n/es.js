@@ -16,7 +16,8 @@ export default {
     texto: 'Ceremonia religiosa · 8 de agosto de 2027 · Biserica Neagră',
   },
   hero: {
-    holaPre: '¡Hola, ',
+    holaExcl: '¡',
+    holaPre: 'Hola, ',
     luna: 'agosto',
     anunt: 'Nos casamos',
     si: '&',

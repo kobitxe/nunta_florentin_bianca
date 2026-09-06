@@ -578,11 +578,20 @@ button {
   font-size: clamp(1.6rem, 6vw, 2.2rem);
   color: var(--salvia-clara);
   margin-bottom: 0.8rem;
+  /* Baja el saludo unos pixeles respecto al resto del bloque superior. */
+  transform: translateY(6px);
 }
 
-/* Separa un poco la "!" del nombre en el saludo del Hero. */
+/* Separa un poco la "!" final del nombre en el saludo del Hero. */
 .hero__saludo-excl {
   margin-left: 0.2em;
+}
+
+/* La "¡" inicial (solo español) va pegada al mismo aire, pero por la
+   derecha, para que quede a la misma distancia que la "!" final. */
+.hero__saludo-excl--ini {
+  margin-left: 0;
+  margin-right: 0.2em;
 }
 
 .hero__anuncio {

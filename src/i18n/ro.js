@@ -16,6 +16,7 @@ export default {
     texto: 'Cununia religioasă · 8 august 2027 · Biserica Neagră',
   },
   hero: {
+    holaExcl: '',
     holaPre: 'Bună, ',
     luna: 'august',
     anunt: 'Ne căsătorim',
