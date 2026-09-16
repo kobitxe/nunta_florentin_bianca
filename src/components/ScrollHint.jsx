@@ -38,7 +38,7 @@ export default function ScrollHint() {
       // Bamboleo del grupo entero: va en el nodo interior para no chocar
       // con el fundido de entrada/salida, que anima la caja de fuera.
       animaciones.push(
-        gsap.to(grupo, { y: 7, duration: 1.15, ease: 'sine.inOut', repeat: -1, yoyo: true }),
+        gsap.to(grupo, { y: 7, duration: 1.6, ease: 'sine.inOut', repeat: -1, yoyo: true }),
       )
 
       // La ola: las tres flechas se encienden y caen escalonadas, de
@@ -50,10 +50,10 @@ export default function ScrollHint() {
       const ola = gsap.to(flechas, {
         opacity: 1,
         y: 6,
-        duration: 0.45,
+        duration: 0.9,
         ease: 'sine.inOut',
         delay: 1,
-        stagger: { each: 0.16, repeat: -1, yoyo: true },
+        stagger: { each: 0.32, repeat: -1, yoyo: true },
       })
       animaciones.push(ola)
     }
