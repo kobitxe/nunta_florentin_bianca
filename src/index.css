@@ -648,48 +648,66 @@ button {
 }
 
 /* ── Pista de scroll ────────────────────────────────────── */
-/* Centrado con left/right en vez de translateX para dejar el transform
-   entero en manos de GSAP, que anima `y` en el fundido y el bamboleo. */
-.scroll-hint {
+/* El icono de mano/toque (el mismo que usa el sobre) haciendo el gesto
+   completo de deslizar: presiona, arrastra hacia abajo dejando un
+   rastro fantasma detrás, suelta. Centrado con left/right para dejar
+   `y`/`scale` libres para GSAP. */
+.arrastre-hint {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: calc(1.4rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(1.6rem + env(safe-area-inset-bottom, 0px));
   /* Por debajo del selector de idioma (10) y de la carta (50). */
   z-index: 9;
+  /* Arranca invisible por CSS (no solo por GSAP): el componente puede
+     entrar y salir varias veces según el invitado suba y baje, y así
+     no hay ni un frame de parpadeo visible antes de que el efecto de
+     React tenga ocasión de fijar el estado inicial. */
+  opacity: 0;
   display: flex;
   justify-content: center;
   pointer-events: none;
 }
 
-.scroll-hint__flechas {
+/* Recinto donde las tres copias se superponen en el mismo centro; el
+   trayecto de cada una (arriba → abajo) lo mueve GSAP con `transform`,
+   así que el tamaño solo necesita cubrir ese recorrido sin recortarlo. */
+.arrastre-hint__grupo {
+  position: relative;
+  width: 3.6rem;
+  height: 4.8rem;
+}
+
+.arrastre-hint__mano {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: -1.3rem 0 0 -1.3rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
-
-/* Las flechas se solapan para que la ola se lea como un único gesto
-   continuo hacia abajo y no como tres iconos sueltos. */
-.scroll-hint__flecha + .scroll-hint__flecha {
-  margin-top: -0.6rem;
-}
-
-.scroll-hint__flecha {
-  width: 1.9rem;
-  height: 1.9rem;
-  stroke-width: 2.4;
-  color: var(--dorado);
-  /* Halo dorado para que destaque, más una sombra dura que lo mantiene
-     legible sobre las zonas claras de la foto del Hero. */
-  filter: drop-shadow(0 0 7px rgba(227, 183, 120, 0.55))
-    drop-shadow(0 1px 2px rgba(24, 21, 17, 0.55));
+  justify-content: center;
 }
 
 @media (min-width: 48rem) {
-  .scroll-hint__flecha {
-    width: 2.1rem;
-    height: 2.1rem;
+  .arrastre-hint__mano {
+    width: 3.1rem;
+    height: 3.1rem;
+    margin: -1.55rem 0 0 -1.55rem;
   }
+}
+
+.arrastre-hint__mano svg {
+  width: 100%;
+  height: 100%;
+  color: var(--dorado);
+  /* Leve inclinación para que se lea como una mano en pleno gesto, no
+     como un cursor estático. */
+  transform: rotate(-12deg);
+  /* Halo dorado fuerte para que destaque, más una sombra dura que lo
+     mantiene legible sobre las zonas claras de la foto del Hero. */
+  filter: drop-shadow(0 0 0.6rem rgba(227, 183, 120, 0.8)) drop-shadow(0 2px 3px rgba(24, 21, 17, 0.55));
 }
 
 /* ── Cita de apertura ───────────────────────────────────── */
