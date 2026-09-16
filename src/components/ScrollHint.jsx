@@ -42,16 +42,19 @@ export default function ScrollHint() {
       )
 
       // La ola: las tres flechas se encienden y caen escalonadas, de
-      // arriba abajo, dibujando el gesto de deslizar.
-      const ola = gsap.timeline({ repeat: -1, repeatDelay: 0.45, delay: 1 })
-      ola
-        .fromTo(
-          flechas,
-          { opacity: 0.1, y: -6 },
-          { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out', stagger: 0.16 },
-          0,
-        )
-        .to(flechas, { opacity: 0.1, y: 6, duration: 0.42, ease: 'power2.in', stagger: 0.16 }, 0.5)
+      // arriba abajo, dibujando el gesto de deslizar. El repeat/yoyo va
+      // DENTRO del stagger (no en el tween) para que cada flecha oscile
+      // por su cuenta, sin un punto de reinicio compartido: así el
+      // bucle no da ningún salto/corte al repetirse.
+      gsap.set(flechas, { opacity: 0.15, y: -6 })
+      const ola = gsap.to(flechas, {
+        opacity: 1,
+        y: 6,
+        duration: 0.45,
+        ease: 'sine.inOut',
+        delay: 1,
+        stagger: { each: 0.16, repeat: -1, yoyo: true },
+      })
       animaciones.push(ola)
     }
 
