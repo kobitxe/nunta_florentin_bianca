@@ -454,7 +454,11 @@ button {
 
 @media (min-width: 48rem) {
   .hero {
-    padding: 5rem 1.5rem 5rem;
+    /* Más aire abajo que arriba: sube el bloque de texto para dejar
+       hueco de sobra a la pista de scroll, que en escritorio flotaría
+       demasiado cerca de "MAMAIA" si no. En móvil no hace falta: el
+       padding inferior ya es generoso (9rem, para las rosas). */
+    padding: 5rem 1.5rem 8rem;
   }
 }
 
