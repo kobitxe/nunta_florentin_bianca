@@ -7,7 +7,7 @@ import { nombresDe, nombreDesdeToken } from '../lib/nombres.js'
 // Sobre de entrada: cubre la pantalla hasta que el invitado lo abre
 // con un click o con el primer intento de scroll. La apertura es un
 // timeline de GSAP: sello → solapa → interior → desvanecido del overlay.
-export default function Carta({ invitado, token, denegado, avisoVisible, onCerrarAviso }) {
+export default function Carta({ invitado, token, denegado, avisoVisible, onCerrarAviso, onAbierta }) {
   const { t } = useI18n()
   const [fase, setFase] = useState('cerrada') // cerrada | abriendo | oculta
   const cartaRef = useRef(null)
@@ -50,6 +50,13 @@ export default function Carta({ invitado, token, denegado, avisoVisible, onCerra
 
     return () => tl.kill()
   }, [fase])
+
+  // Aviso al padre de que el sobre ya ha salido de pantalla, para que
+  // pueda mostrar lo que solo tiene sentido con la invitación ya a la
+  // vista (la pista de scroll).
+  useEffect(() => {
+    if (fase === 'oculta') onAbierta?.()
+  }, [fase, onAbierta])
 
   // Sin scroll de fondo mientras la carta siga en pantalla, para que al
   // abrirla el Hero aparezca siempre desde arriba y no a media página.

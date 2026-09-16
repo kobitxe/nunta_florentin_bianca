@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { I18nProvider } from './i18n/index.jsx'
 import { buscarInvitadoPorToken } from './lib/supabase.js'
 import Carta from './components/Carta.jsx'
@@ -10,6 +10,7 @@ import Contador from './components/Contador.jsx'
 import Detalles from './components/Detalles.jsx'
 import Rsvp from './components/Rsvp.jsx'
 import Footer from './components/Footer.jsx'
+import ScrollHint from './components/ScrollHint.jsx'
 import Admin from './pages/Admin.jsx'
 
 export default function App() {
@@ -20,6 +21,8 @@ export default function App() {
   const [invitado, setInvitado] = useState(null)
   const [cargandoInvitado, setCargandoInvitado] = useState(Boolean(token))
   const [avisoVisible, setAvisoVisible] = useState(true)
+  const [cartaAbierta, setCartaAbierta] = useState(false)
+  const marcarCartaAbierta = useCallback(() => setCartaAbierta(true), [])
 
   useEffect(() => {
     if (!token) return
@@ -44,6 +47,7 @@ export default function App() {
         denegado={denegado}
         avisoVisible={avisoVisible}
         onCerrarAviso={() => setAvisoVisible(false)}
+        onAbierta={marcarCartaAbierta}
       />
       <Idiomas
         variante={denegado ? 'con_misa' : (invitado?.variante ?? 'sin_misa')}
@@ -58,6 +62,7 @@ export default function App() {
         <Rsvp token={token} invitado={invitado} cargando={cargandoInvitado} />
       </main>
       <Footer />
+      {cartaAbierta && <ScrollHint />}
     </I18nProvider>
   )
 }
