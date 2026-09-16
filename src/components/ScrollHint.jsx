@@ -4,7 +4,7 @@ import { LuPointer } from 'react-icons/lu'
 
 // Pista de scroll: el mismo icono de mano que ya usa el sobre para
 // "toca para abrir", pero aquí haciendo el gesto completo de deslizar
-// — aparece, presiona, arrastra hacia abajo y se desvanece — para que
+// — aparece, presiona, arrastra hacia arriba y se desvanece — para que
 // se entienda a la primera sin necesidad de flechas ni de la palabra
 // "desliza". Aparece cuando la carta ya se ha abierto y el Hero está a
 // la vista, se apaga en cuanto el invitado hace scroll de verdad, y
@@ -28,7 +28,7 @@ export default function ScrollHint() {
     // opacity:0; se fija aquí también por si el efecto corriera después
     // de que algo hubiera tocado esos valores.)
     gsap.set(caja, { opacity: 0, y: 10 })
-    gsap.set(mano, { y: -16, opacity: 0, scale: 0.9 })
+    gsap.set(mano, { y: 16, opacity: 0, scale: 0.9 })
 
     const mostrar = () => {
       if (mostrada) return
@@ -43,20 +43,20 @@ export default function ScrollHint() {
       gsap.killTweensOf(caja)
       gsap.fromTo(caja, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
 
-      // El gesto completo en un único trayecto: nace arriba (invisible),
-      // presiona (se achata un poco), arrastra hacia abajo, suelta
+      // El gesto completo en un único trayecto: nace abajo (invisible),
+      // presiona (se achata un poco), arrastra hacia arriba, suelta
       // (rebote leve al soltar) y se desvanece antes de terminar.
       // Empieza y termina en opacidad 0, así que el bucle no da ningún
       // salto al repetirse.
-      gsap.set(mano, { y: -16, opacity: 0, scale: 0.9 })
+      gsap.set(mano, { y: 16, opacity: 0, scale: 0.9 })
       gesto = gsap.to(mano, {
         keyframes: {
-          '0%': { y: -16, opacity: 0, scale: 0.9 },
+          '0%': { y: 16, opacity: 0, scale: 0.9 },
           '14%': { opacity: 1, scale: 1 },
           '24%': { scale: 0.85 },
-          '78%': { y: 24, scale: 0.9, opacity: 1 },
+          '78%': { y: -24, scale: 0.9, opacity: 1 },
           '90%': { scale: 1.06 },
-          '100%': { y: 32, opacity: 0, scale: 0.98 },
+          '100%': { y: -32, opacity: 0, scale: 0.98 },
         },
         duration: 1.5,
         ease: 'power1.inOut',
