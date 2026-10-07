@@ -1,43 +1,73 @@
-import { useCallback, useEffect, useState } from 'react'
-import { I18nProvider } from './i18n/index.jsx'
-import { buscarInvitadoPorToken } from './lib/supabase.js'
-import Carta from './components/Carta.jsx'
-import Idiomas from './components/Idiomas.jsx'
-import Hero from './components/Hero.jsx'
-import IntroCita from './components/IntroCita.jsx'
-import Familia from './components/Familia.jsx'
-import Contador from './components/Contador.jsx'
-import Detalles from './components/Detalles.jsx'
-import Rsvp from './components/Rsvp.jsx'
-import Footer from './components/Footer.jsx'
-import ScrollHint from './components/ScrollHint.jsx'
-import Admin from './pages/Admin.jsx'
+import { useCallback, useEffect, useRef, useState } from "react";
+import { I18nProvider } from "./i18n/index.jsx";
+import { buscarInvitadoPorToken } from "./lib/supabase.js";
+import Carta from "./components/Carta.jsx";
+import Idiomas from "./components/Idiomas.jsx";
+import Hero from "./components/Hero.jsx";
+import IntroCita from "./components/IntroCita.jsx";
+import Familia from "./components/Familia.jsx";
+import Contador from "./components/Contador.jsx";
+import Detalles from "./components/Detalles.jsx";
+import Rsvp from "./components/Rsvp.jsx";
+import Footer from "./components/Footer.jsx";
+import ScrollHint from "./components/ScrollHint.jsx";
+import Admin from "./pages/Admin.jsx";
 
 export default function App() {
-  const ruta = window.location.pathname
-  // Invitación personalizada: /i/{token}
-  const token = ruta.startsWith('/i/') ? decodeURIComponent(ruta.slice(3).replace(/\/$/, '')) : null
+  const audioRef = useRef(null);
 
-  const [invitado, setInvitado] = useState(null)
-  const [cargandoInvitado, setCargandoInvitado] = useState(Boolean(token))
-  const [avisoVisible, setAvisoVisible] = useState(true)
-  const [cartaAbierta, setCartaAbierta] = useState(false)
-  const marcarCartaAbierta = useCallback(() => setCartaAbierta(true), [])
+  const ruta = window.location.pathname;
+  // Invitación personalizada: /i/{token}
+  const token = ruta.startsWith("/i/")
+    ? decodeURIComponent(ruta.slice(3).replace(/\/$/, ""))
+    : null;
+
+  const [invitado, setInvitado] = useState(null);
+  const [cargandoInvitado, setCargandoInvitado] = useState(Boolean(token));
+  const [avisoVisible, setAvisoVisible] = useState(true);
+  const [cartaAbierta, setCartaAbierta] = useState(false);
+  const marcarCartaAbierta = useCallback(() => {
+    setCartaAbierta(true);
+
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/back_music.mp3");
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.5;
+    }
+
+    audioRef.current.play().catch(() => {});
+  }, []);
 
   useEffect(() => {
-    if (!token) return
+    if (ruta === "/admin" && audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
+    };
+  }, [ruta]);
+
+  useEffect(() => {
+    if (!token) return;
     buscarInvitadoPorToken(token)
       .then(setInvitado)
       .catch(() => setInvitado(null))
-      .finally(() => setCargandoInvitado(false))
-  }, [token])
+      .finally(() => setCargandoInvitado(false));
+  }, [token]);
 
-  if (ruta === '/admin') return <Admin />
+  if (ruta === "/admin") return <Admin />;
 
   // Sin token (URL base) o token que no corresponde a ninguna invitación:
   // no se deja pasar. cargandoInvitado evita el falso "denegado" mientras
   // la búsqueda del token todavía está en curso.
-  const denegado = !cargandoInvitado && !invitado
+  const denegado = !cargandoInvitado && !invitado;
 
   return (
     <I18nProvider invitado={invitado}>
@@ -50,7 +80,7 @@ export default function App() {
         onAbierta={marcarCartaAbierta}
       />
       <Idiomas
-        variante={denegado ? 'con_misa' : (invitado?.variante ?? 'sin_misa')}
+        variante={denegado ? "con_misa" : (invitado?.variante ?? "sin_misa")}
         encima={denegado && avisoVisible}
       />
       <main>
@@ -61,8 +91,10 @@ export default function App() {
         <Detalles invitado={invitado} />
         <Rsvp token={token} invitado={invitado} cargando={cargandoInvitado} />
       </main>
+
       <Footer />
+
       {cartaAbierta && <ScrollHint />}
     </I18nProvider>
-  )
+  );
 }
