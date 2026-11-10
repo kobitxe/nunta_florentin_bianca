@@ -156,6 +156,32 @@ export async function actualizarInvitacion(id, { nombre, nombrePareja, tipo, var
   if (error) throw error
 }
 
+// ── Notas privadas del admin (tabla notas_invitados, solo authenticated) ──
+// Van en una tabla aparte porque invitados es legible con la clave anon.
+
+// Devuelve { [invitado_id]: nota }.
+export async function listarNotas() {
+  if (!supabase) return {}
+  const { data, error } = await supabase.from('notas_invitados').select('invitado_id, nota')
+  if (error) throw error
+  return Object.fromEntries(data.map((n) => [n.invitado_id, n.nota]))
+}
+
+// Guarda la nota; si queda vacía, la borra.
+export async function guardarNota(invitadoId, nota) {
+  if (!supabase) throw new Error('supabase-not-configured')
+  const texto = nota.trim()
+  const { error } = texto
+    ? await supabase
+        .from('notas_invitados')
+        .upsert(
+          { invitado_id: invitadoId, nota: texto, updated_at: new Date().toISOString() },
+          { onConflict: 'invitado_id' },
+        )
+    : await supabase.from('notas_invitados').delete().eq('invitado_id', invitadoId)
+  if (error) throw error
+}
+
 export async function borrarInvitacion(id) {
   if (!supabase) throw new Error('supabase-not-configured')
   const { error } = await supabase.from('invitados').delete().eq('id', id)

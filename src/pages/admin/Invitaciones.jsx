@@ -5,6 +5,8 @@ import {
   actualizarNumNinos,
   borrarInvitacion,
   fijarAsistencia,
+  listarNotas,
+  guardarNota,
 } from '../../lib/supabase.js'
 import { confirmar } from '../../lib/alertas.js'
 import ModalIdioma from './ModalIdioma.jsx'
@@ -24,6 +26,40 @@ export default function Invitaciones({ lista, refrescar }) {
   const [crearPendiente, setCrearPendiente] = useState(null) // datos del formulario a falta del idioma
   const [menuAbierto, setMenuAbierto] = useState(null) // id de la invitación con el menú de acciones abierto
   const avisoTimeout = useRef(null)
+  const [notas, setNotas] = useState({}) // { [invitado_id]: nota } — privadas, solo admin
+  const [notaEditando, setNotaEditando] = useState(null) // { id, texto } de la nota en edición
+  const [guardandoNota, setGuardandoNota] = useState(false)
+
+  useEffect(() => {
+    listarNotas()
+      .then(setNotas)
+      .catch(() =>
+        setError('No se pudieron cargar las notas. ¿Ejecutaste migration-007-notas-privadas.sql?'),
+      )
+  }, [])
+
+  const abrirNota = (inv) => setNotaEditando({ id: inv.id, texto: notas[inv.id] ?? '' })
+
+  const onGuardarNota = async (e) => {
+    e.preventDefault()
+    const { id, texto } = notaEditando
+    setGuardandoNota(true)
+    try {
+      await guardarNota(id, texto)
+      setNotas((prev) => {
+        const sig = { ...prev }
+        if (texto.trim()) sig[id] = texto.trim()
+        else delete sig[id]
+        return sig
+      })
+      setNotaEditando(null)
+      setError(null)
+    } catch (err) {
+      setError(`No se pudo guardar la nota.${err?.message ? ` (${err.message})` : ''}`)
+    } finally {
+      setGuardandoNota(false)
+    }
+  }
 
   // Cierra el menú de "más acciones" al pulsar fuera de él.
   useEffect(() => {
@@ -231,6 +267,16 @@ export default function Invitaciones({ lista, refrescar }) {
                       >
                         Editar
                       </button>
+                      <button
+                        className="btn-mini"
+                        type="button"
+                        onClick={() => {
+                          setMenuAbierto(null)
+                          abrirNota(inv)
+                        }}
+                      >
+                        {notas[inv.id] ? 'Editar nota' : 'Añadir nota'}
+                      </button>
                       <label className="inv-card__menu-estado">
                         Cambiar estado
                         <select
@@ -258,6 +304,39 @@ export default function Invitaciones({ lista, refrescar }) {
                     </div>
                   )}
                 </div>
+
+                {notaEditando?.id === inv.id ? (
+                  <form className="inv-card__nota-form" onSubmit={onGuardarNota}>
+                    <textarea
+                      autoFocus
+                      rows={3}
+                      maxLength={1000}
+                      aria-label={`Nota privada sobre ${nombresDe(inv)}`}
+                      placeholder="Nota privada (solo la ves tú)…"
+                      value={notaEditando.texto}
+                      onChange={(e) => setNotaEditando({ ...notaEditando, texto: e.target.value })}
+                    />
+                    <div className="inv-card__nota-acciones">
+                      <button className="btn-mini" type="button" onClick={() => setNotaEditando(null)}>
+                        Cancelar
+                      </button>
+                      <button className="btn-mini btn-mini--ok" type="submit" disabled={guardandoNota}>
+                        {guardandoNota ? 'Guardando…' : 'Guardar nota'}
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  notas[inv.id] && (
+                    <button
+                      className="inv-card__nota"
+                      type="button"
+                      title="Editar nota"
+                      onClick={() => abrirNota(inv)}
+                    >
+                      {notas[inv.id]}
+                    </button>
+                  )
+                )}
               </li>
             )
           })}

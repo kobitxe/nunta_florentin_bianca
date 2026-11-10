@@ -2276,3 +2276,62 @@ button {
   border-color: var(--salvia);
   color: var(--salvia);
 }
+
+/* Nota privada del admin: ocupa una fila propia bajo nombre y chips. */
+.inv-card {
+  flex-wrap: wrap;
+}
+
+.inv-card__nota {
+  flex-basis: 100%;
+  display: block;
+  text-align: left;
+  font: inherit;
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--taupe);
+  background: color-mix(in srgb, var(--dorado) 12%, var(--marfil));
+  border: 0;
+  border-left: 3px solid var(--dorado);
+  border-radius: var(--radio);
+  padding: 0.45rem 0.65rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.inv-card__nota:hover {
+  color: var(--tinta);
+}
+
+.inv-card__nota-form {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.inv-card__nota-form textarea {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 0.45rem 0.6rem;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inv-card__nota-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.btn-mini--ok {
+  border-color: var(--salvia);
+  color: var(--salvia-oscura);
+}
